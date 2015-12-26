@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Numsense", "Numsense\Numsense.fsproj", "{72A79661-F252-4571-A857-268CE356E88A}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Numsense.UnitTests", "Numsense.UnitTests\Numsense.UnitTests.fsproj", "{FC7BD508-0445-428A-AC8C-2DDCA3EFEADE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{72A79661-F252-4571-A857-268CE356E88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72A79661-F252-4571-A857-268CE356E88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72A79661-F252-4571-A857-268CE356E88A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC7BD508-0445-428A-AC8C-2DDCA3EFEADE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC7BD508-0445-428A-AC8C-2DDCA3EFEADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC7BD508-0445-428A-AC8C-2DDCA3EFEADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC7BD508-0445-428A-AC8C-2DDCA3EFEADE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
