@@ -7,7 +7,7 @@ let ofEnglish x =
     | true, i -> i
     | _ -> 
 
-    match x.Trim().ToUpper() with
+    match x.Trim().ToUpper(System.Globalization.CultureInfo "en") with
     | "ZERO"      ->  0
     | "ONE"       ->  1
     | "TWO"       ->  2
