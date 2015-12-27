@@ -33,13 +33,13 @@ let ofEnglish x =
         | 'Y'::t // matches 'y' in 'eighty'
         | 'T'::'Y'::t                                -> conv (10 %* acc) t
         | 'H'::'U'::'N'::'D'::'R'::'E'::'D'::t       ->
-            conv (if acc = 0 then 100 else 100 %* acc) t
+            conv (if acc = 0 then  100 else  100 %* acc) t
         | 'T'::'H'::'O'::'U'::'S'::'A'::'N'::'D'::t  ->
             conv (if acc = 0 then 1000 else 1000 %* acc) t
         | 'M'::'I'::'L'::'L'::'I'::'O'::'N'::t       ->
-            conv (1000000 %* acc) t
+            conv (   1000000 %* acc) t
         | 'B'::'I'::'L'::'L'::'I'::'O'::'N'::t       ->
-            conv (1000000000 * acc) t
+            conv (1000000000  * acc) t
         | _ -> -1
 
     match System.Int32.TryParse x with
