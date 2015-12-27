@@ -27,6 +27,8 @@ let ofEnglish x =
         | 'T'::'H'::'I'::'R'::'T'::'Y'::t            -> conv (30 + acc) t
         | 'F'::'O'::'R'::'T'::'Y'::t                 -> conv (40 + acc) t
         | 'F'::'I'::'F'::'T'::'Y'::t                 -> conv (50 + acc) t
+        | 'Y'::t // matches 'y' in 'eighty'
+        | 'T'::'Y'::t                                -> conv (10 * acc) t
         | _ -> -1
 
     match System.Int32.TryParse x with
