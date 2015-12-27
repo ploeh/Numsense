@@ -24,6 +24,7 @@ let ofEnglish x =
         | 'E'::'E'::'N'::t // matches 'een' in 'eighteen'
         | 'T'::'E'::'E'::'N'::t                      -> conv (10 + acc) t
         | 'T'::'W'::'E'::'N'::'T'::'Y'::t            -> conv (20 + acc) t
+        | 'T'::'H'::'I'::'R'::'T'::'Y'::t            -> conv (30 + acc) t
         | _ -> -1
 
     match System.Int32.TryParse x with
