@@ -38,6 +38,10 @@ let rec toEnglish x =
     | x' when 80 < x' && x' < 90 -> sprintf "eighty-%s" (toEnglish (x' % 10))
     | 90 -> "ninety"
     | x' when 90 < x' && x' < 100 -> sprintf "ninety-%s" (toEnglish (x' % 10))
+    | x' when 99 < x' && x' < 1000 && x' % 100 = 0 ->
+        sprintf "%s-hundred" (toEnglish (x' / 100))
+    | x' when 99 < x' && x' < 1000 ->
+        sprintf "%s-hundred-%s" (toEnglish (x' / 100)) (toEnglish (x' % 100))
     | _ -> string x
 
 let tryOfEnglish x =
