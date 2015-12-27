@@ -118,3 +118,28 @@ open Swensen.Unquote
 let ``tryOfEnglish returns correct result`` (english : string, expected : int) =
     let actual = Numeral.tryOfEnglish english
     Some expected =! actual
+
+[<Theory>]
+[<InlineData( 0, "zero")>]
+[<InlineData( 1, "one")>]
+[<InlineData( 2, "two")>]
+[<InlineData( 3, "three")>]
+[<InlineData( 4, "four")>]
+[<InlineData( 5, "five")>]
+[<InlineData( 6, "six")>]
+[<InlineData( 7, "seven")>]
+[<InlineData( 8, "eight")>]
+[<InlineData( 9, "nine")>]
+[<InlineData(10, "ten")>]
+[<InlineData(11, "eleven")>]
+[<InlineData(12, "twelve")>]
+[<InlineData(13, "thirteen")>]
+[<InlineData(14, "fourteen")>]
+[<InlineData(15, "fifteen")>]
+[<InlineData(16, "sixteen")>]
+[<InlineData(17, "seventeen")>]
+[<InlineData(18, "eighteen")>]
+[<InlineData(19, "nineteen")>]
+let ``toEnglish returns correct result`` (i : int, expected : string) =
+    let actual = Numeral.toEnglish i
+    expected =! actual
