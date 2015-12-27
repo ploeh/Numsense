@@ -1,6 +1,6 @@
 ﻿module Ploeh.Numsense.Numeral
 
-let toEnglish x =
+let rec toEnglish x =
     match x with
     |  0 -> "zero"
     |  1 -> "one"
@@ -22,6 +22,22 @@ let toEnglish x =
     | 17 -> "seventeen"
     | 18 -> "eighteen"
     | 19 -> "nineteen"
+    | 20 -> "twenty"
+    | x' when 20 < x' && x' < 30 -> sprintf "twenty-%s" (toEnglish (x' % 10))
+    | 30 -> "thirty"
+    | x' when 30 < x' && x' < 40 -> sprintf "thirty-%s" (toEnglish (x' % 10))
+    | 40 -> "forty"
+    | x' when 40 < x' && x' < 50 -> sprintf "forty-%s" (toEnglish (x' % 10))
+    | 50 -> "fifty"
+    | x' when 50 < x' && x' < 60 -> sprintf "fifty-%s" (toEnglish (x' % 10))
+    | 60 -> "sixty"
+    | x' when 60 < x' && x' < 70 -> sprintf "sixty-%s" (toEnglish (x' % 10))
+    | 70 -> "seventy"
+    | x' when 70 < x' && x' < 80 -> sprintf "seventy-%s" (toEnglish (x' % 10))
+    | 80 -> "eighty"
+    | x' when 80 < x' && x' < 90 -> sprintf "eighty-%s" (toEnglish (x' % 10))
+    | 90 -> "ninety"
+    | x' when 90 < x' && x' < 100 -> sprintf "ninety-%s" (toEnglish (x' % 10))
     | _ -> string x
 
 let tryOfEnglish x =

@@ -140,6 +140,22 @@ let ``tryOfEnglish returns correct result`` (english : string, expected : int) =
 [<InlineData(17, "seventeen")>]
 [<InlineData(18, "eighteen")>]
 [<InlineData(19, "nineteen")>]
+[<InlineData(20, "twenty")>]
+[<InlineData(21, "twenty-one")>]
+[<InlineData(30, "thirty")>]
+[<InlineData(34, "thirty-four")>]
+[<InlineData(40, "forty")>]
+[<InlineData(42, "forty-two")>]
+[<InlineData(50, "fifty")>]
+[<InlineData(58, "fifty-eight")>]
+[<InlineData(60, "sixty")>]
+[<InlineData(65, "sixty-five")>]
+[<InlineData(70, "seventy")>]
+[<InlineData(79, "seventy-nine")>]
+[<InlineData(80, "eighty")>]
+[<InlineData(86, "eighty-six")>]
+[<InlineData(90, "ninety")>]
+[<InlineData(93, "ninety-three")>]
 let ``toEnglish returns correct result`` (i : int, expected : string) =
     let actual = Numeral.toEnglish i
     expected =! actual
