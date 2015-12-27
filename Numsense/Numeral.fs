@@ -13,6 +13,9 @@ let ofEnglish x =
     let multiplyThousands x =
         let hundreds = x % 1000
         x + (1000 * hundreds) - hundreds
+    let multiplyMillions x =
+        let thousands = x % 1000000
+        x + (1000000 * thousands) - thousands
     let rec conv acc xs =        
         match xs with
         | []                                         -> acc
@@ -43,7 +46,9 @@ let ofEnglish x =
             conv (if acc = 0 then 100 else multiplyHundreds acc) t
         | 'T'::'H'::'O'::'U'::'S'::'A'::'N'::'D'::t  ->
             conv (if acc = 0 then 1000 else multiplyThousands acc) t
-        | 'M'::'I'::'L'::'L'::'I'::'O'::'N'::t       -> conv (1000000 * acc) t
+        | 'M'::'I'::'L'::'L'::'I'::'O'::'N'::t       ->
+            conv (multiplyMillions acc) t
+        | 'B'::'I'::'L'::'L'::'I'::'O'::'N'::t       -> conv (1000000000 * acc) t
         | _ -> -1
 
     match System.Int32.TryParse x with
