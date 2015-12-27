@@ -3,6 +3,10 @@
 let toEnglish x = string x
 
 let ofEnglish x = 
+    // Multiply the 'ty's
+    let multys x =
+        let ones = x % 10
+        x + (10 * ones) - ones
     let rec conv acc xs =        
         match xs with
         | []                                         -> acc
@@ -28,7 +32,9 @@ let ofEnglish x =
         | 'F'::'O'::'R'::'T'::'Y'::t                 -> conv (40 + acc) t
         | 'F'::'I'::'F'::'T'::'Y'::t                 -> conv (50 + acc) t
         | 'Y'::t // matches 'y' in 'eighty'
-        | 'T'::'Y'::t                                -> conv (10 * acc) t
+        | 'T'::'Y'::t                                -> conv (multys acc) t
+        | 'H'::'U'::'N'::'D'::'R'::'E'::'D'::t       ->
+            conv (if acc = 0 then 100 else 100 * acc) t
         | _ -> -1
 
     match System.Int32.TryParse x with
