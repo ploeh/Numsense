@@ -39,6 +39,8 @@ open Swensen.Unquote
 [<InlineData("seventeen", 17)>]
 [<InlineData( "eighteen", 18)>]
 [<InlineData( "nineteen", 19)>]
+[<InlineData(   "twenty", 20)>]
+[<InlineData("twentyone", 21)>]
 let ``ofEnglish returns correct result`` (english : string, expected : int) =
     let actual = Numeral.ofEnglish english
     expected =! actual
