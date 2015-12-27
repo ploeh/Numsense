@@ -26,6 +26,7 @@ let ofEnglish x =
         | 'T'::'W'::'E'::'N'::'T'::'Y'::t            -> conv (20 + acc) t
         | 'T'::'H'::'I'::'R'::'T'::'Y'::t            -> conv (30 + acc) t
         | 'F'::'O'::'R'::'T'::'Y'::t                 -> conv (40 + acc) t
+        | 'F'::'I'::'F'::'T'::'Y'::t                 -> conv (50 + acc) t
         | _ -> -1
 
     match System.Int32.TryParse x with
