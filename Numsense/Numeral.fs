@@ -42,6 +42,10 @@ let rec toEnglish x =
         sprintf "%s-hundred" (toEnglish (x' / 100))
     | x' when 99 < x' && x' < 1000 ->
         sprintf "%s-hundred-%s" (toEnglish (x' / 100)) (toEnglish (x' % 100))
+    | x' when 999 < x' && x' < 1000000 && x' % 1000 = 0 ->
+        sprintf "%s-thousand" (toEnglish (x' / 1000))
+    | x' when 999 < x' && x' < 1000000 ->
+        sprintf "%s-thousand-%s" (toEnglish (x' / 1000)) (toEnglish (x' % 1000))
     | _ -> string x
 
 let tryOfEnglish x =
