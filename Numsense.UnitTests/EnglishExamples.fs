@@ -102,6 +102,6 @@ open Swensen.Unquote
 [<InlineData(
     "twobilliononehundredfortysevenmillionfourhundredeightythreethousandsixhundredfortyseven",
     System.Int32.MaxValue)>]
-let ``ofEnglish returns correct result`` (english : string, expected : int) =
-    let actual = Numeral.ofEnglish english
-    expected =! actual
+let ``tryOfEnglish returns correct result`` (english : string, expected : int) =
+    let actual = Numeral.tryOfEnglish english
+    Some expected =! actual

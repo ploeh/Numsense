@@ -2,7 +2,7 @@
 
 let toEnglish x = string x
 
-let ofEnglish x =
+let tryOfEnglish x =
     let (%*) factor x =
         let multiplicand = x % factor
         x + (factor * multiplicand) - multiplicand
@@ -14,7 +14,7 @@ let ofEnglish x =
 
     let rec conv acc xs =        
         match xs with
-        | ""                      -> acc
+        | ""                      -> Some acc
         | StartsWith "ZERO"     t -> conv          (0  + acc) t
         | StartsWith "ONE"      t -> conv          (1  + acc) t
         | StartsWith "TWO"      t -> conv          (2  + acc) t
@@ -44,8 +44,8 @@ let ofEnglish x =
             conv (if acc = 0 then 1000 else      1000 %* acc) t
         | StartsWith "MILLION"  t -> conv    (1000000 %* acc) t
         | StartsWith "BILLION"  t -> conv (1000000000  * acc) t
-        | _ -> -1
+        | _ -> None
 
     match System.Int32.TryParse x with
-    | true, i -> i
+    | true, i -> Some i
     | _ -> conv 0 (x.Trim().ToUpper(System.Globalization.CultureInfo "en"))
