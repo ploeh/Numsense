@@ -15,6 +15,7 @@ let tryOfEnglish x =
     let rec conv acc xs =        
         match xs with
         | ""                      -> Some acc
+        | StartsWith "-"        t -> conv                acc  t
         | StartsWith "ZERO"     t -> conv          (0  + acc) t
         | StartsWith "ONE"      t -> conv          (1  + acc) t
         | StartsWith "TWO"      t -> conv          (2  + acc) t
