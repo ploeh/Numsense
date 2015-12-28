@@ -15,6 +15,7 @@ let tryOfDanish x =
     let rec conv acc xs =
         match xs with
         | ""                        -> Some acc
+        | StartsWith " "          t
         | StartsWith "-"          t
         | StartsWith "OG"         t -> conv                acc  t
         | StartsWith "NUL"        t -> conv          (0  + acc) t
@@ -48,6 +49,8 @@ let tryOfDanish x =
             conv (if acc = 0 then  100 else         100 %* acc) t
         | StartsWith "TUSIND"     t ->
             conv (if acc = 0 then 1000 else        1000 %* acc) t
+        | StartsWith "MILLIONER"  t
+        | StartsWith "MILLION"    t -> conv    (1000000 %* acc) t
         | _ -> None
 
     match System.Int32.TryParse x with
