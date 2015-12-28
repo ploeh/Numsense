@@ -2,6 +2,7 @@
 
 let rec toEnglish x =
     match x with
+    | x' when x' < 0 -> sprintf "minus %s" (toEnglish -x)
     |  0 -> "zero"
     |  1 -> "one"
     |  2 -> "two"
@@ -54,9 +55,13 @@ let rec toEnglish x =
         sprintf "%s-billion" (toEnglish (x' / 1000000000))
     | x' when 999999999 < x' ->
         sprintf "%s-billion-%s" (toEnglish (x' / 1000000000)) (toEnglish (x' % 1000000000))
-    | _ -> string x
+    | _ ->
+        // This case shouldn't be reached, but due to the the use of 'when'
+        // clauses in the above pattern match, the compiler can't verify that
+        // all cases are covered.
+        failwith (sprintf "Unhandled number: %i" x)
 
-let tryOfEnglish x =
+let tryOfEnglish (x : string) =
     let (%*) factor x =
         let multiplicand = x % factor
         x + (factor * multiplicand) - multiplicand
@@ -102,6 +107,7 @@ let tryOfEnglish x =
         | StartsWith "BILLION"  t -> conv (1000000000  * acc) t
         | _ -> None
 
-    match System.Int32.TryParse x with
-    | true, i -> Some i
-    | _ -> conv 0 (x.Trim().ToUpper(System.Globalization.CultureInfo "en"))
+    let canonicalized = x.Trim().ToUpper(System.Globalization.CultureInfo "en")
+    match canonicalized with
+    | StartsWith "MINUS" t -> conv 0 (t.Trim ()) |> Option.map ((*)-1)
+    | _ -> conv 0 canonicalized
