@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="NumeralProperties.fs" />
+    <Compile Include="DanishExamples.fs" />
     <Compile Include="EnglishExamples.fs" />
     <Content Include="packages.config" />
     <Content Include="App.config" />

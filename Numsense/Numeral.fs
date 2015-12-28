@@ -1,8 +1,39 @@
 ﻿module Ploeh.Numsense.Numeral
 
+let private (|StartsWith|_|) prefix (candidate : string) =
+    if candidate.StartsWith prefix
+    then Some (candidate.Substring prefix.Length)
+    else None
+
 let toDanish x = string x
 
-let tryOfDanish x = Some (System.Int32.Parse x)
+let tryOfDanish x =
+    let rec conv acc xs =
+        match xs with
+        | ""                      -> Some acc
+        | StartsWith "NUL"      t -> conv          (0  + acc) t
+        | StartsWith "ET"       t -> conv          (1  + acc) t
+        | StartsWith "TO"       t -> conv          (2  + acc) t
+        | StartsWith "TRE"      t -> conv          (3  + acc) t
+        | StartsWith "FIRE"     t -> conv          (4  + acc) t
+        | StartsWith "FEM"      t -> conv          (5  + acc) t
+        | StartsWith "SEKS"     t -> conv          (6  + acc) t
+        | StartsWith "SYV"      t -> conv          (7  + acc) t
+        | StartsWith "OTTE"     t -> conv          (8  + acc) t
+        | StartsWith "NI"       t -> conv          (9  + acc) t
+        | StartsWith "TI"       t -> conv         (10  + acc) t
+        | StartsWith "ELLEVE"   t -> conv         (11  + acc) t
+        | StartsWith "FJORTEN"  t -> conv         (14  + acc) t
+        | StartsWith "SYTTEN"   t -> conv         (17  + acc) t
+        | StartsWith "ATTEN"    t -> conv         (18  + acc) t
+        | StartsWith "LV"       t // Matches 'lv' in 'tolv'
+        | StartsWith "TTEN"     t // Matches 'tten' in 'tretten' and 'nitten'
+        | StartsWith "TEN"      t -> conv         (10  + acc) t
+        | _ -> None
+
+    match System.Int32.TryParse x with
+    | true, i -> Some i
+    | _ -> conv 0 (x.Trim().ToUpper(System.Globalization.CultureInfo "da-DK"))
 
 let rec toEnglish x =
     let (|Between|_|) lower upper candidate =
@@ -59,11 +90,6 @@ let tryOfEnglish (x : string) =
     let (%*) factor x =
         let multiplicand = x % factor
         x + (factor * multiplicand) - multiplicand
-
-    let (|StartsWith|_|) prefix (candidate : string) =
-        if candidate.StartsWith prefix
-        then Some (candidate.Substring prefix.Length)
-        else None
 
     let rec conv acc xs =        
         match xs with
