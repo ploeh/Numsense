@@ -14,15 +14,9 @@ let rec toEnglish x =
         then prefix
         else sprintf "%s-%s" prefix (toEnglish (remainder))
 
-    // Appends a suffix. Let's make a word out of 'to suffix': 'suffice'
-    // Yes: that word already exists.
-    // No: it doesn't actually mean that
-    // It's a pun, which I think is okay since it's a locally scoped function.
-    let suffice suffix factor x =
-        sprintf "%s%s" (toEnglish (x / factor)) suffix
-
     let format suffix factor x =
-        simplify (suffice suffix factor x) factor x
+        let prefix = sprintf "%s%s" (toEnglish (x / factor)) suffix
+        simplify prefix factor x
 
     match x with
     |  x when x < 0 -> sprintf "minus %s" (toEnglish -x)
