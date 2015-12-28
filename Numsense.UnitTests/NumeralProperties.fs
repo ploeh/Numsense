@@ -18,3 +18,7 @@ let ``negative English is the inverse of positive English`` (x : int) =
 
     sprintf "minus %s" (Numeral.toEnglish x) =! actualEnglish
     Some -x =! actualInteger
+
+[<Property(QuietOnSuccess = true)>]
+let ``tryOfDanish is the inverse of toDanish`` (x : int) =
+    test <@ Some x = (x |> Numeral.toDanish |> Numeral.tryOfDanish) @>

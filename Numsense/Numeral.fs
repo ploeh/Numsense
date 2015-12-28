@@ -1,5 +1,9 @@
 ﻿module Ploeh.Numsense.Numeral
 
+let toDanish x = string x
+
+let tryOfDanish x = Some (System.Int32.Parse x)
+
 let rec toEnglish x =
     let (|Between|_|) lower upper candidate =
         if lower <= candidate && candidate < upper
