@@ -106,6 +106,12 @@ open Swensen.Unquote
 [<InlineData(                           "tohundredefemmillioner",  205000000)>]
 [<InlineData(                    "tre-hundrede-og-syv-millioner",  307000000)>]
 [<InlineData("firehundredeenogtresmillionertrestusindtohundrede",  461060200)>]
+[<InlineData(                                       "enmilliard", 1000000000)>]
+[<InlineData(                                    "to milliarder", 2000000000)>]
+[<InlineData("tomilliarderniogtyvemillionertohundredetrestusind", 2029260000)>]
+[<InlineData(
+    "tomilliarderethundredesyvogfyrremillionerfirehundredetreogfirstusindsekshundredesyvogfyrre",
+    System.Int32.MaxValue)>]
 let ``tryOfDanish returns correct result`` (danish : string, expected : int) =
     let actual = Numeral.tryOfDanish danish
     Some expected =! actual

@@ -51,6 +51,8 @@ let tryOfDanish x =
             conv (if acc = 0 then 1000 else        1000 %* acc) t
         | StartsWith "MILLIONER"  t
         | StartsWith "MILLION"    t -> conv    (1000000 %* acc) t
+        | StartsWith "MILLIARDER" t
+        | StartsWith "MILLIARD"   t -> conv (1000000000  * acc) t
         | _ -> None
 
     match System.Int32.TryParse x with
