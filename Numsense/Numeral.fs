@@ -5,12 +5,17 @@ let private (|StartsWith|_|) prefix (candidate : string) =
     then Some (candidate.Substring prefix.Length)
     else None
 
+let private (%*) factor x =
+    let multiplicand = x % factor
+    x + (factor * multiplicand) - multiplicand
+
 let toDanish x = string x
 
 let tryOfDanish x =
     let rec conv acc xs =
         match xs with
         | ""                        -> Some acc
+        | StartsWith "-"          t
         | StartsWith "OG"         t -> conv                acc  t
         | StartsWith "NUL"        t -> conv          (0  + acc) t
         | StartsWith "ET"         t
@@ -39,6 +44,8 @@ let tryOfDanish x =
         | StartsWith "HALVFJERDS" t -> conv         (70  + acc) t
         | StartsWith "FIRS"       t -> conv         (80  + acc) t
         | StartsWith "HALVFEMS"   t -> conv         (90  + acc) t
+        | StartsWith "HUNDREDE"   t ->
+            conv (if acc = 0 then  100 else         100 %* acc) t
         | _ -> None
 
     match System.Int32.TryParse x with
@@ -97,10 +104,6 @@ let rec toEnglish x =
     | _ -> format "-billion" 1000000000 x
 
 let tryOfEnglish (x : string) =
-    let (%*) factor x =
-        let multiplicand = x % factor
-        x + (factor * multiplicand) - multiplicand
-
     let rec conv acc xs =        
         match xs with
         | ""                      -> Some acc
