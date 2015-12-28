@@ -6,6 +6,14 @@ let rec toEnglish x =
         then Some candidate
         else None
 
+    // Esentially simplifies expressions like 'twenty-zero' to 'twenty',
+    // 'one-milion-zero' to 'one-million', and so on.
+    let simplify prefix f factor x =
+        let remainder = x % factor
+        if remainder = 0
+        then prefix
+        else sprintf "%s-%s" prefix (f (remainder))
+
     match x with
     | x' when x' < 0 -> sprintf "minus %s" (toEnglish -x)
     |  0 -> "zero"
@@ -28,43 +36,25 @@ let rec toEnglish x =
     | 17 -> "seventeen"
     | 18 -> "eighteen"
     | 19 -> "nineteen"
-    | 20 -> "twenty"
-    | Between 20 30 x' -> sprintf "twenty-%s" (toEnglish (x' % 10))
-    | 30 -> "thirty"
-    | Between 30 40 x' -> sprintf "thirty-%s" (toEnglish (x' % 10))
-    | 40 -> "forty"
-    | Between 40 50 x' -> sprintf "forty-%s" (toEnglish (x' % 10))
-    | 50 -> "fifty"
-    | Between 50 60 x' -> sprintf "fifty-%s" (toEnglish (x' % 10))
-    | 60 -> "sixty"
-    | Between 60 70 x' -> sprintf "sixty-%s" (toEnglish (x' % 10))
-    | 70 -> "seventy"
-    | Between 70 80 x' -> sprintf "seventy-%s" (toEnglish (x' % 10))
-    | 80 -> "eighty"
-    | Between 80 90 x' -> sprintf "eighty-%s" (toEnglish (x' % 10))
-    | 90 -> "ninety"
-    | Between 90 100 x' -> sprintf "ninety-%s" (toEnglish (x' % 10))
-    | x' when 99 < x' && x' < 1000 && x' % 100 = 0 ->
-        sprintf "%s-hundred" (toEnglish (x' / 100))
+    | Between 19 30 x' -> simplify "twenty" toEnglish 10 x'
+    | Between 29 40 x' -> simplify "thirty" toEnglish 10 x'
+    | Between 39 50 x' -> simplify "forty" toEnglish 10 x'
+    | Between 49 60 x' -> simplify "fifty" toEnglish 10 x'
+    | Between 59 70 x' -> simplify "sixty" toEnglish 10 x'
+    | Between 69 80 x' -> simplify "seventy" toEnglish 10 x'
+    | Between 79 90 x' -> simplify "eighty" toEnglish 10 x'
+    | Between 89 100 x' -> simplify "ninety" toEnglish 10 x'
     | Between 99 1000 x' ->
-        sprintf "%s-hundred-%s" (toEnglish (x' / 100)) (toEnglish (x' % 100))
-    | x' when 999 < x' && x' < 1000000 && x' % 1000 = 0 ->
-        sprintf "%s-thousand" (toEnglish (x' / 1000))
+        simplify (sprintf "%s-hundred" (toEnglish (x' / 100))) toEnglish 100 x'
     | Between 999 1000000 x' ->
-        sprintf "%s-thousand-%s" (toEnglish (x' / 1000)) (toEnglish (x' % 1000))
-    | x' when 999999 < x' && x' < 1000000000 && x' % 1000000 = 0 ->
-        sprintf "%s-million" (toEnglish (x' / 1000000))
+        let prefix = sprintf "%s-thousand" (toEnglish (x' / 1000))
+        simplify prefix toEnglish 1000 x'
     | Between 999999 1000000000 x' ->
-        sprintf "%s-million-%s" (toEnglish (x' / 1000000)) (toEnglish (x' % 1000000))
-    | x' when 999999999 < x' && x' % 1000000000 = 0 ->
-        sprintf "%s-billion" (toEnglish (x' / 1000000000))
-    | x' when 999999999 < x' ->
-        sprintf "%s-billion-%s" (toEnglish (x' / 1000000000)) (toEnglish (x' % 1000000000))
+        let prefix = sprintf "%s-million" (toEnglish (x' / 1000000))
+        simplify prefix toEnglish 1000000 x'
     | _ ->
-        // This case shouldn't be reached, but due to the the use of 'when'
-        // clauses in the above pattern match, the compiler can't verify that
-        // all cases are covered.
-        failwith (sprintf "Unhandled number: %i" x)
+        let prefix = sprintf "%s-billion" (toEnglish (x / 1000000000))
+        simplify prefix toEnglish 1000000000 x
 
 let tryOfEnglish (x : string) =
     let (%*) factor x =
