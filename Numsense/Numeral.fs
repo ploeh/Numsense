@@ -14,6 +14,12 @@ let rec toEnglish x =
         then prefix
         else sprintf "%s-%s" prefix (f (remainder))
 
+    // Appends a suffix. Let's make a word out of 'to suffix': 'suffice'
+    // Yes: that word already exists.
+    // No: it doesn't actually mean that
+    // It's a pun, which I think is okay since it's a locally scoped function.
+    let suffice suffix f factor x = sprintf "%s%s" (f (x / factor)) suffix
+
     match x with
     | x' when x' < 0 -> sprintf "minus %s" (toEnglish -x)
     |  0 -> "zero"
@@ -40,20 +46,19 @@ let rec toEnglish x =
     | Between 30 40 x' -> simplify "thirty" toEnglish 10 x'
     | Between 40 50 x' -> simplify "forty" toEnglish 10 x'
     | Between 50 60 x' -> simplify "fifty" toEnglish 10 x'
-    | Between 60 70 x' -> simplify "sixty" toEnglish 10 x'
-    | Between 70 80 x' -> simplify "seventy" toEnglish 10 x'
     | Between 80 90 x' -> simplify "eighty" toEnglish 10 x'
-    | Between 90 100 x' -> simplify "ninety" toEnglish 10 x'
+    | Between 60 100 x' ->
+        simplify (suffice "ty" toEnglish 10 x') toEnglish 10 x'
     | Between 100 1000 x' ->
-        simplify (sprintf "%s-hundred" (toEnglish (x' / 100))) toEnglish 100 x'
+        simplify (suffice "-hundred" toEnglish 100 x') toEnglish 100 x'
     | Between 1000 1000000 x' ->
-        let prefix = sprintf "%s-thousand" (toEnglish (x' / 1000))
+        let prefix = suffice "-thousand" toEnglish 1000 x'
         simplify prefix toEnglish 1000 x'
     | Between 1000000 1000000000 x' ->
-        let prefix = sprintf "%s-million" (toEnglish (x' / 1000000))
+        let prefix = suffice "-million" toEnglish 1000000 x'
         simplify prefix toEnglish 1000000 x'
     | _ ->
-        let prefix = sprintf "%s-billion" (toEnglish (x / 1000000000))
+        let prefix = suffice "-billion" toEnglish 1000000000 x
         simplify prefix toEnglish 1000000000 x
 
 let tryOfEnglish (x : string) =
