@@ -8,17 +8,18 @@ let rec toEnglish x =
 
     // Esentially simplifies expressions like 'twenty-zero' to 'twenty',
     // 'one-milion-zero' to 'one-million', and so on.
-    let simplify prefix f factor x =
+    let simplify prefix factor x =
         let remainder = x % factor
         if remainder = 0
         then prefix
-        else sprintf "%s-%s" prefix (f (remainder))
+        else sprintf "%s-%s" prefix (toEnglish (remainder))
 
     // Appends a suffix. Let's make a word out of 'to suffix': 'suffice'
     // Yes: that word already exists.
     // No: it doesn't actually mean that
     // It's a pun, which I think is okay since it's a locally scoped function.
-    let suffice suffix f factor x = sprintf "%s%s" (f (x / factor)) suffix
+    let suffice suffix factor x =
+        sprintf "%s%s" (toEnglish (x / factor)) suffix
 
     match x with
     |  x when x < 0 -> sprintf "minus %s" (toEnglish -x)
@@ -42,24 +43,24 @@ let rec toEnglish x =
     | 17 -> "seventeen"
     | 18 -> "eighteen"
     | 19 -> "nineteen"
-    | Between 20 30 x -> simplify "twenty" toEnglish 10 x
-    | Between 30 40 x -> simplify "thirty" toEnglish 10 x
-    | Between 40 50 x -> simplify "forty" toEnglish 10 x
-    | Between 50 60 x -> simplify "fifty" toEnglish 10 x
-    | Between 80 90 x -> simplify "eighty" toEnglish 10 x
+    | Between 20 30 x -> simplify "twenty" 10 x
+    | Between 30 40 x -> simplify "thirty" 10 x
+    | Between 40 50 x -> simplify "forty" 10 x
+    | Between 50 60 x -> simplify "fifty" 10 x
+    | Between 80 90 x -> simplify "eighty" 10 x
     | Between 60 100 x ->
-        simplify (suffice "ty" toEnglish 10 x) toEnglish 10 x
+        simplify (suffice "ty" 10 x) 10 x
     | Between 100 1000 x ->
-        simplify (suffice "-hundred" toEnglish 100 x) toEnglish 100 x
+        simplify (suffice "-hundred" 100 x) 100 x
     | Between 1000 1000000 x ->
-        let prefix = suffice "-thousand" toEnglish 1000 x
-        simplify prefix toEnglish 1000 x
+        let prefix = suffice "-thousand" 1000 x
+        simplify prefix 1000 x
     | Between 1000000 1000000000 x ->
-        let prefix = suffice "-million" toEnglish 1000000 x
-        simplify prefix toEnglish 1000000 x
+        let prefix = suffice "-million" 1000000 x
+        simplify prefix 1000000 x
     | _ ->
-        let prefix = suffice "-billion" toEnglish 1000000000 x
-        simplify prefix toEnglish 1000000000 x
+        let prefix = suffice "-billion" 1000000000 x
+        simplify prefix 1000000000 x
 
 let tryOfEnglish (x : string) =
     let (%*) factor x =
