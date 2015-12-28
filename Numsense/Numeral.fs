@@ -1,6 +1,11 @@
 ﻿module Ploeh.Numsense.Numeral
 
 let rec toEnglish x =
+    let (|Between|_|) lower upper candidate =
+        if lower < candidate && candidate < upper
+        then Some candidate
+        else None
+
     match x with
     | x' when x' < 0 -> sprintf "minus %s" (toEnglish -x)
     |  0 -> "zero"
@@ -24,32 +29,32 @@ let rec toEnglish x =
     | 18 -> "eighteen"
     | 19 -> "nineteen"
     | 20 -> "twenty"
-    | x' when 20 < x' && x' < 30 -> sprintf "twenty-%s" (toEnglish (x' % 10))
+    | Between 20 30 x' -> sprintf "twenty-%s" (toEnglish (x' % 10))
     | 30 -> "thirty"
-    | x' when 30 < x' && x' < 40 -> sprintf "thirty-%s" (toEnglish (x' % 10))
+    | Between 30 40 x' -> sprintf "thirty-%s" (toEnglish (x' % 10))
     | 40 -> "forty"
-    | x' when 40 < x' && x' < 50 -> sprintf "forty-%s" (toEnglish (x' % 10))
+    | Between 40 50 x' -> sprintf "forty-%s" (toEnglish (x' % 10))
     | 50 -> "fifty"
-    | x' when 50 < x' && x' < 60 -> sprintf "fifty-%s" (toEnglish (x' % 10))
+    | Between 50 60 x' -> sprintf "fifty-%s" (toEnglish (x' % 10))
     | 60 -> "sixty"
-    | x' when 60 < x' && x' < 70 -> sprintf "sixty-%s" (toEnglish (x' % 10))
+    | Between 60 70 x' -> sprintf "sixty-%s" (toEnglish (x' % 10))
     | 70 -> "seventy"
-    | x' when 70 < x' && x' < 80 -> sprintf "seventy-%s" (toEnglish (x' % 10))
+    | Between 70 80 x' -> sprintf "seventy-%s" (toEnglish (x' % 10))
     | 80 -> "eighty"
-    | x' when 80 < x' && x' < 90 -> sprintf "eighty-%s" (toEnglish (x' % 10))
+    | Between 80 90 x' -> sprintf "eighty-%s" (toEnglish (x' % 10))
     | 90 -> "ninety"
-    | x' when 90 < x' && x' < 100 -> sprintf "ninety-%s" (toEnglish (x' % 10))
+    | Between 90 100 x' -> sprintf "ninety-%s" (toEnglish (x' % 10))
     | x' when 99 < x' && x' < 1000 && x' % 100 = 0 ->
         sprintf "%s-hundred" (toEnglish (x' / 100))
-    | x' when 99 < x' && x' < 1000 ->
+    | Between 99 1000 x' ->
         sprintf "%s-hundred-%s" (toEnglish (x' / 100)) (toEnglish (x' % 100))
     | x' when 999 < x' && x' < 1000000 && x' % 1000 = 0 ->
         sprintf "%s-thousand" (toEnglish (x' / 1000))
-    | x' when 999 < x' && x' < 1000000 ->
+    | Between 999 1000000 x' ->
         sprintf "%s-thousand-%s" (toEnglish (x' / 1000)) (toEnglish (x' % 1000))
     | x' when 999999 < x' && x' < 1000000000 && x' % 1000000 = 0 ->
         sprintf "%s-million" (toEnglish (x' / 1000000))
-    | x' when 999999 < x' && x' < 1000000000 ->
+    | Between 999999 1000000000 x' ->
         sprintf "%s-million-%s" (toEnglish (x' / 1000000)) (toEnglish (x' % 1000000))
     | x' when 999999999 < x' && x' % 1000000000 = 0 ->
         sprintf "%s-billion" (toEnglish (x' / 1000000000))
