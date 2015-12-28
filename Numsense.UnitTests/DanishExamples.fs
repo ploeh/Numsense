@@ -75,6 +75,23 @@ open Swensen.Unquote
 [<InlineData(                               "ottehundredeogseks",        806)>]
 [<InlineData(                             "otte-hundrede-og-syv",        807)>]
 [<InlineData(                          "nihundredenioghalvtreds",        959)>]
+[<InlineData(                                           "tusind",       1000)>]
+[<InlineData(                                         "ettusind",       1000)>]
+[<InlineData(                                       "tusindogen",       1001)>]
+[<InlineData(                                     "ettusindogto",       1002)>]
+[<InlineData(                             "ettusindogfireogtres",       1064)>]
+[<InlineData(                                         "totusind",       2000)>]
+[<InlineData(                  "ottetusindsyvhundredeogenogtyve",       8721)>]
+[<InlineData(                "ni-tusind-et-hundrede-tre-og-tyve",       9123)>]
+[<InlineData(                                         "titusind",      10000)>]
+[<InlineData(                             "titusindethundredeet",      10101)>]
+[<InlineData(                      "ti-tusind-et-hundrede-og-to",      10102)>]
+[<InlineData(             "treogtyvetusindfemhundredefireogtres",      23564)>]
+[<InlineData(                                   "firstusindogti",      80010)>]
+[<InlineData(                                   "hundredetusind",     100000)>]
+[<InlineData(                                 "ethundredetusind",     100000)>]
+[<InlineData(                             "ethundredetusindoget",     100001)>]
+[<InlineData(      "trehundredenittentusindtrehundredeniogfyrre",     319349)>]
 let ``tryOfDanish returns correct result`` (danish : string, expected : int) =
     let actual = Numeral.tryOfDanish danish
     Some expected =! actual

@@ -46,6 +46,8 @@ let tryOfDanish x =
         | StartsWith "HALVFEMS"   t -> conv         (90  + acc) t
         | StartsWith "HUNDREDE"   t ->
             conv (if acc = 0 then  100 else         100 %* acc) t
+        | StartsWith "TUSIND"     t ->
+            conv (if acc = 0 then 1000 else        1000 %* acc) t
         | _ -> None
 
     match System.Int32.TryParse x with
