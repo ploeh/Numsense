@@ -21,6 +21,9 @@ let rec toEnglish x =
     let suffice suffix factor x =
         sprintf "%s%s" (toEnglish (x / factor)) suffix
 
+    let format suffix factor x =
+        simplify (suffice suffix factor x) factor x
+
     match x with
     |  x when x < 0 -> sprintf "minus %s" (toEnglish -x)
     |  0 -> "zero"
@@ -48,19 +51,11 @@ let rec toEnglish x =
     | Between 40 50 x -> simplify "forty" 10 x
     | Between 50 60 x -> simplify "fifty" 10 x
     | Between 80 90 x -> simplify "eighty" 10 x
-    | Between 60 100 x ->
-        simplify (suffice "ty" 10 x) 10 x
-    | Between 100 1000 x ->
-        simplify (suffice "-hundred" 100 x) 100 x
-    | Between 1000 1000000 x ->
-        let prefix = suffice "-thousand" 1000 x
-        simplify prefix 1000 x
-    | Between 1000000 1000000000 x ->
-        let prefix = suffice "-million" 1000000 x
-        simplify prefix 1000000 x
-    | _ ->
-        let prefix = suffice "-billion" 1000000000 x
-        simplify prefix 1000000000 x
+    | Between 60 100 x -> format "ty" 10 x
+    | Between 100 1000 x -> format "-hundred" 100 x
+    | Between 1000 1000000 x -> format "-thousand" 1000 x
+    | Between 1000000 1000000000 x -> format "-million" 1000000 x
+    | _ -> format "-billion" 1000000000 x
 
 let tryOfEnglish (x : string) =
     let (%*) factor x =
