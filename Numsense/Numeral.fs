@@ -21,7 +21,7 @@ let rec toEnglish x =
     let suffice suffix f factor x = sprintf "%s%s" (f (x / factor)) suffix
 
     match x with
-    | x' when x' < 0 -> sprintf "minus %s" (toEnglish -x)
+    |  x when x < 0 -> sprintf "minus %s" (toEnglish -x)
     |  0 -> "zero"
     |  1 -> "one"
     |  2 -> "two"
@@ -42,21 +42,21 @@ let rec toEnglish x =
     | 17 -> "seventeen"
     | 18 -> "eighteen"
     | 19 -> "nineteen"
-    | Between 20 30 x' -> simplify "twenty" toEnglish 10 x'
-    | Between 30 40 x' -> simplify "thirty" toEnglish 10 x'
-    | Between 40 50 x' -> simplify "forty" toEnglish 10 x'
-    | Between 50 60 x' -> simplify "fifty" toEnglish 10 x'
-    | Between 80 90 x' -> simplify "eighty" toEnglish 10 x'
-    | Between 60 100 x' ->
-        simplify (suffice "ty" toEnglish 10 x') toEnglish 10 x'
-    | Between 100 1000 x' ->
-        simplify (suffice "-hundred" toEnglish 100 x') toEnglish 100 x'
-    | Between 1000 1000000 x' ->
-        let prefix = suffice "-thousand" toEnglish 1000 x'
-        simplify prefix toEnglish 1000 x'
-    | Between 1000000 1000000000 x' ->
-        let prefix = suffice "-million" toEnglish 1000000 x'
-        simplify prefix toEnglish 1000000 x'
+    | Between 20 30 x -> simplify "twenty" toEnglish 10 x
+    | Between 30 40 x -> simplify "thirty" toEnglish 10 x
+    | Between 40 50 x -> simplify "forty" toEnglish 10 x
+    | Between 50 60 x -> simplify "fifty" toEnglish 10 x
+    | Between 80 90 x -> simplify "eighty" toEnglish 10 x
+    | Between 60 100 x ->
+        simplify (suffice "ty" toEnglish 10 x) toEnglish 10 x
+    | Between 100 1000 x ->
+        simplify (suffice "-hundred" toEnglish 100 x) toEnglish 100 x
+    | Between 1000 1000000 x ->
+        let prefix = suffice "-thousand" toEnglish 1000 x
+        simplify prefix toEnglish 1000 x
+    | Between 1000000 1000000000 x ->
+        let prefix = suffice "-million" toEnglish 1000000 x
+        simplify prefix toEnglish 1000000 x
     | _ ->
         let prefix = suffice "-billion" toEnglish 1000000000 x
         simplify prefix toEnglish 1000000000 x
