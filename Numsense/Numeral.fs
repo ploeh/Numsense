@@ -2,7 +2,7 @@
 
 let rec toEnglish x =
     let (|Between|_|) lower upper candidate =
-        if lower < candidate && candidate < upper
+        if lower <= candidate && candidate < upper
         then Some candidate
         else None
 
@@ -36,20 +36,20 @@ let rec toEnglish x =
     | 17 -> "seventeen"
     | 18 -> "eighteen"
     | 19 -> "nineteen"
-    | Between 19 30 x' -> simplify "twenty" toEnglish 10 x'
-    | Between 29 40 x' -> simplify "thirty" toEnglish 10 x'
-    | Between 39 50 x' -> simplify "forty" toEnglish 10 x'
-    | Between 49 60 x' -> simplify "fifty" toEnglish 10 x'
-    | Between 59 70 x' -> simplify "sixty" toEnglish 10 x'
-    | Between 69 80 x' -> simplify "seventy" toEnglish 10 x'
-    | Between 79 90 x' -> simplify "eighty" toEnglish 10 x'
-    | Between 89 100 x' -> simplify "ninety" toEnglish 10 x'
-    | Between 99 1000 x' ->
+    | Between 20 30 x' -> simplify "twenty" toEnglish 10 x'
+    | Between 30 40 x' -> simplify "thirty" toEnglish 10 x'
+    | Between 40 50 x' -> simplify "forty" toEnglish 10 x'
+    | Between 50 60 x' -> simplify "fifty" toEnglish 10 x'
+    | Between 60 70 x' -> simplify "sixty" toEnglish 10 x'
+    | Between 70 80 x' -> simplify "seventy" toEnglish 10 x'
+    | Between 80 90 x' -> simplify "eighty" toEnglish 10 x'
+    | Between 90 100 x' -> simplify "ninety" toEnglish 10 x'
+    | Between 100 1000 x' ->
         simplify (sprintf "%s-hundred" (toEnglish (x' / 100))) toEnglish 100 x'
-    | Between 999 1000000 x' ->
+    | Between 1000 1000000 x' ->
         let prefix = sprintf "%s-thousand" (toEnglish (x' / 1000))
         simplify prefix toEnglish 1000 x'
-    | Between 999999 1000000000 x' ->
+    | Between 1000000 1000000000 x' ->
         let prefix = sprintf "%s-million" (toEnglish (x' / 1000000))
         simplify prefix toEnglish 1000000 x'
     | _ ->
