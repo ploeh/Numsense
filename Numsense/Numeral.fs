@@ -10,25 +10,35 @@ let toDanish x = string x
 let tryOfDanish x =
     let rec conv acc xs =
         match xs with
-        | ""                      -> Some acc
-        | StartsWith "NUL"      t -> conv          (0  + acc) t
-        | StartsWith "ET"       t -> conv          (1  + acc) t
-        | StartsWith "TO"       t -> conv          (2  + acc) t
-        | StartsWith "TRE"      t -> conv          (3  + acc) t
-        | StartsWith "FIRE"     t -> conv          (4  + acc) t
-        | StartsWith "FEM"      t -> conv          (5  + acc) t
-        | StartsWith "SEKS"     t -> conv          (6  + acc) t
-        | StartsWith "SYV"      t -> conv          (7  + acc) t
-        | StartsWith "OTTE"     t -> conv          (8  + acc) t
-        | StartsWith "NI"       t -> conv          (9  + acc) t
-        | StartsWith "TI"       t -> conv         (10  + acc) t
-        | StartsWith "ELLEVE"   t -> conv         (11  + acc) t
-        | StartsWith "FJORTEN"  t -> conv         (14  + acc) t
-        | StartsWith "SYTTEN"   t -> conv         (17  + acc) t
-        | StartsWith "ATTEN"    t -> conv         (18  + acc) t
-        | StartsWith "LV"       t // Matches 'lv' in 'tolv'
-        | StartsWith "TTEN"     t // Matches 'tten' in 'tretten' and 'nitten'
-        | StartsWith "TEN"      t -> conv         (10  + acc) t
+        | ""                        -> Some acc
+        | StartsWith "OG"         t -> conv                acc  t
+        | StartsWith "NUL"        t -> conv          (0  + acc) t
+        | StartsWith "ET"         t
+        | StartsWith "EN"         t -> conv          (1  + acc) t
+        | StartsWith "TO"         t -> conv          (2  + acc) t
+        | StartsWith "TREDIVE"    t -> conv         (30  + acc) t
+        | StartsWith "TRES"       t -> conv         (60  + acc) t
+        | StartsWith "TRE"        t -> conv          (3  + acc) t
+        | StartsWith "FIRE"       t -> conv          (4  + acc) t
+        | StartsWith "FEM"        t -> conv          (5  + acc) t
+        | StartsWith "SEKS"       t -> conv          (6  + acc) t
+        | StartsWith "SYV"        t -> conv          (7  + acc) t
+        | StartsWith "OTTE"       t -> conv          (8  + acc) t
+        | StartsWith "NI"         t -> conv          (9  + acc) t
+        | StartsWith "TI"         t -> conv         (10  + acc) t
+        | StartsWith "ELLEVE"     t -> conv         (11  + acc) t
+        | StartsWith "FJORTEN"    t -> conv         (14  + acc) t
+        | StartsWith "SYTTEN"     t -> conv         (17  + acc) t
+        | StartsWith "ATTEN"      t -> conv         (18  + acc) t
+        | StartsWith "LV"         t // Matches 'lv' in 'tolv'
+        | StartsWith "TTEN"       t // Matches 'tten' in 'tretten' and 'nitten'
+        | StartsWith "TEN"        t -> conv         (10  + acc) t
+        | StartsWith "TYVE"       t -> conv         (20  + acc) t        
+        | StartsWith "FYRRE"      t -> conv         (40  + acc) t
+        | StartsWith "HALVTREDS"  t -> conv         (50  + acc) t
+        | StartsWith "HALVFJERDS" t -> conv         (70  + acc) t
+        | StartsWith "FIRS"       t -> conv         (80  + acc) t
+        | StartsWith "HALVFEMS"   t -> conv         (90  + acc) t
         | _ -> None
 
     match System.Int32.TryParse x with
