@@ -133,8 +133,8 @@ let toDanish x =
     imp 1 x
 
 let tryOfDanish (x : string) =
-    let rec conv acc xs =
-        match xs with
+    let rec conv acc candidate =
+        match candidate with
         | ""                        -> Some acc
         | StartsWith " "          t
         | StartsWith "-"          t
@@ -230,8 +230,8 @@ let rec toEnglish x =
     | _ -> format "-billion" 1000000000 x
 
 let tryOfEnglish (x : string) =
-    let rec conv acc xs =        
-        match xs with
+    let rec conv acc candidate =        
+        match candidate with
         | ""                      -> Some acc
         | StartsWith "-"        t
         | StartsWith "AND"      t -> conv                acc  t
