@@ -96,6 +96,7 @@ let toDanish x =
             | _ -> sprintf "%s-%s" billionsText (imp 1000000 remainder)
 
         match x with
+        |  x when x < 0 -> sprintf "minus %s" (imp 1 -x)
         |  0 -> "nul"
         |  1 -> "et"
         |  2 -> "to"
@@ -127,12 +128,11 @@ let toDanish x =
         | Between     100       1000 x -> formatHundreds x
         | Between    1000    1000000 x -> formatThousands x
         | Between 1000000 1000000000 x -> formatMillions x
-        | x when 1000000000 <= x       -> formatBillions x
-        | _ -> string x
+        | _                            -> formatBillions x
 
     imp 1 x
 
-let tryOfDanish x =
+let tryOfDanish (x : string) =
     let rec conv acc xs =
         match xs with
         | ""                        -> Some acc
@@ -176,9 +176,11 @@ let tryOfDanish x =
         | StartsWith "MILLIARD"   t -> conv (1000000000  * acc) t
         | _ -> None
 
-    match System.Int32.TryParse x with
-    | true, i -> Some i
-    | _ -> conv 0 (x.Trim().ToUpper(System.Globalization.CultureInfo "da-DK"))
+    let canonicalized =
+        x.Trim().ToUpper(System.Globalization.CultureInfo "da-DK")
+    match canonicalized with
+    | StartsWith "MINUS" t -> conv 0 (t.Trim ()) |> Option.map ((*)-1)
+    | _ -> conv 0 canonicalized
 
 let rec toEnglish x =
 
