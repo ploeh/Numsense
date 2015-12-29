@@ -1,18 +1,6 @@
 ﻿module Ploeh.Numsense.Numeral
 
-let private (|StartsWith|_|) prefix (candidate : string) =
-    if candidate.StartsWith prefix
-    then Some (candidate.Substring prefix.Length)
-    else None
-
-let private (|Between|_|) lower upper candidate =
-    if lower <= candidate && candidate < upper
-    then Some candidate
-    else None
-
-let private (%*) factor x =
-    let multiplicand = x % factor
-    x + (factor * multiplicand) - multiplicand
+open Ploeh.Numsense.InternalDsl
 
 let toDanish x =
 

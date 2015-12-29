@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="InternalDsl.fs" />
     <Compile Include="Numeral.fs" />
   </ItemGroup>
   <PropertyGroup>
