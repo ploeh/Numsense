@@ -5,11 +5,24 @@ let private (|StartsWith|_|) prefix (candidate : string) =
     then Some (candidate.Substring prefix.Length)
     else None
 
+let private (|Between|_|) lower upper candidate =
+    if lower <= candidate && candidate < upper
+    then Some candidate
+    else None
+
 let private (%*) factor x =
     let multiplicand = x % factor
     x + (factor * multiplicand) - multiplicand
 
-let toDanish x =
+let rec toDanish x =
+
+    let formatTens suffix factor x =
+        let remainder = x % factor
+        match remainder with
+        | 0 -> suffix // 'tyve' instead of 'nul-og-tyve', and so on.
+        | 1 -> sprintf "en-og-%s" suffix // 'en' instead of 'et'.
+        | _ -> sprintf "%s-og-%s" (toDanish (remainder)) suffix
+
     match x with
     |  0 -> "nul"
     |  1 -> "et"
@@ -30,7 +43,15 @@ let toDanish x =
     | 16 -> "seksten"
     | 17 -> "sytten"
     | 18 -> "atten"
-    | 19 -> "nitten"
+    | 19 -> "nitten"    
+    | Between 20  30 x -> formatTens "tyve" 10 x
+    | Between 30  40 x -> formatTens "tredive" 10 x
+    | Between 40  50 x -> formatTens "fyrre" 10 x
+    | Between 50  60 x -> formatTens "halvtreds" 10 x
+    | Between 60  70 x -> formatTens "tres" 10 x
+    | Between 70  80 x -> formatTens "halvfjerds" 10 x
+    | Between 80  90 x -> formatTens "firs" 10 x
+    | Between 90 100 x -> formatTens "halvfems" 10 x
     |  _ -> string x
 
 let tryOfDanish x =
@@ -82,10 +103,6 @@ let tryOfDanish x =
     | _ -> conv 0 (x.Trim().ToUpper(System.Globalization.CultureInfo "da-DK"))
 
 let rec toEnglish x =
-    let (|Between|_|) lower upper candidate =
-        if lower <= candidate && candidate < upper
-        then Some candidate
-        else None
 
     // Esentially simplifies expressions like 'twenty-zero' to 'twenty',
     // 'one-milion-zero' to 'one-million', and so on.

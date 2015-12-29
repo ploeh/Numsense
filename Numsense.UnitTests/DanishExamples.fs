@@ -137,6 +137,22 @@ let ``tryOfDanish returns correct result`` (danish : string, expected : int) =
 [<InlineData(        17, "sytten")>]
 [<InlineData(        18, "atten")>]
 [<InlineData(        19, "nitten")>]
+[<InlineData(        20, "tyve")>]
+[<InlineData(        21, "en-og-tyve")>]
+[<InlineData(        30, "tredive")>]
+[<InlineData(        34, "fire-og-tredive")>]
+[<InlineData(        40, "fyrre")>]
+[<InlineData(        42, "to-og-fyrre")>]
+[<InlineData(        50, "halvtreds")>]
+[<InlineData(        58, "otte-og-halvtreds")>]
+[<InlineData(        60, "tres")>]
+[<InlineData(        65, "fem-og-tres")>]
+[<InlineData(        70, "halvfjerds")>]
+[<InlineData(        79, "ni-og-halvfjerds")>]
+[<InlineData(        80, "firs")>]
+[<InlineData(        86, "seks-og-firs")>]
+[<InlineData(        90, "halvfems")>]
+[<InlineData(        93, "tre-og-halvfems")>]
 let ``toDanish returns correct result`` (i : int, expected : string) =
     let actual = Numeral.toDanish i
     expected =! actual
