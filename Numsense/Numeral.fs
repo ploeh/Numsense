@@ -2,10 +2,10 @@
 
 open Ploeh.Numsense.InternalDsl
 
-let toDanish x = Danish.toDanishImp 1 x
+let toDanish = Danish.toDanishImp 1
 
-let tryParseDanish x = Danish.tryParseDanishImp x
+let tryParseDanish = Danish.tryParseDanishImp
 
-let toEnglish x = English.toEnglishImp x
+let toEnglish = English.toEnglishImp
 
-let tryParseEnglish x = English.tryParseEnglishImp x
+let tryParseEnglish = English.tryParseEnglishImp
