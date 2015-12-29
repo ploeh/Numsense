@@ -9,7 +9,29 @@ let private (%*) factor x =
     let multiplicand = x % factor
     x + (factor * multiplicand) - multiplicand
 
-let toDanish x = string x
+let toDanish x =
+    match x with
+    |  0 -> "nul"
+    |  1 -> "et"
+    |  2 -> "to"
+    |  3 -> "tre"
+    |  4 -> "fire"
+    |  5 -> "fem"
+    |  6 -> "seks"
+    |  7 -> "syv"
+    |  8 -> "otte"
+    |  9 -> "ni"
+    | 10 -> "ti"
+    | 11 -> "elleve"
+    | 12 -> "tolv"
+    | 13 -> "tretten"
+    | 14 -> "fjorten"
+    | 15 -> "femten"
+    | 16 -> "seksten"
+    | 17 -> "sytten"
+    | 18 -> "atten"
+    | 19 -> "nitten"
+    |  _ -> string x
 
 let tryOfDanish x =
     let rec conv acc xs =
