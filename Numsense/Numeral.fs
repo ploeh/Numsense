@@ -21,7 +21,14 @@ let rec toDanish x =
         match remainder with
         | 0 -> suffix // 'tyve' instead of 'nul-og-tyve', and so on.
         | 1 -> sprintf "en-og-%s" suffix // 'en' instead of 'et'.
-        | _ -> sprintf "%s-og-%s" (toDanish (remainder)) suffix
+        | _ -> sprintf "%s-og-%s" (toDanish remainder) suffix
+
+    let formatHundreds x =
+        let remainder = x % 100
+        let hundreds = toDanish (x / 100)
+        if remainder = 0
+        then sprintf "%s-hundrede" hundreds
+        else sprintf "%s-hundrede-og-%s" hundreds (toDanish remainder)
 
     match x with
     |  0 -> "nul"
@@ -44,14 +51,15 @@ let rec toDanish x =
     | 17 -> "sytten"
     | 18 -> "atten"
     | 19 -> "nitten"    
-    | Between 20  30 x -> formatTens "tyve" 10 x
-    | Between 30  40 x -> formatTens "tredive" 10 x
-    | Between 40  50 x -> formatTens "fyrre" 10 x
-    | Between 50  60 x -> formatTens "halvtreds" 10 x
-    | Between 60  70 x -> formatTens "tres" 10 x
-    | Between 70  80 x -> formatTens "halvfjerds" 10 x
-    | Between 80  90 x -> formatTens "firs" 10 x
-    | Between 90 100 x -> formatTens "halvfems" 10 x
+    | Between  20   30 x -> formatTens "tyve" 10 x
+    | Between  30   40 x -> formatTens "tredive" 10 x
+    | Between  40   50 x -> formatTens "fyrre" 10 x
+    | Between  50   60 x -> formatTens "halvtreds" 10 x
+    | Between  60   70 x -> formatTens "tres" 10 x
+    | Between  70   80 x -> formatTens "halvfjerds" 10 x
+    | Between  80   90 x -> formatTens "firs" 10 x
+    | Between  90  100 x -> formatTens "halvfems" 10 x
+    | Between 100 1000 x -> formatHundreds x
     |  _ -> string x
 
 let tryOfDanish x =
