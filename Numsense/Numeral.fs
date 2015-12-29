@@ -47,7 +47,7 @@ let toDanish x =
 
         // When formatting the thousands, this function interleaves an 'og'
         // ('and') as a binding word when the remainder is small. As an
-        // example, ti creates 'to-tusind-og-halvtreds', but
+        // example, it creates 'to-tusind-og-halvtreds', but
         // 'to-tusind-tre-hundrede-tres'. To my native Danish ears, this sounds
         // natural, but is arbitrary and subjective; it isn't based on any
         // grammatical rule I know of.
@@ -58,6 +58,24 @@ let toDanish x =
             | 0 -> sprintf "%s-tusind" thousands
             | x when x < 100 -> sprintf "%s-tusind-og-%s" thousands (imp 100 x)
             | _ -> sprintf "%s-tusind-%s" thousands (imp 100 remainder)
+
+        // When formatting the millions, this function interleaves an 'og'
+        // ('and') as a binding word when the remainder is small. As an
+        // example, it creates 'to-millioner-og-seksten', but
+        // 'to-millioner-tre-hundrede-firs'. To my native Danish ears, this
+        // sounds natural, but is arbitrary and subjective; it isn't based on
+        // any grammatical rule I know of.
+        let formatMillions x =
+            let remainder = x % 1000000
+            let millions = x / 1000000
+            let millionsText =
+                if millions = 1
+                then "en-million" // Not 'et-million', as imp would give.
+                else sprintf "%s-millioner" (imp 1000000 millions)
+            match remainder with
+            | 0 -> millionsText
+            | x when x < 100 -> sprintf "%s-og-%s" millionsText (imp 1000 x)
+            | _ -> sprintf "%s-%s" millionsText (imp 1000 remainder)
 
         match x with
         |  0 -> "nul"
@@ -80,16 +98,17 @@ let toDanish x =
         | 17 -> "sytten"
         | 18 -> "atten"
         | 19 -> "nitten"    
-        | Between   20      30 x -> formatTens "tyve" 10 x
-        | Between   30      40 x -> formatTens "tredive" 10 x
-        | Between   40      50 x -> formatTens "fyrre" 10 x
-        | Between   50      60 x -> formatTens "halvtreds" 10 x
-        | Between   60      70 x -> formatTens "tres" 10 x
-        | Between   70      80 x -> formatTens "halvfjerds" 10 x
-        | Between   80      90 x -> formatTens "firs" 10 x
-        | Between   90     100 x -> formatTens "halvfems" 10 x
-        | Between  100    1000 x -> formatHundreds x
-        | Between 1000 1000000 x -> formatThousands x
+        | Between      20         30 x -> formatTens "tyve" 10 x
+        | Between      30         40 x -> formatTens "tredive" 10 x
+        | Between      40         50 x -> formatTens "fyrre" 10 x
+        | Between      50         60 x -> formatTens "halvtreds" 10 x
+        | Between      60         70 x -> formatTens "tres" 10 x
+        | Between      70         80 x -> formatTens "halvfjerds" 10 x
+        | Between      80         90 x -> formatTens "firs" 10 x
+        | Between      90        100 x -> formatTens "halvfems" 10 x
+        | Between     100       1000 x -> formatHundreds x
+        | Between    1000    1000000 x -> formatThousands x
+        | Between 1000000 1000000000 x -> formatMillions x
         |  _ -> string x
 
     imp 1 x
