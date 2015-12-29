@@ -231,6 +231,14 @@ let ``tryOfDanish returns correct result`` (danish : string, expected : int) =
 [<InlineData( 600010900, "seks-hundrede-millioner-ti-tusind-ni-hundrede")>]
 [<InlineData( 700000000, "syv-hundrede-millioner")>]
 [<InlineData( 800115000, "otte-hundrede-millioner-et-hundrede-femten-tusind")>]
+[<InlineData( 900800007, "ni-hundrede-millioner-otte-hundrede-tusind-og-syv")>]
+[<InlineData(1000000000, "en-milliard")>]
+[<InlineData(1000000080, "en-milliard-og-firs")>]
+[<InlineData(1000000120, "en-milliard-et-hundrede-tyve")>]
+[<InlineData(2121000000, "to-milliarder-et-hundrede-en-og-tyve-millioner")>]
+[<InlineData(
+    System.Int32.MaxValue,
+    "to-milliarder-et-hundrede-syv-og-fyrre-millioner-fire-hundrede-tre-og-firs-tusind-seks-hundrede-syv-og-fyrre")>]
 let ``toDanish returns correct result`` (i : int, expected : string) =
     let actual = Numeral.toDanish i
     expected =! actual

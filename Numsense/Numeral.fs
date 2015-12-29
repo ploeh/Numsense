@@ -77,6 +77,24 @@ let toDanish x =
             | x when x < 100 -> sprintf "%s-og-%s" millionsText (imp 1000 x)
             | _ -> sprintf "%s-%s" millionsText (imp 1000 remainder)
 
+        // When formatting the billions, this function interleaves an 'og'
+        // ('and') as a binding word when the remainder is small. As an
+        // example, it creates 'to-milliarder-og-seksten', but
+        // 'to-milliarder-tre-hundrede-firs'. To my native Danish ears, this
+        // sounds natural, but is arbitrary and subjective; it isn't based on
+        // any grammatical rule I know of.
+        let formatBillions x =
+            let remainder = x % 1000000000
+            let billions = x / 1000000000
+            let billionsText =
+                if billions = 1
+                then "en-milliard" // Not 'et-milliard', as imp would give.
+                else sprintf "%s-milliarder" (imp 1000000000 billions)
+            match remainder with
+            | 0 -> billionsText
+            | x when x < 100 -> sprintf "%s-og-%s" billionsText (imp 1000000 x)
+            | _ -> sprintf "%s-%s" billionsText (imp 1000000 remainder)
+
         match x with
         |  0 -> "nul"
         |  1 -> "et"
@@ -109,7 +127,8 @@ let toDanish x =
         | Between     100       1000 x -> formatHundreds x
         | Between    1000    1000000 x -> formatThousands x
         | Between 1000000 1000000000 x -> formatMillions x
-        |  _ -> string x
+        | x when 1000000000 <= x       -> formatBillions x
+        | _ -> string x
 
     imp 1 x
 
