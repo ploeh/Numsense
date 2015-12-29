@@ -116,7 +116,7 @@ open Swensen.Unquote
     "twobilliononehundredfortysevenmillionfourhundredeightythreethousandsixhundredfortyseven",
     System.Int32.MaxValue)>]
 let ``tryOfEnglish returns correct result`` (english : string, expected : int) =
-    let actual = Numeral.tryOfEnglish english
+    let actual = Numeral.tryParseEnglish english
     Some expected =! actual
 
 [<Theory>]

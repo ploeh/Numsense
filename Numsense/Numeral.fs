@@ -132,7 +132,7 @@ let toDanish x =
 
     imp 1 x
 
-let tryOfDanish (x : string) =
+let tryParseDanish (x : string) =
     let rec conv acc candidate =
         match candidate with
         | ""                        -> Some acc
@@ -229,7 +229,7 @@ let rec toEnglish x =
     | Between 1000000 1000000000 x -> format "-million" 1000000 x
     | _ -> format "-billion" 1000000000 x
 
-let tryOfEnglish (x : string) =
+let tryParseEnglish (x : string) =
     let rec conv acc candidate =        
         match candidate with
         | ""                      -> Some acc
