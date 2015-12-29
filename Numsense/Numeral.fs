@@ -14,53 +14,85 @@ let private (%*) factor x =
     let multiplicand = x % factor
     x + (factor * multiplicand) - multiplicand
 
-let rec toDanish x =
+let toDanish x =
 
-    let formatTens suffix factor x =
-        let remainder = x % factor
-        match remainder with
-        | 0 -> suffix // 'tyve' instead of 'nul-og-tyve', and so on.
-        | 1 -> sprintf "en-og-%s" suffix // 'en' instead of 'et'.
-        | _ -> sprintf "%s-og-%s" (toDanish remainder) suffix
+    let rec imp magnitude x =
+        let formatTens suffix factor x =
+            let remainder = x % factor
+            match remainder with
+            | 0 -> suffix // 'tyve' instead of 'nul-og-tyve', and so on.
+            | 1 -> sprintf "en-og-%s" suffix // 'en' instead of 'et'.
+            | _ -> sprintf "%s-og-%s" (imp 1 remainder) suffix
 
-    let formatHundreds x =
-        let remainder = x % 100
-        let hundreds = toDanish (x / 100)
-        if remainder = 0
-        then sprintf "%s-hundrede" hundreds
-        else sprintf "%s-hundrede-og-%s" hundreds (toDanish remainder)
+        // When formatting the hundreds, this function interleaves an 'og'
+        // ('and') as a binding word when the remainder is small. As an
+        // example, it creates 'to-hundrede-og-elleve', but
+        // 'tre-hundrede-halvtreds'. To my native Danish ears, this sounds
+        // natural, but is arbitrary and subjective; it isn't based on any
+        // grammatical rule I know of.
+        //
+        // Correspondingly, when formatting the hundreds from a larger
+        // magnitude (to quantify thousands or millions), it never feels right
+        // to include the binding 'og'; as an example,
+        // 'to-hundrede-og-to-tusind-og-to' doesn't sound as correct as
+        // 'to-hundrede-to-tusind-og-to'.
+        let formatHundreds x =
+            let remainder = x % 100
+            let hundreds = imp 100 (x / 100)
+            match remainder with
+            | 0 -> sprintf "%s-hundrede" hundreds
+            | x when x < 20 && magnitude <= 100 ->
+                sprintf "%s-hundrede-og-%s" hundreds (imp 10 x)
+            | _ -> sprintf "%s-hundrede-%s" hundreds (imp 10 remainder)
 
-    match x with
-    |  0 -> "nul"
-    |  1 -> "et"
-    |  2 -> "to"
-    |  3 -> "tre"
-    |  4 -> "fire"
-    |  5 -> "fem"
-    |  6 -> "seks"
-    |  7 -> "syv"
-    |  8 -> "otte"
-    |  9 -> "ni"
-    | 10 -> "ti"
-    | 11 -> "elleve"
-    | 12 -> "tolv"
-    | 13 -> "tretten"
-    | 14 -> "fjorten"
-    | 15 -> "femten"
-    | 16 -> "seksten"
-    | 17 -> "sytten"
-    | 18 -> "atten"
-    | 19 -> "nitten"    
-    | Between  20   30 x -> formatTens "tyve" 10 x
-    | Between  30   40 x -> formatTens "tredive" 10 x
-    | Between  40   50 x -> formatTens "fyrre" 10 x
-    | Between  50   60 x -> formatTens "halvtreds" 10 x
-    | Between  60   70 x -> formatTens "tres" 10 x
-    | Between  70   80 x -> formatTens "halvfjerds" 10 x
-    | Between  80   90 x -> formatTens "firs" 10 x
-    | Between  90  100 x -> formatTens "halvfems" 10 x
-    | Between 100 1000 x -> formatHundreds x
-    |  _ -> string x
+        // When formatting the thousands, this function interleaves an 'og'
+        // ('and') as a binding word when the remainder is small. As an
+        // example, ti creates 'to-tusind-og-halvtreds', but
+        // 'to-tusind-tre-hundrede-tres'. To my native Danish ears, this sounds
+        // natural, but is arbitrary and subjective; it isn't based on any
+        // grammatical rule I know of.
+        let formatThousands x =
+            let remainder = x % 1000
+            let thousands = imp 1000 (x / 1000)
+            match remainder with
+            | 0 -> sprintf "%s-tusind" thousands
+            | x when x < 100 -> sprintf "%s-tusind-og-%s" thousands (imp 100 x)
+            | _ -> sprintf "%s-tusind-%s" thousands (imp 100 remainder)
+
+        match x with
+        |  0 -> "nul"
+        |  1 -> "et"
+        |  2 -> "to"
+        |  3 -> "tre"
+        |  4 -> "fire"
+        |  5 -> "fem"
+        |  6 -> "seks"
+        |  7 -> "syv"
+        |  8 -> "otte"
+        |  9 -> "ni"
+        | 10 -> "ti"
+        | 11 -> "elleve"
+        | 12 -> "tolv"
+        | 13 -> "tretten"
+        | 14 -> "fjorten"
+        | 15 -> "femten"
+        | 16 -> "seksten"
+        | 17 -> "sytten"
+        | 18 -> "atten"
+        | 19 -> "nitten"    
+        | Between   20      30 x -> formatTens "tyve" 10 x
+        | Between   30      40 x -> formatTens "tredive" 10 x
+        | Between   40      50 x -> formatTens "fyrre" 10 x
+        | Between   50      60 x -> formatTens "halvtreds" 10 x
+        | Between   60      70 x -> formatTens "tres" 10 x
+        | Between   70      80 x -> formatTens "halvfjerds" 10 x
+        | Between   80      90 x -> formatTens "firs" 10 x
+        | Between   90     100 x -> formatTens "halvfems" 10 x
+        | Between  100    1000 x -> formatHundreds x
+        | Between 1000 1000000 x -> formatThousands x
+        |  _ -> string x
+
+    imp 1 x
 
 let tryOfDanish x =
     let rec conv acc xs =
