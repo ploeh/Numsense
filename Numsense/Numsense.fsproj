@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="InternalDsl.fs" />
+    <Compile Include="Danish.fs" />
     <Compile Include="Numeral.fs" />
   </ItemGroup>
   <PropertyGroup>
