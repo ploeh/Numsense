@@ -15,3 +15,12 @@ type EnglishNumeralConverter () =
             | true, _
             | false, Lazy None -> false
             | false, Lazy (Some i) -> result <- i; true
+
+type DanishNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toDanish number
+        member this.TryParse (s, result) =
+            match s = null, lazy (Numeral.tryParseDanish s) with
+            | true, _
+            | false, Lazy None -> false
+            | false, Lazy (Some i) -> result <- i; true
