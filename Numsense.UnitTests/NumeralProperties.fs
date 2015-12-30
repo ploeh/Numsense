@@ -5,11 +5,11 @@ open FsCheck.Xunit
 open Swensen.Unquote
 
 [<Property(QuietOnSuccess = true)>]
-let ``tryOfEnglish is the inverse of toEnglish`` (x : int) =
+let ``tryOfEnglish is the inverse of toEnglish`` x =
     test <@ Some x = (x |> Numeral.toEnglish |> Numeral.tryParseEnglish) @>
 
 [<Property(QuietOnSuccess = true)>]
-let ``negative English is the inverse of positive English`` (x : int) =
+let ``negative English is the inverse of positive English`` x =
     x <> 0 ==> lazy
     let x = abs x
 
@@ -20,11 +20,11 @@ let ``negative English is the inverse of positive English`` (x : int) =
     Some -x =! actualInteger
 
 [<Property(QuietOnSuccess = true)>]
-let ``tryOfDanish is the inverse of toDanish`` (x : int) =
+let ``tryOfDanish is the inverse of toDanish`` x =
     test <@ Some x = (x |> Numeral.toDanish |> Numeral.tryParseDanish) @>
 
 [<Property(QuietOnSuccess = true)>]
-let ``negative Danish is the inverse of positive Danish`` (x : int) =
+let ``negative Danish is the inverse of positive Danish`` x =
     x <> 0 ==> lazy
     let x = abs x
 
