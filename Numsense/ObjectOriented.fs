@@ -26,5 +26,5 @@ type DanishNumeralConverter () =
             | false, Lazy (Some i) -> result <- i; true
 
 type Numeral private () =
-    static member val English = EnglishNumeralConverter ()
-    static member val Danish  =  DanishNumeralConverter ()
+    static member val English = EnglishNumeralConverter () :> INumeralConverter
+    static member val Danish  =  DanishNumeralConverter () :> INumeralConverter

@@ -68,6 +68,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Demo.cs" />
     <Compile Include="NumeralConverterProperties.cs" />
     <Compile Include="NumeralTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
