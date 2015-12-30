@@ -1,4 +1,5 @@
-﻿module Ploeh.Numsense.Numeral
+﻿[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+module Ploeh.Numsense.Numeral
 
 open Ploeh.Numsense.InternalDsl
 

@@ -24,3 +24,7 @@ type DanishNumeralConverter () =
             | true, _
             | false, Lazy None -> false
             | false, Lazy (Some i) -> result <- i; true
+
+type Numeral private () =
+    static member val English = EnglishNumeralConverter ()
+    static member val Danish  =  DanishNumeralConverter ()

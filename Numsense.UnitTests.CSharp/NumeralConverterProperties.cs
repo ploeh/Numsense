@@ -73,12 +73,12 @@ namespace Ploeh.Numsense.UnitTests
                     .Elements(
                     new ConverterPropertyGroup(
                         new EnglishNumeralConverter(),
-                        Ploeh.Numsense.Numeral.toEnglish,
-                        Ploeh.Numsense.Numeral.tryParseEnglish),
+                        Ploeh.Numsense.NumeralModule.toEnglish,
+                        Ploeh.Numsense.NumeralModule.tryParseEnglish),
                     new ConverterPropertyGroup(
                         new DanishNumeralConverter(),
-                        Ploeh.Numsense.Numeral.toDanish,
-                        Ploeh.Numsense.Numeral.tryParseDanish)
+                        Ploeh.Numsense.NumeralModule.toDanish,
+                        Ploeh.Numsense.NumeralModule.tryParseDanish)
                     )
                     .ToArbitrary();
             }
