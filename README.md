@@ -25,6 +25,8 @@ var success = Numeral.English.TryParse(
 // success is true, and i is 1337
 ```
 
+## Languages
+
 Other languages than English are supported as well:
 
 ```F#
