@@ -11,11 +11,11 @@ Target "Clean" (fun _ ->
 
 Target "Build" (fun _ ->
     !! "Numsense.sln"
-    |> MSBuildDebug "" "Rebuild"
+    |> MSBuildRelease "" "Rebuild"
     |> ignore)
 
 Target "Test" (fun _ ->
-    !! "*/bin/Debug/*Ploeh.*.*Tests*.dll"
+    !! "*/bin/Release/*Ploeh.*.*Tests*.dll"
     |> xUnit2 (fun p -> { p with Parallel = ParallelMode.All }))
 
 "Clean"
