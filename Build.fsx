@@ -18,8 +18,20 @@ Target "Test" (fun _ ->
     !! "*/bin/Release/*Ploeh.*.*Tests*.dll"
     |> xUnit2 (fun p -> { p with Parallel = ParallelMode.All }))
 
+Target "PackageNuGet" (fun _ ->
+    let version = GetAssemblyVersion "Numsense/bin/Release/Ploeh.Numsense.dll"
+    let semVerString (v : System.Version) =
+        sprintf "%i.%i.%i" v.Major v.Minor v.Build
+
+    NuGet (fun p ->
+        { p with
+            Version = semVerString version
+            WorkingDir = "."
+            OutputPath = "."}) "Numsense.nuspec")
+
 "Clean"
 ==> "Build"
 ==> "Test"
+==> "PackageNuGet"
 
-RunTargetOrDefault "Test"
+RunTargetOrDefault "PackageNuGet"
