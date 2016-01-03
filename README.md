@@ -36,6 +36,10 @@ val danishNumeral : string = "ni"
 
 If you don't see your favourite language, please consider submitting a pull request.
 
+## NuGet
+
+Numsense is available via NuGet: [Numsense](https://www.nuget.org/packages/Numsense).
+
 ## Versioning
 
 Numsense follows [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
