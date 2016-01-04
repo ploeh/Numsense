@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ploeh.Numsense.ObjectOriented;
+﻿using Ploeh.Numsense.ObjectOriented;
 using Xunit;
 
 namespace Ploeh.Numsense.UnitTests

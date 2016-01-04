@@ -50,7 +50,7 @@ let rec internal toEnglishImp x =
     | _ -> format "-billion" 1000000000 x
 
 let internal tryParseEnglishImp (x : string) =
-    let rec conv acc candidate =        
+    let rec conv acc candidate =
         match candidate with
         | ""                      -> Some acc
         | StartsWith "-"        t
@@ -70,7 +70,7 @@ let internal tryParseEnglishImp (x : string) =
         | StartsWith "TWELVE"   t -> conv         (12  + acc) t
         | StartsWith "THIRTEEN" t -> conv         (13  + acc) t
         | StartsWith "FIFTEEN"  t -> conv         (15  + acc) t
-        | StartsWith "EEN"      t // matches 'een' in 'eighteen'         
+        | StartsWith "EEN"      t // matches 'een' in 'eighteen'
         | StartsWith "TEEN"     t -> conv         (10  + acc) t
         | StartsWith "TWENTY"   t -> conv         (20  + acc) t
         | StartsWith "THIRTY"   t -> conv         (30  + acc) t

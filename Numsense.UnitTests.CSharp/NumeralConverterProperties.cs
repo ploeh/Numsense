@@ -1,11 +1,6 @@
 ﻿using FsCheck;
 using FsCheck.Xunit;
 using Ploeh.Numsense.ObjectOriented;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using Microsoft.FSharp.Core;
 
@@ -73,12 +68,12 @@ namespace Ploeh.Numsense.UnitTests
                     .Elements(
                     new ConverterPropertyGroup(
                         new EnglishNumeralConverter(),
-                        Ploeh.Numsense.NumeralModule.toEnglish,
-                        Ploeh.Numsense.NumeralModule.tryParseEnglish),
+                        NumeralModule.toEnglish,
+                        NumeralModule.tryParseEnglish),
                     new ConverterPropertyGroup(
                         new DanishNumeralConverter(),
-                        Ploeh.Numsense.NumeralModule.toDanish,
-                        Ploeh.Numsense.NumeralModule.tryParseDanish)
+                        NumeralModule.toDanish,
+                        NumeralModule.tryParseDanish)
                     )
                     .ToArbitrary();
             }
