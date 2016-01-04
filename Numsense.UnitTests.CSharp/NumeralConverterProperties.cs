@@ -67,11 +67,11 @@ namespace Ploeh.Numsense.UnitTests
                 return Gen
                     .Elements(
                     new ConverterPropertyGroup(
-                        new EnglishNumeralConverter(),
+                        Numeral.English,
                         NumeralModule.toEnglish,
                         NumeralModule.tryParseEnglish),
                     new ConverterPropertyGroup(
-                        new DanishNumeralConverter(),
+                        Numeral.Danish,
                         NumeralModule.toDanish,
                         NumeralModule.tryParseDanish)
                     )

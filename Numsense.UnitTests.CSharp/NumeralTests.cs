@@ -9,7 +9,7 @@ namespace Ploeh.Numsense.UnitTests
         public void EnglishIsCorrect()
         {
             var actual = Numeral.English;
-            Assert.IsAssignableFrom<EnglishNumeralConverter>(actual);
+            Assert.IsAssignableFrom<INumeralConverter>(actual);
         }
 
         [Fact]
@@ -24,7 +24,7 @@ namespace Ploeh.Numsense.UnitTests
         public void DanishIsCorrect()
         {
             var actual = Numeral.Danish;
-            Assert.IsAssignableFrom<DanishNumeralConverter>(actual);
+            Assert.IsAssignableFrom<INumeralConverter>(actual);
         }
 
         [Fact]
