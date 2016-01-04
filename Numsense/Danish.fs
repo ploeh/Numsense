@@ -102,7 +102,7 @@ let rec internal toDanishImp magnitude x =
     | 16 -> "seksten"
     | 17 -> "sytten"
     | 18 -> "atten"
-    | 19 -> "nitten"    
+    | 19 -> "nitten"
     | Between      20         30 x -> formatTens "tyve" 10 x
     | Between      30         40 x -> formatTens "tredive" 10 x
     | Between      40         50 x -> formatTens "fyrre" 10 x
@@ -144,7 +144,7 @@ let internal tryParseDanishImp (x : string) =
         | StartsWith "LV"         t // Matches 'lv' in 'tolv'
         | StartsWith "TTEN"       t // Matches 'tten' in 'tretten' and 'nitten'
         | StartsWith "TEN"        t -> conv         (10  + acc) t
-        | StartsWith "TYVE"       t -> conv         (20  + acc) t        
+        | StartsWith "TYVE"       t -> conv         (20  + acc) t
         | StartsWith "FYRRE"      t -> conv         (40  + acc) t
         | StartsWith "HALVTREDS"  t -> conv         (50  + acc) t
         | StartsWith "HALVFJERDS" t -> conv         (70  + acc) t
