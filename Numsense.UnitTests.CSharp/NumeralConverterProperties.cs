@@ -85,6 +85,10 @@ namespace Ploeh.Numsense.UnitTests
                         NumeralModule.toPolish,
                         NumeralModule.tryParsePolish),
                     new ConverterPropertyGroup(
+                        new FrenchNumeralConverter(),
+                        NumeralModule.toFrench,
+                        NumeralModule.tryParseFrench),
+                    new ConverterPropertyGroup(
                         new DutchNumeralConverter(),
                         NumeralModule.toDutch,
                         NumeralModule.tryParseDutch),

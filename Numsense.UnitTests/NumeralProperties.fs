@@ -93,7 +93,23 @@ let ``negative Russian is the inverse of positive Russian`` x =
 
     sprintf "минус %s" (Numeral.toRussian x) =! actualRussian
     Some -x =! actualInteger
-    
+
+
+[<Property(QuietOnSuccess = true)>]
+let ``tryOfFrench is the inverse of toFrench`` x =
+    test <@ Some x = (x |> Numeral.toFrench |> Numeral.tryParseFrench) @>
+
+[<Property(QuietOnSuccess = true)>]
+let ``negative French is the inverse of positive French`` x =
+    x <> 0 ==> lazy
+    let x = abs x
+
+    let actualFrench = Numeral.toFrench -x
+    let actualInteger = Numeral.tryParseFrench actualFrench
+
+    sprintf "moins %s" (Numeral.toFrench x) =! actualFrench
+    Some -x =! actualInteger
+
 [<Property(QuietOnSuccess = true)>]
 let ``tryParseCatalan is the inverse of toCatalan`` x =
     test <@ Some x = (x |> Numeral.toCatalan |> Numeral.tryParseCatalan) @>
