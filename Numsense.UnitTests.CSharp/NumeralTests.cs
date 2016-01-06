@@ -39,5 +39,13 @@ namespace Ploeh.Numsense.UnitTests
             var actual = Numeral.Danish;
             Assert.Same(expected, actual);
         }
+
+        [Fact]
+        public void FarsiIsSingleton()
+        {
+            var expected = Numeral.Farsi;
+            var actual = Numeral.Farsi;
+            Assert.Same(expected, actual);
+        }
     }
 }

@@ -25,6 +25,16 @@ type DanishNumeralConverter () =
             | false, Lazy None -> false
             | false, Lazy (Some i) -> result <- i; true
 
+type FarsiNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toFarsi number
+        member this.TryParse (s, result) =
+            match s = null, lazy (Numeral.tryParseFarsi s) with
+            | true, _
+            | false, Lazy None -> false
+            | false, Lazy (Some i) -> result <- i; true
+         
 type Numeral private () =
     static member val English = EnglishNumeralConverter () :> INumeralConverter
-    static member val Danish  =  DanishNumeralConverter () :> INumeralConverter
+    static member val Danish  = DanishNumeralConverter () :> INumeralConverter
+    static member val Farsi   = FarsiNumeralConverter () :> INumeralConverter
