@@ -4,6 +4,10 @@ Numsense is written in F#, using simple concepts and elementary language constru
 
 Numsense is currently being developed in F# 4 on .NET 4.5, using Visual Studio 2015 with xUnit.net as the unit testing framework. So far, all development has been done with TDD, so there's a high degree of code coverage, and it would be preferable to keep it that way.
 
+## Contributor Licence Agreement
+
+If you want to contribute to Numsense, you must sign the Contributor Licence Agreement (CLA). GitHub will notify you when it's time to do that, but you can peruse [the text of the CLA](https://gist.github.com/ploeh/9fef4fe35e21a44684e5) in advance, if you'd like to.
+
 ## Features
 
 You can always find a list of desired features, defects to be corrected, and other work, in the GitHub projects [issue list](https://github.com/ploeh/Numsense/issues). Issues marked with [the jump-in tag](http://nikcodes.com/2013/05/10/new-contributor-jump-in) are deemed particularly friendly to newcomers. These are good candidates to attempt if you are just getting started with Numsense.
