@@ -36,6 +36,13 @@ namespace Ploeh.Numsense.UnitTests
         }
 
         [Fact]
+        public void FarsiIsCorrect()
+        {
+            var actual = Numeral.Farsi;
+            Assert.IsAssignableFrom<FarsiNumeralConverter>(actual);
+        }
+
+        [Fact]
         public void FarsiIsSingleton()
         {
             var expected = Numeral.Farsi;
