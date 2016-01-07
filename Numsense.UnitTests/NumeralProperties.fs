@@ -33,3 +33,18 @@ let ``negative Danish is the inverse of positive Danish`` x =
 
     sprintf "minus %s" (Numeral.toDanish x) =! actualDanish
     Some -x =! actualInteger
+
+[<Property(QuietOnSuccess = true)>]
+let ``tryOfFarsi is the inverse of toFarsi`` x =
+    test <@ Some x = (x |> Numeral.toFarsi |> Numeral.tryParseFarsi) @>
+
+[<Property(QuietOnSuccess = true)>]
+let ``negative Farsi is the inverse of positive Farsi`` x =
+    x <> 0 ==> lazy
+    let x = abs x
+
+    let actualFarsi = Numeral.toFarsi -x
+    let actualInteger = Numeral.tryParseFarsi actualFarsi
+
+    sprintf "منفی %s" (Numeral.toFarsi x) =! actualFarsi
+    Some -x =! actualInteger
