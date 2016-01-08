@@ -26,6 +26,13 @@ type DanishNumeralConverter () =
         member this.TryParse (s, result) =
             Helper.tryParse Numeral.tryParseDanish (s, &result)
 
+type PolishNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toPolish number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParsePolish (s, &result)
+
 type Numeral private () =
     static member val English = EnglishNumeralConverter () :> INumeralConverter
     static member val Danish  =  DanishNumeralConverter () :> INumeralConverter
+    static member val Polish  =  PolishNumeralConverter () :> INumeralConverter

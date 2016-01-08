@@ -56,6 +56,7 @@
     <Compile Include="InternalDsl.fs" />
     <Compile Include="Danish.fs" />
     <Compile Include="English.fs" />
+    <Compile Include="Polish.fs" />
     <Compile Include="Numeral.fs" />
     <Compile Include="ObjectOriented.fs" />
     <Content Include="packages.config" />
