@@ -16,7 +16,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="Numsense\bin\Release\Ploeh.Numsense.dll" target="lib\net45" />
-    <file src="Numsense\bin\Release\Ploeh.Numsense.XML" target="lib\net45" />
+    <file src="Numsense/bin/Release/Ploeh.Numsense.dll" target="lib\net45" />
+    <file src="Numsense/bin/Release/Ploeh.Numsense.XML" target="lib\net45" />
   </files>
 </package>
