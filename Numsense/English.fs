@@ -35,10 +35,8 @@ let english_integer (num:bigint) : string =
             let  s = hyphenated.[int x/100].Substring 1 + " hundred" 
             if not (num % 100I > 0I) then sprintf "%s%s" s thousand_up.[idx] else
             sprintf "%s and %s%s" s (toEnglish (num % 100I) 0) thousand_up.[idx]
-        | x ->  
-            match num % 1000I with
-            | x when x = 0I ->  toEnglish (num/1000I) (idx+1)
-            | current ->  sprintf "%s %s" (toEnglish (num/1000I) (idx+1)) (toEnglish current idx)
+        | x when (num % 1000I) = 0I -> toEnglish (num/1000I) (idx+1)
+        | _ -> sprintf "%s %s" (toEnglish (num/1000I) (idx+1)) (toEnglish (num % 1000I) idx)
     toEnglish num 0
 
 let rec internal toEnglishImp x =
