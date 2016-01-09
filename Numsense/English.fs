@@ -2,6 +2,45 @@
 
 open Ploeh.Numsense.InternalDsl
 
+let zero_to_19 = 
+    [|  "zero"     ;    "one"      ;    "two"      ; "three"   ;  "four"    ;  "five"       ; 
+        "six"      ;    "seven"    ;    "eight"    ; "nine"    ;  "ten"     ;  "eleven"     ;
+        "twelve"   ;    "thirteen" ;    "fourteen" ; "fifteen" ;  "sixteen" ;  "seventeen"  ;    
+        "eighteen" ;    "nineteen"                                                          |]
+    
+let hyphenated = 
+    [|  ""      ; "-one"   ; "-two"   ; "-three" ; "-four"  ; 
+        "-five" ; "-six"   ; "-seven" ; "-eight" ; "-nine"  |]
+
+let twenty_up = 
+    [|  ""      ; ""      ; "twenty"  ; "thirty" ; "forty"  ; 
+        "fifty" ; "sixty" ; "seventy" ; "eighty" ; "ninety" |] 
+    
+let thousand_up = 
+    [|  ""              ;   " thousand"        ;    " million"       ;  " billion"              ; 
+        " trillion"     ;   " quadrillion"     ;    " quintillion"   ;  " sextillion"           ;    
+        " septillion"   ;   " octillion"       ;    " nonillion"     ;  " decillion"            ; 
+        " undecillion"  ;   " duodecillion"    ;    " tredecillion"  ;  " quattuordecillion"    ;
+        " sexdecillion" ;   " septendecillion" ;    " octodecillion" ;  " novemdecillion"       ;  
+        " vigintillion"                                                                         |]
+
+
+let english_integer (num:bigint) : string =
+    let rec toEnglish num idx  = 
+        match num with
+        | x when x < 0I    -> sprintf "negative %s" (toEnglish -x 0)  
+        | x when x < 20I   -> sprintf "%s%s" zero_to_19.[int x] thousand_up.[idx]
+        | x when x < 100I  -> sprintf "%s%s%s" twenty_up.[int x/10] hyphenated.[int x % 10] thousand_up.[idx]  
+        | x when x < 1000I ->   
+            let  s = hyphenated.[int x/100].Substring 1 + " hundred" 
+            if not (num % 100I > 0I) then sprintf "%s%s" s thousand_up.[idx] else
+            sprintf "%s and %s%s" s (toEnglish (num % 100I) 0) thousand_up.[idx]
+        | x ->  
+            match num % 1000I with
+            | x when x = 0I ->  toEnglish (num/1000I) (idx+1)
+            | current ->  sprintf "%s %s" (toEnglish (num/1000I) (idx+1)) (toEnglish current idx)
+    toEnglish num 0
+
 let rec internal toEnglishImp x =
 
     // Esentially simplifies expressions like 'twenty-zero' to 'twenty',
