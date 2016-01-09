@@ -16,7 +16,7 @@ Target "Build" (fun _ ->
 
 Target "Test" (fun _ ->
     !! "*/bin/Release/*Ploeh.*.*Tests*.dll"
-    |> xUnit2 (fun p -> { p with Parallel = ParallelMode.All }))
+    |> xUnit2 (fun p -> { p with Parallel = ParallelMode.NoParallelization }))
 
 Target "PackageNuGet" (fun _ ->
     let version = GetAssemblyVersion "Numsense/bin/Release/Ploeh.Numsense.dll"

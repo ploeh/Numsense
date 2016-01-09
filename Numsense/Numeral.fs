@@ -6,3 +6,6 @@ let tryParseDanish =  Danish.tryParseDanishImp
 
 let toEnglish =       English.toEnglishImp
 let tryParseEnglish = English.tryParseEnglishImp
+
+let toGerman =       German.toGermanImp
+let tryParseGerman = German.tryParseGermanImp
