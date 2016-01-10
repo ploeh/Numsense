@@ -110,6 +110,6 @@ open Swensen.Unquote
 [<InlineData(
     "doismilcentoequarentaesetemilhõesquatrocentoseoitentaetrêsmilseiscentosequarentaesete",
     System.Int32.MaxValue)>]
-let ``tryOfPortuguese returns correct result`` (portuguese, expected) =
+let ``tryParsePortuguese returns correct result`` (portuguese, expected) =
     let actual = Numeral.tryParsePortuguese portuguese
     Some expected =! actual
