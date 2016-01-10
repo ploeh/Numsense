@@ -34,5 +34,20 @@ namespace Ploeh.Numsense.UnitTests
             var actual = Numeral.Danish;
             Assert.Same(expected, actual);
         }
+
+        [Fact]
+        public void PolishIsCorrect()
+        {
+            var actual = Numeral.Polish;
+            Assert.IsAssignableFrom<PolishNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void PolishIsSingleton()
+        {
+            var expected = Numeral.Polish;
+            var actual = Numeral.Polish;
+            Assert.Same(expected, actual);
+        }
     }
 }

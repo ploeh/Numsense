@@ -73,7 +73,11 @@ namespace Ploeh.Numsense.UnitTests
                     new ConverterPropertyGroup(
                         new DanishNumeralConverter(),
                         NumeralModule.toDanish,
-                        NumeralModule.tryParseDanish)
+                        NumeralModule.tryParseDanish),
+                    new ConverterPropertyGroup(
+                        new PolishNumeralConverter(),
+                        NumeralModule.toPolish,
+                        NumeralModule.tryParsePolish)
                     )
                     .ToArbitrary();
             }
