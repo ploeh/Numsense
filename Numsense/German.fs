@@ -2,24 +2,34 @@ module internal Ploeh.Numsense.German
 
 open Ploeh.Numsense.InternalDsl
 
-let rec internal toGermanImp x =
+let rec internal toGermanImp x  =
 
     // Esentially simplifies expressions like 'twenty-zero' to 'twenty',
     // 'one-milion-zero' to 'one-million', and so on.
+    let simplifyReverse prefix factor x =
+        let remainder = x % factor
+        match remainder = 0 with
+        | true ->
+            prefix
+        | false ->
+            sprintf "%s-und-%s" (toGermanImp (remainder)) prefix
+
     let simplify prefix factor x =
         let remainder = x % factor
-        if remainder = 0
-        then prefix
-        else sprintf "%s-%s" prefix (toGermanImp (remainder))
+        match remainder = 0 with
+        | true ->
+            prefix
+        | false ->
+            sprintf "%s-%s" prefix (toGermanImp (remainder))
 
     let format suffix factor x =
         let prefix = sprintf "%s%s" (toGermanImp (x / factor)) suffix
         simplify prefix factor x
 
     match x with
-    |  x when x < 0 -> sprintf "minus %s" (toGermanImp -x)
+    |  x when x < 0 -> sprintf "minus %s" (toGermanImp -x )
     |  0 -> "null"
-    |  1 -> "eins"
+    |  1 -> "ein"
     |  2 -> "zwei"
     |  3 -> "drei"
     |  4 -> "vier"
@@ -34,20 +44,24 @@ let rec internal toGermanImp x =
     | 13 -> "dreizehn"
     | 14 -> "vierzehn"
     | 15 -> "fünfzehn"
-    | 16 -> "sechszehn"
-    | 17 -> "siebenzehn"
+    | 16 -> "sechzehn"
+    | 17 -> "siebzehn"
     | 18 -> "achtzehn"
-    | 19 -> "neinzehn"
-    | Between 20 30 x -> simplify "zwanzig" 10 x
-    | Between 30 40 x -> simplify "dreisig" 10 x
-    | Between 40 50 x -> simplify "vierzig" 10 x
-    | Between 50 60 x -> simplify "fünfzig" 10 x
-    | Between 80 90 x -> simplify "achtzig" 10 x
-    | Between 60 100 x -> format "zig" 10 x
+    | 19 -> "neunzehn"
+    | Between 20 30 x -> simplifyReverse "zwanzig" 10 x
+    | Between 30 40 x -> simplifyReverse "dreißig" 10 x
+    | Between 40 50 x -> simplifyReverse "vierzig" 10 x
+    | Between 50 60 x -> simplifyReverse "fünfzig" 10 x
+    | Between 60 70 x -> simplifyReverse "sechzig" 10 x
+    | Between 70 80 x -> simplifyReverse "siebzig" 10 x
+    | Between 80 90 x -> simplifyReverse "achtzig" 10 x
+    | Between 90 100 x -> simplifyReverse "neunzig" 10 x
     | Between 100 1000 x -> format "-hundert" 100 x
     | Between 1000 1000000 x -> format "-tausend" 1000 x
-    | Between 1000000 1000000000 x -> format "-million" 1000000 x
-    | _ -> format "-milliarde" 1000000000 x
+    | Between 1000000 2000000 x -> format "-million" 1000000 x
+    | Between 2000000 1000000000 x -> format "-millionen" 1000000 x
+    | Between 1000000000 2000000000 x -> format "-milliarde" 1000000000 x
+    | _ -> format "-milliarden" 1000000000 x
 
 let internal tryParseGermanImp (x : string) =
     let rec conv acc (candidate : string) =
@@ -66,6 +80,8 @@ let internal tryParseGermanImp (x : string) =
         | StartsWith "ZWÖLF"     t -> conv         (12  + acc) t
         | StartsWith "DREIZEHN"  t -> conv         (13  + acc) t
         | StartsWith "FÜNFZEHN"  t -> conv         (15  + acc) t
+        | StartsWith "SECHZEHN"  t -> conv         (16  + acc) t
+        | StartsWith "SIEBZEHN"  t -> conv         (17  + acc) t
         | StartsWith "EHN"       t // matches 'een' in 'eighteen'
         | StartsWith "ZEHN"      t -> conv         (10  + acc) t
         | StartsWith "ZWANZIG"   t -> conv         (20  + acc) t
