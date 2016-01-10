@@ -121,6 +121,7 @@ let ``tryOfGerman returns correct result`` (german, expected) =
     Some expected =! actual
 
 [<Theory>]
+[<InlineData(        -1, "minus-eins")>]
 [<InlineData(         0, "null")>]
 [<InlineData(         1, "eins")>]
 [<InlineData(         2, "zwei")>]

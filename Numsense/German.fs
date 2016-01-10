@@ -62,6 +62,14 @@ let rec convertPart einEnde x  =
 let convToInt (str : string) =
     Convert.ToInt32(str)
 
+let combineParts (newPart : string) (result : string) =
+    match (newPart <> "") with
+    | true ->
+        match (result <> "") with
+        | true -> sprintf "%s-%s" newPart result
+        | false -> newPart
+    | false -> result
+
 let internal toGermanNumber (x : int ) =
 
     let minus = (x < 0)
@@ -85,25 +93,10 @@ let internal toGermanNumber (x : int ) =
                         | "" -> ""
                         | _ -> sprintf "%s%s" tausend "-tausend"
 
-    let mutable result = rest
-
-    if (tausendString <> "") then
-        if (result <> "") then
-            result <- sprintf "%s-%s" tausendString result
-        else
-            result <- tausendString
-
-    if (millionString <> "") then
-        if (result <> "") then
-            result <- sprintf "%s-%s" millionString result
-        else
-            result <- millionString
-
-    if (milliardeString <> "") then
-        if (result <> "") then
-            result <- sprintf "%s-%s" milliardeString result
-        else
-            result <- milliardeString
+    let result = rest
+                 |> combineParts tausendString
+                 |> combineParts millionString
+                 |> combineParts milliardeString
 
     match minus with
     | true -> sprintf "minus-%s" result
