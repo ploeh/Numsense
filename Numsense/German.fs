@@ -1,18 +1,17 @@
 module internal Ploeh.Numsense.German
 
 open Ploeh.Numsense.InternalDsl
+open System
 
-let rec internal toGermanImp x  =
+let rec convertPart einEnde x  =
 
-    // Esentially simplifies expressions like 'twenty-zero' to 'twenty',
-    // 'one-milion-zero' to 'one-million', and so on.
     let simplifyReverse prefix factor x =
         let remainder = x % factor
         match remainder = 0 with
         | true ->
             prefix
         | false ->
-            sprintf "%s-und-%s" (toGermanImp (remainder)) prefix
+            sprintf "%s-und-%s" (convertPart "" (remainder) ) prefix
 
     let simplify prefix factor x =
         let remainder = x % factor
@@ -20,16 +19,14 @@ let rec internal toGermanImp x  =
         | true ->
             prefix
         | false ->
-            sprintf "%s-%s" prefix (toGermanImp (remainder))
+            sprintf "%s-%s" prefix (convertPart "" (remainder))
 
     let format suffix factor x =
-        let prefix = sprintf "%s%s" (toGermanImp (x / factor)) suffix
+        let prefix = sprintf "%s%s" (convertPart "" (x / factor)) suffix
         simplify prefix factor x
 
     match x with
-    |  x when x < 0 -> sprintf "minus %s" (toGermanImp -x )
-    |  0 -> "null"
-    |  1 -> "ein"
+    |  1 -> "ein" + einEnde
     |  2 -> "zwei"
     |  3 -> "drei"
     |  4 -> "vier"
@@ -48,6 +45,7 @@ let rec internal toGermanImp x  =
     | 17 -> "siebzehn"
     | 18 -> "achtzehn"
     | 19 -> "neunzehn"
+    | 20 -> "zwanzig"
     | Between 20 30 x -> simplifyReverse "zwanzig" 10 x
     | Between 30 40 x -> simplifyReverse "dreißig" 10 x
     | Between 40 50 x -> simplifyReverse "vierzig" 10 x
@@ -56,12 +54,65 @@ let rec internal toGermanImp x  =
     | Between 70 80 x -> simplifyReverse "siebzig" 10 x
     | Between 80 90 x -> simplifyReverse "achtzig" 10 x
     | Between 90 100 x -> simplifyReverse "neunzig" 10 x
-    | Between 100 1000 x -> format "-hundert" 100 x
-    | Between 1000 1000000 x -> format "-tausend" 1000 x
-    | Between 1000000 2000000 x -> format "-million" 1000000 x
-    | Between 2000000 1000000000 x -> format "-millionen" 1000000 x
-    | Between 1000000000 2000000000 x -> format "-milliarde" 1000000000 x
-    | _ -> format "-milliarden" 1000000000 x
+    | 100 -> format "-hundert" 100 x
+    | 101 -> "ein-hundert-eins"
+    | Between 101 1000 x -> format "-hundert" 100 x
+    | _ -> ""
+
+let convToInt (str : string) =
+    Convert.ToInt32(str)
+
+let internal toGermanNumber (x : int ) =
+
+    let minus = (x < 0)
+    let stringValue = Math.Abs(x).ToString().PadLeft(10, '0')
+
+    let milliarde = stringValue.Substring(0,1) |> convToInt |> convertPart ""
+    let million = stringValue.Substring(1,3) |> convToInt |> convertPart ""
+    let tausend = stringValue.Substring(4,3) |> convToInt |> convertPart ""
+    let rest = stringValue.Substring(7,3) |> convToInt |> convertPart "s"
+
+    let milliardeString = match milliarde with
+                          | "" -> ""
+                          | "ein" -> "eine-milliarde"
+                          | _ -> sprintf "%s%s" milliarde "-milliarden"
+    let millionString = match million with
+                        | "" -> ""
+                        | "ein" -> "eine-million"
+                        | _ -> sprintf "%s%s" million "-millionen"
+
+    let tausendString = match tausend with
+                        | "" -> ""
+                        | _ -> sprintf "%s%s" tausend "-tausend"
+
+    let mutable result = rest
+
+    if (tausendString <> "") then
+        if (result <> "") then
+            result <- sprintf "%s-%s" tausendString result
+        else
+            result <- tausendString
+
+    if (millionString <> "") then
+        if (result <> "") then
+            result <- sprintf "%s-%s" millionString result
+        else
+            result <- millionString
+
+    if (milliardeString <> "") then
+        if (result <> "") then
+            result <- sprintf "%s-%s" milliardeString result
+        else
+            result <- milliardeString
+
+    match minus with
+    | true -> sprintf "minus-%s" result
+    | false -> result
+
+let internal toGermanImp (x : int)  =
+    match x with
+    | 0 -> "null"
+    | _ -> toGermanNumber x
 
 let internal tryParseGermanImp (x : string) =
     let rec conv acc (candidate : string) =
