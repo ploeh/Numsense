@@ -7,5 +7,8 @@ let tryParseDanish =  Danish.tryParseDanishImp
 let toEnglish =       English.toEnglishImp
 let tryParseEnglish = English.tryParseEnglishImp
 
+let toPolish =        Polish.toPolishImp
+let tryParsePolish =  Polish.tryParsePolishImp
+
 let toGerman =       German.toGermanImp
 let tryParseGerman = German.tryParseGermanImp
