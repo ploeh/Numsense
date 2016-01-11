@@ -12,7 +12,6 @@ open Swensen.Unquote
 [<InlineData(                                                                "NULL",          0)>]
 [<InlineData(                                                             " nULL\t",          0)>]
 [<InlineData(                                                                "eins",          1)>]
-[<InlineData(                                                                "eins",          1)>]
 [<InlineData(                                                                "zwei",          2)>]
 [<InlineData(                                                               " zwei",          2)>]
 [<InlineData(                                                                "drei",          3)>]
