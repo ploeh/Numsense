@@ -59,6 +59,10 @@
     <Compile Include="PolishExamples.fs" />
     <Compile Include="DutchExamples.fs" />
     <Compile Include="RussianExamples.fs" />
+    <Compile Include="TraditionalChineseExamples.fs" />
+    <Compile Include="TraditionalFinancialChineseExamples.fs" />
+    <Compile Include="SimplifiedChineseExamples.fs" />
+    <Compile Include="SimplifiedFinancialChineseExamples.fs" />
     <Compile Include="CatalanExamples.fs" />
     <Compile Include="Demo.fs" />
     <Content Include="packages.config" />

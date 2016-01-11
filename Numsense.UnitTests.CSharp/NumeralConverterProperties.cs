@@ -93,6 +93,22 @@ namespace Ploeh.Numsense.UnitTests
                         NumeralModule.toRussian,
                         NumeralModule.tryParseRussian),
                     new ConverterPropertyGroup(
+                        new TraditionalChineseNumeralConverter(),
+                        NumeralModule.toTraditionalChinese,
+                        NumeralModule.tryParseTraditionalChinese),
+                    new ConverterPropertyGroup(
+                        new TraditionalFinancialChineseNumeralConverter(),
+                        NumeralModule.toTraditionalFinancialChinese,
+                        NumeralModule.tryParseTraditionalFinancialChinese),
+                    new ConverterPropertyGroup(
+                        new SimplifiedChineseNumeralConverter(),
+                        NumeralModule.toSimplifiedChinese,
+                        NumeralModule.tryParseSimplifiedChinese),
+                    new ConverterPropertyGroup(
+                        new SimplifiedFinancialChineseNumeralConverter(),
+                        NumeralModule.toSimplifiedFinancialChinese,
+                        NumeralModule.tryParseSimplifiedFinancialChinese),
+                    new ConverterPropertyGroup(
                         new CatalanNumeralConverter(),
                         NumeralModule.toCatalan,
                         NumeralModule.tryParseCatalan)
