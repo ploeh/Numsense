@@ -70,15 +70,21 @@ let combineParts (newPart : string) (result : string) =
         | false -> newPart
     | false -> result
 
+let getPartOfNumber start length number =
+    let divisor = pown 10 (start - 1)
+    let parts = pown 10 length
+
+    (number / divisor) % parts
+
 let internal toGermanNumber (x : int ) =
 
     let minus = (x < 0)
-    let stringValue = Math.Abs(x).ToString().PadLeft(10, '0')
+    let absValue = Math.Abs(x)
 
-    let milliarde = stringValue.Substring(0,1) |> convToInt |> convertPart ""
-    let million = stringValue.Substring(1,3) |> convToInt |> convertPart ""
-    let tausend = stringValue.Substring(4,3) |> convToInt |> convertPart ""
-    let rest = stringValue.Substring(7,3) |> convToInt |> convertPart "s"
+    let milliarde = absValue |> getPartOfNumber 10 1  |> convertPart ""
+    let million = absValue |> getPartOfNumber 7 3 |> convertPart ""
+    let tausend = absValue |> getPartOfNumber 4 3 |> convertPart ""
+    let rest = absValue |> getPartOfNumber 1 3 |> convertPart "s"
 
     let milliardeString = match milliarde with
                           | "" -> ""
