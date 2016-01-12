@@ -82,7 +82,7 @@ let rec internal toRussianImp gender x =
         function
         | Singular -> "тысяча"
         | Paucal   -> "тысячи"
-        | Plural   -> "тысячь"
+        | Plural   -> "тысяч"
 
     let million =
         function
@@ -108,7 +108,8 @@ let internal tryParseRussianImp (x : string) =
     let rec conv acc candidate =
         match candidate with
         | ""                        -> Some acc
-        | StartsWith " "          t -> conv                     acc  t
+        | StartsWith " "          t
+        | StartsWith "ь"          t -> conv                     acc  t
         | StartsWith "ноль"       t -> conv               (0  + acc) t
         | StartsWith "один"       t
         | StartsWith "одно"       t
@@ -118,15 +119,10 @@ let internal tryParseRussianImp (x : string) =
         | StartsWith "три"        t -> conv               (3  + acc) t
         | StartsWith "четыре"     t
         | StartsWith "четыр"      t -> conv               (4  + acc) t
-        | StartsWith "пять"       t
         | StartsWith "пят"        t -> conv               (5  + acc) t
-        | StartsWith "шесть"      t
         | StartsWith "шест"       t -> conv               (6  + acc) t
-        | StartsWith "семь"       t
         | StartsWith "сем"        t -> conv               (7  + acc) t
-        | StartsWith "восемь"     t
         | StartsWith "восем"      t -> conv               (8  + acc) t
-        | StartsWith "девять"     t
         | StartsWith "девят"      t -> conv               (9  + acc) t
         | StartsWith "десять"     t -> conv              (10  + acc) t
         | StartsWith "надцать"    t -> conv              (10  + acc) t
@@ -138,9 +134,9 @@ let internal tryParseRussianImp (x : string) =
         | StartsWith "ста"        t
         | StartsWith "сти"        t
         | StartsWith "сот"        t -> conv             (100 %* acc) t
-        | StartsWith "тысячь"     t
+        | StartsWith "тысячи"     t
         | StartsWith "тысяча"     t
-        | StartsWith "тысячи"     t ->
+        | StartsWith "тысяч"      t ->
             conv (if acc = 0 then 1000 else             1000 %* acc) t
         | StartsWith "миллионов"  t
         | StartsWith "миллиона"   t
