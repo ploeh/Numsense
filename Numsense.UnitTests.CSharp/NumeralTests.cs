@@ -49,5 +49,20 @@ namespace Ploeh.Numsense.UnitTests
             var actual = Numeral.Polish;
             Assert.Same(expected, actual);
         }
+
+        [Fact]
+        public void DutchIsCorrect()
+        {
+            var actual = Numeral.Dutch;
+            Assert.IsAssignableFrom<DutchNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void DutchIsSingleton()
+        {
+            var expected = Numeral.Dutch;
+            var actual = Numeral.Dutch;
+            Assert.Same(expected, actual);
+        }
     }
 }
