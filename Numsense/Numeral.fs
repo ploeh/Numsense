@@ -10,5 +10,5 @@ let tryParseEnglish =     English.tryParseEnglishImp
 let toPolish =            Polish.toPolishImp
 let tryParsePolish =      Polish.tryParsePolishImp
 
-let toPortuguese =         Portuguese.toPortugueseImp
+let toPortuguese =        Portuguese.toPortugueseImp
 let tryParsePortuguese =  Portuguese.tryParsePortugueseImp
