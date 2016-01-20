@@ -14,21 +14,22 @@ let rec internal toPortugueseImp x =
         else sprintf "%s-%s" prefix (toPortugueseImp (remainder))
 
     let format' suffixPlural suffixSingular factor x biform =
-        let firstDigit = (x / factor)
+        let firstDigit = x / factor
         match firstDigit, biform with
         | 1, false ->
-            let prefix = sprintf "%s-%s" (toPortugueseImp firstDigit) suffixPlural
+            let prefix = sprintf "%s-%s" (toPortugueseImp firstDigit) suffixSingular
             simplify prefix factor x
         | 1, true ->
-            simplify suffixSingular factor x
+            let form = if x % factor > 0 then suffixPlural else suffixSingular
+            simplify form factor x
         | _ ->
-            let prefix = sprintf "%s-%s" (toPortugueseImp firstDigit) suffixSingular
+            let prefix = sprintf "%s-%s" (toPortugueseImp firstDigit) suffixPlural
             simplify prefix factor x
 
     let formatPlural suffixPlural suffixSingular factor x =
-        format' suffixPlural suffixSingular factor x false        
+        format' suffixPlural suffixSingular factor x false
 
-    let formatBiform suffixPlural suffixSingular factor x = 
+    let formatBiform suffixPlural suffixSingular factor x =
         format' suffixPlural suffixSingular factor x true
 
     match x with
@@ -115,13 +116,13 @@ let rec internal tryParsePortugueseImp (x:string) =
         | StartsWith "QUINHENTOS"   t -> conv         (500 + acc) t
         | StartsWith "CENTO"        t
         | StartsWith "CEM"          t -> conv         (100 + acc) t
-        | StartsWith "MILHÃO"       t 
+        | StartsWith "MILHÃO"       t
         | StartsWith "MILHÕES"      t -> conv    (1000000 %* acc) t
         | StartsWith "MILMILHÕES"   t ->
                conv (if acc = 0 then 1000000000 else 1000000000 %* acc) t
-        | StartsWith "MIL"          t -> 
+        | StartsWith "MIL"          t ->
                conv (if acc = 0 then 1000 else      1000 %* acc) t
-        | _ -> failwith(candidate) 
+        | _ -> failwith(candidate)
 
     let canonicalized = x.Trim().ToUpper(System.Globalization.CultureInfo "pt-PT")
     match canonicalized with
