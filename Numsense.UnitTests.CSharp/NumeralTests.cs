@@ -49,5 +49,20 @@ namespace Ploeh.Numsense.UnitTests
             var actual = Numeral.Polish;
             Assert.Same(expected, actual);
         }
+
+        [Fact]
+        public void SpanishIsCorrect()
+        {
+            var actual = Numeral.Spanish;
+            Assert.IsAssignableFrom<SpanishNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void SpanishIsSingleton()
+        {
+            var expected = Numeral.Spanish;
+            var actual = Numeral.Spanish;
+            Assert.Same(expected, actual);
+        }
     }
 }

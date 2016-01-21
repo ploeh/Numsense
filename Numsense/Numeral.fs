@@ -9,3 +9,6 @@ let tryParseEnglish = English.tryParseEnglishImp
 
 let toPolish =        Polish.toPolishImp
 let tryParsePolish =  Polish.tryParsePolishImp
+
+let toSpanish =        Spanish.toSpanishImp
+let tryParseSpanish =  Spanish.tryParseSpanishImp

@@ -77,7 +77,11 @@ namespace Ploeh.Numsense.UnitTests
                     new ConverterPropertyGroup(
                         new PolishNumeralConverter(),
                         NumeralModule.toPolish,
-                        NumeralModule.tryParsePolish)
+                        NumeralModule.tryParsePolish),
+                    new ConverterPropertyGroup(
+                        new SpanishNumeralConverter(),
+                        NumeralModule.toSpanish,
+                        NumeralModule.tryParseSpanish)
                     )
                     .ToArbitrary();
             }
