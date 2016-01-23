@@ -14,6 +14,12 @@ module internal Helper =
         | false, Lazy None -> false
         | false, Lazy (Some i) -> result <- i; true
 
+type BulgarianNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toBulgarian number
+        member this.TryParse (s, result) = 
+            Helper.tryParse Numeral.tryParseBulgarian (s, &result)
+
 type EnglishNumeralConverter () =
     interface INumeralConverter with
         member this.ToNumeral number = Numeral.toEnglish number
@@ -33,6 +39,7 @@ type PolishNumeralConverter () =
             Helper.tryParse Numeral.tryParsePolish (s, &result)
 
 type Numeral private () =
+    static member val Bulgarian = BulgarianNumeralConverter () :> INumeralConverter
     static member val English = EnglishNumeralConverter () :> INumeralConverter
     static member val Danish  =  DanishNumeralConverter () :> INumeralConverter
     static member val Polish  =  PolishNumeralConverter () :> INumeralConverter

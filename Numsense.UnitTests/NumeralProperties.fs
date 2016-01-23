@@ -5,6 +5,21 @@ open FsCheck.Xunit
 open Swensen.Unquote
 
 [<Property(QuietOnSuccess = true)>]
+let ``tryOfBulgarian is the inverse of toBulgarian`` x =
+    test <@ Some x = (x |> Numeral.toBulgarian |> Numeral.tryParseBulgarian) @>
+
+[<Property(QuietOnSuccess = true)>]
+let ``negative Bulgarian is the inverse of positive Bulgarian`` x =
+    x <> 0 ==> lazy
+    let x = abs x
+
+    let actualBulgarian = Numeral.toBulgarian -x
+    let actualInteger = Numeral.tryParseBulgarian actualBulgarian
+
+    sprintf "minus %s" (Numeral.toBulgarian x) =! actualBulgarian
+    Some -x =! actualInteger
+
+[<Property(QuietOnSuccess = true)>]
 let ``tryOfEnglish is the inverse of toEnglish`` x =
     test <@ Some x = (x |> Numeral.toEnglish |> Numeral.tryParseEnglish) @>
 
