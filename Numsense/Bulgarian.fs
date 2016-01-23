@@ -19,7 +19,7 @@ let internal toBulgarianImp x =
             match remainder with
             | 0 -> prefix
             | r when nonTeens r = 0 || numDigits r = 1 ->
-                sprintf "%s-и-%s" prefix (toBulgarian r gender) // add "-and-
+                sprintf "%s-и-%s" prefix (toBulgarian r gender) // add "-and-"
             | _ -> sprintf "%s-%s" prefix (toBulgarian remainder gender)
         
         let format suffix factor x = 
@@ -84,7 +84,7 @@ let internal toBulgarianImp x =
             simplify quotientText 1000000000 x
         
         match x with
-        | x when x < 0 -> sprintf "minus %s" (toBulgarian -x gender)
+        | x when x < 0 -> sprintf "минус %s" (toBulgarian -x gender)
         | 0 -> "нула"
         | 1 -> match gender with
                | Masculine -> "един"
@@ -159,5 +159,5 @@ let internal tryParseBulgarianImp (x : string) =
     
     let canonicalized = x.Trim().ToUpper(System.Globalization.CultureInfo "bg-BG")
     match canonicalized with
-    | StartsWith "MINUS" t -> conv 0 (t.Trim()) |> Option.map ((*) -1)
+    | StartsWith "МИНУС" t -> conv 0 (t.Trim()) |> Option.map ((*) -1)
     | _ -> conv 0 canonicalized
