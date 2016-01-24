@@ -22,14 +22,16 @@ namespace Ploeh.Numsense.UnitTests
         [ConverterProperty]
         public void TryParseProperNumeralReturnsCorrectResult(
             ConverterPropertyGroup p,
-            int expected)
+            int i)
         {
-            var numeral = p.ToNumeralImp.Invoke(expected);
+            var numeral = p.ToNumeralImp.Invoke(i);
+
             int actual;
             var success = p.Sut.TryParse(numeral, out actual);
 
+            var expected = p.TryParseImp.Invoke(numeral);
             Assert.True(success);
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, FSharpOption<int>.Some(actual));
         }
 
         [ConverterProperty]
@@ -79,7 +81,11 @@ namespace Ploeh.Numsense.UnitTests
                         NumeralModule.toPolish,
                         NumeralModule.tryParsePolish),
                     new ConverterPropertyGroup(
-                        new SpanishNumeralConverter(),
+                        new DutchNumeralConverter(),
+                        NumeralModule.toDutch,
+                        NumeralModule.tryParseDutch),
+                    new ConverterPropertyGroup(
+                      new SpanishNumeralConverter(),
                         NumeralModule.toSpanish,
                         NumeralModule.tryParseSpanish)
                     )
@@ -97,7 +103,7 @@ namespace Ploeh.Numsense.UnitTests
                 INumeralConverter sut,
                 FSharpFunc<int, string> toNumeralImp,
                 FSharpFunc<string, FSharpOption<int>> tryParseImp)
-            {   
+            {
                 this.Sut = sut;
                 this.ToNumeralImp = toNumeralImp;
                 this.TryParseImp = tryParseImp;
