@@ -22,14 +22,16 @@ namespace Ploeh.Numsense.UnitTests
         [ConverterProperty]
         public void TryParseProperNumeralReturnsCorrectResult(
             ConverterPropertyGroup p,
-            int expected)
+            int i)
         {
-            var numeral = p.ToNumeralImp.Invoke(expected);
+            var numeral = p.ToNumeralImp.Invoke(i);
+
             int actual;
             var success = p.Sut.TryParse(numeral, out actual);
 
+            var expected = p.TryParseImp.Invoke(numeral);
             Assert.True(success);
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, FSharpOption<int>.Some(actual));
         }
 
         [ConverterProperty]
