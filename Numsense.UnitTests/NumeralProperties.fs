@@ -50,7 +50,7 @@ let ``negative Polish is the inverse of positive Polish`` x =
     Some -x =! actualInteger
 
 [<Property(QuietOnSuccess = true)>]
-let ``tryOfDutch is the inverse of toDutch`` x =
+let ``tryParseDutch is the inverse of toDutch`` x =
     test <@ Some x = (x |> Numeral.toDutch |> Numeral.tryParseDutch) @>
 
 [<Property(QuietOnSuccess = true)>]
