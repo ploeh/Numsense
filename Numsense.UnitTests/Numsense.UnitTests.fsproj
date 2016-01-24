@@ -60,6 +60,7 @@
     <Compile Include="Demo.fs" />
     <Content Include="packages.config" />
     <Content Include="App.config" />
+    <Compile Include="SwedishExamples.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FsCheck">
