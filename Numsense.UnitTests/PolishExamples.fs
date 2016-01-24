@@ -123,7 +123,7 @@ open Swensen.Unquote
 [<InlineData(
     "dwamiliardystoczterdzieścisiedemmilionówczterystaosiemdziesiąttrzytysiącesześćsetczterdzieścisiedem",
     System.Int32.MaxValue)>]
-let ``tryOfPolish returns correct result`` (polish, expected) =
+let ``tryParsePolish returns correct result`` (polish, expected) =
     let actual = Numeral.tryParsePolish polish
     Some expected =! actual
 
