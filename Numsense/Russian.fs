@@ -61,6 +61,7 @@ let rec internal toRussianImp gender x =
         | Between 700 800 x -> simplify "семьсот" 100 x
         | Between 800 900 x -> simplify "восемьсот" 100 x
         | Between 900 1000 x -> simplify "девятьсот" 100 x
+        | _ -> invalidOp (sprintf "expected input from 1 to 999, got %d" x)
 
     let format suffixGender suffix factor x =
         let factored = x / factor
