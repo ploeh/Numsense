@@ -16,7 +16,7 @@ let ``negative Bulgarian is the inverse of positive Bulgarian`` x =
     let actualBulgarian = Numeral.toBulgarian -x
     let actualInteger = Numeral.tryParseBulgarian actualBulgarian
 
-    sprintf "minus %s" (Numeral.toBulgarian x) =! actualBulgarian
+    sprintf "минус %s" (Numeral.toBulgarian x) =! actualBulgarian
     Some -x =! actualInteger
 
 [<Property(QuietOnSuccess = true)>]
