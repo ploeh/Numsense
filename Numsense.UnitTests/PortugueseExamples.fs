@@ -4,6 +4,8 @@ open Xunit
 open Swensen.Unquote
 
 [<Theory>]
+[<InlineData(               "menos mil-quinhentos-sessenta-oito",      -1568)>]
+[<InlineData(                                         "menos um",         -1)>]
 [<InlineData(                                             "zero",          0)>]
 [<InlineData(                                            " zero",          0)>]
 [<InlineData(                                            "zero ",          0)>]
@@ -115,6 +117,8 @@ let ``tryParsePortuguese returns correct result`` (portuguese, expected) =
     Some expected =! actual
 
 [<Theory>]
+[<InlineData(     -1586, "menos mil-quinhentos-oitenta-seis")>]
+[<InlineData(        -1, "menos um")>]
 [<InlineData(         0, "zero")>]
 [<InlineData(         1, "um")>]
 [<InlineData(         2, "dois")>]
