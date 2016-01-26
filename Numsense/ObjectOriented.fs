@@ -38,8 +38,15 @@ type PolishNumeralConverter () =
         member this.TryParse (s, result) =
             Helper.tryParse Numeral.tryParsePolish (s, &result)
 
+type DutchNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toDutch number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseDutch (s, &result)
+
 type Numeral private () =
     static member val English = EnglishNumeralConverter () :> INumeralConverter
     static member val Danish = DanishNumeralConverter () :> INumeralConverter
-    static member val German = GermanNumeralConverter () :> INumeralConverter
     static member val Polish = PolishNumeralConverter () :> INumeralConverter
+    static member val Dutch = DutchNumeralConverter () :> INumeralConverter
+    static member val German = GermanNumeralConverter () :> INumeralConverter
