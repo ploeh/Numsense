@@ -83,7 +83,11 @@ namespace Ploeh.Numsense.UnitTests
                     new ConverterPropertyGroup(
                         new DutchNumeralConverter(),
                         NumeralModule.toDutch,
-                        NumeralModule.tryParseDutch)
+                        NumeralModule.tryParseDutch),
+                    new ConverterPropertyGroup(
+                        new CatalanNumeralConverter(),
+                        NumeralModule.toCatalan,
+                        NumeralModule.tryParseCatalan)
                     )
                     .ToArbitrary();
             }
@@ -99,7 +103,7 @@ namespace Ploeh.Numsense.UnitTests
                 INumeralConverter sut,
                 FSharpFunc<int, string> toNumeralImp,
                 FSharpFunc<string, FSharpOption<int>> tryParseImp)
-            {   
+            {
                 this.Sut = sut;
                 this.ToNumeralImp = toNumeralImp;
                 this.TryParseImp = tryParseImp;
