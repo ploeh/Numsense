@@ -17,7 +17,7 @@ module internal Helper =
 type EnglishNumeralConverter () =
     interface INumeralConverter with
         member this.ToNumeral number = Numeral.toEnglish number
-        member this.TryParse (s, result) = 
+        member this.TryParse (s, result) =
             Helper.tryParse Numeral.tryParseEnglish (s, &result)
 
 type DanishNumeralConverter () =
@@ -38,8 +38,15 @@ type DutchNumeralConverter () =
         member this.TryParse (s, result) =
             Helper.tryParse Numeral.tryParseDutch (s, &result)
 
+type PortugueseNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toPortuguese number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParsePortuguese (s, &result)
+
 type Numeral private () =
-    static member val English = EnglishNumeralConverter () :> INumeralConverter
-    static member val Danish  =  DanishNumeralConverter () :> INumeralConverter
-    static member val Polish  =  PolishNumeralConverter () :> INumeralConverter
-    static member val Dutch   =   DutchNumeralConverter () :> INumeralConverter
+    static member val English    = EnglishNumeralConverter () :> INumeralConverter
+    static member val Danish     = DanishNumeralConverter () :> INumeralConverter
+    static member val Polish     = PolishNumeralConverter () :> INumeralConverter
+    static member val Dutch      = DutchNumeralConverter () :> INumeralConverter
+    static member val Portuguese = PortugueseNumeralConverter () :> INumeralConverter 
