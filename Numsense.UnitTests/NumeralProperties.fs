@@ -64,10 +64,12 @@ let ``negative Dutch is the inverse of positive Dutch`` x =
     sprintf "min %s" (Numeral.toDutch x) =! actualDutch
     Some -x =! actualInteger
 
+[<UseCulture("sv-SE")>]
 [<Property(QuietOnSuccess = true)>]
 let ``tryParseSwedish is the inverse of toSwedish`` x =
     test <@ Some x = (x |> Numeral.toSwedish |> Numeral.tryParseSwedish) @>
 
+[<UseCulture("sv-SE")>]
 [<Property(QuietOnSuccess = true)>]
 let ``negative Swedish is the inverse of positive Swedish`` x =
     x <> 0 ==> lazy

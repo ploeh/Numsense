@@ -3,6 +3,7 @@
 open Xunit
 open Swensen.Unquote
 
+[<UseCulture("sv-SE")>]
 [<Theory>]
 [<InlineData(                                             "noll",          0)>]
 [<InlineData(                                            " noll",          0)>]
@@ -124,6 +125,7 @@ let ``tryParseSwedish returns correct result`` (swedish, expected) =
     let actual = Numeral.tryParseSwedish swedish
     Some expected =! actual
 
+[<UseCulture("sv-SE")>]
 [<Theory>]
 [<InlineData(         0, "noll")>]
 [<InlineData(         1, "ett")>]

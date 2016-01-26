@@ -52,6 +52,7 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="UseCultureAttribute.fs" />
     <Compile Include="NumeralProperties.fs" />
     <Compile Include="DanishExamples.fs" />
     <Compile Include="EnglishExamples.fs" />
