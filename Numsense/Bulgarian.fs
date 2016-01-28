@@ -10,15 +10,15 @@ let internal toBulgarianImp x =
 
         let simplify prefix factor x = 
             let remainder = x % factor
-            let rec nonTeens n = 
-                let d = if n % 1000 < 20 then 0 else 1
-                if n > 0 then d + nonTeens (n / 1000) else 0
-            let rec numDigits n =
-                let d = if n % 10 <> 0 then 1 else 0
-                if n > 0 then d + numDigits (n / 10) else 0
+            let rec countTeens n = 
+                let d = match n % 1000 with | 0 -> 0 | n when n < 20 -> 1 | _ -> 2
+                if n > 0 then d + countTeens (n / 1000) else 0
+            let rec countDigits n =
+                let d = match n % 10 with | 0 -> 0 | _ -> 1
+                if n > 0 then d + countDigits (n / 10) else 0
             match remainder with
             | 0 -> prefix
-            | r when nonTeens r = 0 || numDigits r = 1 ->
+            | r when countTeens r = 1 || countDigits r = 1 ->
                 sprintf "%s-и-%s" prefix (toBulgarian r gender) // add "-and-"
             | _ -> sprintf "%s-%s" prefix (toBulgarian remainder gender)
         
