@@ -44,9 +44,16 @@ type RussianNumeralConverter () =
         member this.TryParse (s, result) =
             Helper.tryParse Numeral.tryParseRussian (s, &result)
 
+type SlovakNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toSlovak number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseSlovak (s, &result)
+
 type Numeral private () =
     static member val English = EnglishNumeralConverter () :> INumeralConverter
     static member val Danish  =  DanishNumeralConverter () :> INumeralConverter
     static member val Polish  =  PolishNumeralConverter () :> INumeralConverter
     static member val Dutch   =   DutchNumeralConverter () :> INumeralConverter
     static member val Russian = RussianNumeralConverter () :> INumeralConverter
+    static member val Slovak  =  SlovakNumeralConverter () :> INumeralConverter
