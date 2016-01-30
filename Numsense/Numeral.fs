@@ -13,5 +13,8 @@ let tryParsePolish =  Polish.tryParsePolishImp
 let toDutch =         Dutch.toDutchImp
 let tryParseDutch =   Dutch.tryParseDutchImp
 
+let toRussian =       Russian.toRussianImp Russian.Masculine
+let tryParseRussian = Russian.tryParseRussianImp
+
 let toSwedish =       Swedish.toSwedishImp
 let tryParseSwedish = Swedish.tryParseSwedishImp
