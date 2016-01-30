@@ -87,21 +87,29 @@ let internal tryParseLithuanianImp (x : string) =
         | StartsWith "-" t
         | StartsWith "IR" t -> conv acc t
         | StartsWith "NULIS" t -> conv (0 + acc) t
-        | StartsWith "VIENAS" t -> conv (1 + acc) t
+        | StartsWith "VIENAS" t
+        | StartsWith "VIENA" t -> conv (1 + acc) t
+        | StartsWith "DVIDEŠIMT" t -> conv (20 + acc) t
+        | StartsWith "DVI" t
         | StartsWith "DU" t -> conv (2 + acc) t
         | StartsWith "TRYS" t -> conv (3 + acc) t
+        | StartsWith "KETURIOS" t
         | StartsWith "KETURI" t -> conv (4 + acc) t
+        | StartsWith "PENKIOS" t
         | StartsWith "PENKI" t -> conv (5 + acc) t
+        | StartsWith "ŠEŠIOS" t
         | StartsWith "ŠEŠI" t -> conv (6 + acc) t
+        | StartsWith "SEPTYNIOS" t
         | StartsWith "SEPTYNI" t -> conv (7 + acc) t
+        | StartsWith "AŠTUONIOS" t
         | StartsWith "AŠTUONI" t -> conv (8 + acc) t
+        | StartsWith "DEVYNIOS" t
         | StartsWith "DEVYNI" t -> conv (9 + acc) t
         | StartsWith "DEŠIMT" t -> conv (10 + acc) t
         | StartsWith "VIENUOLIKA" t -> conv (11 + acc) t
         | StartsWith "DVYLIKA" t -> conv (12 + acc) t
         | StartsWith "TRYLIKA" t -> conv (13 + acc) t
         | StartsWith "OLIKA" t -> conv (10 + acc) t
-        | StartsWith "DVIDEŠIMT" t -> conv (20 + acc) t
         | StartsWith "TRISDEŠIMT" t -> conv (30 + acc) t
         | StartsWith "ASDEŠIMT" t -> conv (10 %* acc) t
         | StartsWith "ŠIMTAS" t -> 
