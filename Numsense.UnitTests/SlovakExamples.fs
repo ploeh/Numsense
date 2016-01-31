@@ -66,7 +66,6 @@ open Swensen.Unquote
 [<InlineData(                                       "stojeden  ",        101)>]
 [<InlineData(                                       "sto jeden ",        101)>]
 [<InlineData(                                           "dvesto",        200)>]
-[<InlineData(                            "mínus dvestoosemnásť",        -218)>]
 [<InlineData(                               "dvestotridsaťsedem",        237)>]
 [<InlineData(                          "triSTO sedemdesiat päť",         375)>]
 [<InlineData(                              "štyristodeväťdesiat",        490)>]
@@ -96,6 +95,8 @@ open Swensen.Unquote
 [<InlineData(        "tristodevätnásťtisíctristoštyridsať deväť",     319349)>]
 [<InlineData(                                           "milión",    1000000)>]
 [<InlineData(                                    "milión jeden ",    1000001)>]
+[<InlineData(                               "jeden milión jeden",    1000001)>]
+[<InlineData(                              "milión tisíc dvesto",    1001200)>]
 [<InlineData(                                "dva milióny desať",    2000010)>]
 [<InlineData(                       "šesť miliónov tridsaŤTisíc",    6030000)>]
 [<InlineData(
@@ -114,7 +115,10 @@ open Swensen.Unquote
     "štyristošesťdesiatjeden miliónov šesťdesiattisícšesťsto",
     461060600)>]
 [<InlineData(                                         "miliaRDA", 1000000000)>]
+[<InlineData(                                   "jedna miliarda", 1000000000)>]
 [<InlineData(                                     "dve miliardy", 2000000000)>]
+[<InlineData(                    "dve miliardy milión tisíc sto", 2001001100)>]
+[<InlineData(              "dve miliardy jeden milión tisíc sto", 2001001100)>]
 [<InlineData(
     "dve miliardy štyridsaťdeväť miliónov šesťstopäťdesiattisíc",
     2049650000)>]

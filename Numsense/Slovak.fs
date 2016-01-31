@@ -105,45 +105,50 @@ let rec internal toSlovakImp gender x =
     | _                            -> format Feminine billion 1000000000 x
 
 let internal tryParseSlovakImp (x : string) =
+    // It is very common to omit jeden/jedna/jedno (1) in numbers like
+    // '_ tisíc _ sto' (1100), '_ milión _ tisíc dvesto' (1001200).
+    // This function makes sure that the outcome is the same regardless of
+    // the fact if we do omit it or not.
+    let add candidate acc =
+        if acc % candidate = 0 then candidate + acc else candidate %* acc
+
     let rec conv acc candidate =
         match candidate with
-        | ""                            -> Some acc
-        | StartsWith " "              t
-        | StartsWith "NULA"           t -> conv           (0  + acc) t
-        | StartsWith "JEDENÁSŤ"       t -> conv           (11 + acc) t
-        | StartsWith "JEDEN"          t
-        | StartsWith "JEDNA"          t
-        | StartsWith "JEDNO"          t -> conv           (1  + acc) t
-        | StartsWith "DVAJA"          t
-        | StartsWith "DVA"            t
-        | StartsWith "DVE"            t -> conv           (2  + acc) t
-        | StartsWith "TRI"            t
-        | StartsWith "TRAJA"          t -> conv           (3  + acc) t
-        | StartsWith "ŠTYRIA"         t
-        | StartsWith "ŠTYRI"          t -> conv           (4  + acc) t
-        | StartsWith "PÄŤ"            t -> conv           (5  + acc) t
-        | StartsWith "ŠESŤ"           t -> conv           (6  + acc) t
-        | StartsWith "SEDEM"          t -> conv           (7  + acc) t
-        | StartsWith "OSEM"           t -> conv           (8  + acc) t
-        | StartsWith "DEVÄŤ"          t -> conv           (9  + acc) t
-        | StartsWith "DESAŤ"          t -> conv          (10  + acc) t
-        | StartsWith "ŠTRNÁSŤ"        t -> conv          (14  + acc) t
-        | StartsWith "PÄTNÁSŤ"        t -> conv          (15  + acc) t
-        | StartsWith "ŠESTNÁSŤ"       t -> conv          (16  + acc) t
-        | StartsWith "DEVÄTNÁSŤ"      t -> conv          (19  + acc) t
-        | StartsWith "NÁSŤ"           t -> conv          (10  + acc) t
-        | StartsWith "DSAŤ"           t
-        | StartsWith "DESIAT"         t -> conv          (10 %* acc) t
-        | StartsWith "STO"            t ->
-            conv (if acc % 100 <= 1 then 100 + acc else  100 %* acc) t
-        | StartsWith "TISÍC"          t ->
-            conv (if acc = 0 then       1000 else       1000 %* acc) t
-        | StartsWith "MILIÓNY"        t -> conv     (1000000 %* acc) t
-        | StartsWith "MILIÓNOV"       t -> conv     (1000000 %* acc) t
-        | StartsWith "MILIÓN"         t -> conv     (1000000  + acc) t
-        | StartsWith "MILIÁRD"        t -> conv  (1000000000 %* acc) t
-        | StartsWith "MILIARDY"       t -> conv  (1000000000 %* acc) t
-        | StartsWith "MILIARDA"       t -> conv  (1000000000  + acc) t
+        | ""                              -> Some acc
+        | StartsWith " "                t
+        | StartsWith "NULA"             t -> conv           (0  + acc) t
+        | StartsWith "JEDENÁSŤ"         t -> conv           (11 + acc) t
+        | StartsWith "JEDEN"            t
+        | StartsWith "JEDNA"            t
+        | StartsWith "JEDNO"            t -> conv           (1  + acc) t
+        | StartsWith "DVAJA"            t
+        | StartsWith "DVA"              t
+        | StartsWith "DVE"              t -> conv           (2  + acc) t
+        | StartsWith "TRI"              t
+        | StartsWith "TRAJA"            t -> conv           (3  + acc) t
+        | StartsWith "ŠTYRIA"           t
+        | StartsWith "ŠTYRI"            t -> conv           (4  + acc) t
+        | StartsWith "PÄŤ"              t -> conv           (5  + acc) t
+        | StartsWith "ŠESŤ"             t -> conv           (6  + acc) t
+        | StartsWith "SEDEM"            t -> conv           (7  + acc) t
+        | StartsWith "OSEM"             t -> conv           (8  + acc) t
+        | StartsWith "DEVÄŤ"            t -> conv           (9  + acc) t
+        | StartsWith "DESAŤ"            t -> conv          (10  + acc) t
+        | StartsWith "ŠTRNÁSŤ"          t -> conv          (14  + acc) t
+        | StartsWith "PÄTNÁSŤ"          t -> conv          (15  + acc) t
+        | StartsWith "ŠESTNÁSŤ"         t -> conv          (16  + acc) t
+        | StartsWith "DEVÄTNÁSŤ"        t -> conv          (19  + acc) t
+        | StartsWith "NÁSŤ"             t -> conv          (10  + acc) t
+        | StartsWith "DSAŤ"             t
+        | StartsWith "DESIAT"           t -> conv          (10 %* acc) t
+        | StartsWith "STO"              t -> conv        (add 100 acc) t
+        | StartsWith "TISÍC"            t -> conv       (add 1000 acc) t
+        | StartsWith "MILIÓNY"          t
+        | StartsWith "MILIÓNOV"         t -> conv     (1000000 %* acc) t
+        | StartsWith "MILIÓN"           t -> conv    (add 1000000 acc) t
+        | StartsWith "MILIÁRD"          t
+        | StartsWith "MILIARDY"         t -> conv  (1000000000 %* acc) t
+        | StartsWith "MILIARDA"         t -> conv (add 1000000000 acc) t
         | _ -> None
     
     let canonicalized = x.Trim().ToUpper(System.Globalization.CultureInfo "sk-SK")
