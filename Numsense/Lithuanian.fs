@@ -8,7 +8,7 @@ let rec internal toLithuanianImp x =
         let remainder = x % factor
         if remainder = 0
         then prefix
-        else sprintf "%s-%s" prefix (toLithuanianImp (remainder))
+        else sprintf "%s %s" prefix (toLithuanianImp (remainder))
 
     let formatNumeral suffix factor x =
         let prefix = sprintf "%s%s" (toLithuanianImp (x / factor)) suffix
@@ -19,7 +19,7 @@ let rec internal toLithuanianImp x =
         let prefix =
             match factored with
             | 1 -> sprintf "%s" (suffix factored)
-            | _ -> sprintf "%s-%s" (toLithuanianImp factored) (suffix factored)
+            | _ -> sprintf "%s %s" (toLithuanianImp factored) (suffix factored)
         simplify prefix factor x
 
     let (|Singular|Paucal|Plural|) x =
@@ -75,7 +75,7 @@ let rec internal toLithuanianImp x =
     | Between 30 40 x -> simplify "trisdešimt" 10 x
     | Between 40 100 x -> formatNumeral "asdešimt" 10 x
     | Between 100 200 x -> simplify "šimtas" 100 x
-    | Between 200 1000 x -> formatNumeral "-šimtai" 100 x
+    | Between 200 1000 x -> formatNumeral " šimtai" 100 x
     | Between 1000 1000000 x -> formatNoun thousand 1000 x
     | Between 1000000 1000000000 x -> formatNoun million 1000000 x
     | _ -> formatNoun billion 1000000000 x
@@ -84,7 +84,7 @@ let internal tryParseLithuanianImp (x : string) =
     let rec conv acc candidate =
         match candidate with
         | "" -> Some acc
-        | StartsWith "-" t
+        | StartsWith " " t
         | StartsWith "IR" t -> conv acc t
         | StartsWith "NULIS" t -> conv (0 + acc) t
         | StartsWith "VIENAS" t
