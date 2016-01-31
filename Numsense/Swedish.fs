@@ -95,9 +95,7 @@ let internal tryParseSwedishImp (x : string) =
         | StartsWith "ÅTTIO"     t -> conv         (80  + acc) t
         | StartsWith "NITTIO"    t -> conv         (90  + acc) t
         | StartsWith "HUNDRA"    t ->
-            if acc = 0 then conv 100 t
-            else if acc % 1000 = 0 then conv (100 %* (acc + 1)) t
-            else conv (100 %* acc) t
+            conv (if acc % 1000 = 0 then 100 + acc else 100 %* acc) t
         | StartsWith "USEN"      t
         | StartsWith "TUSEN"     t ->
             conv (if acc = 0 then 1000 else       1000 %* acc) t
