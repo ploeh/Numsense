@@ -15,3 +15,6 @@ let tryParseDutch =   Dutch.tryParseDutchImp
 
 let toRussian =       Russian.toRussianImp Russian.Masculine
 let tryParseRussian = Russian.tryParseRussianImp
+
+let toLithuanian = Lithuanian.toLithuanianImp
+let tryParseLithuanian = Lithuanian.tryParseLithuanianImp
