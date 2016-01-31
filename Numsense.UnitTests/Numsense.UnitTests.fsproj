@@ -58,6 +58,7 @@
     <Compile Include="GermanExamples.fs" />
     <Compile Include="PolishExamples.fs" />
     <Compile Include="DutchExamples.fs" />
+    <Compile Include="RussianExamples.fs" />
     <Compile Include="Demo.fs" />
     <Content Include="packages.config" />
     <Content Include="App.config" />

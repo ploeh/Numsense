@@ -83,7 +83,11 @@ namespace Ploeh.Numsense.UnitTests
                     new ConverterPropertyGroup(
                         new DutchNumeralConverter(),
                         NumeralModule.toDutch,
-                        NumeralModule.tryParseDutch)
+                        NumeralModule.tryParseDutch),
+                    new ConverterPropertyGroup(
+                        new RussianNumeralConverter(),
+                        NumeralModule.toRussian,
+                        NumeralModule.tryParseRussian)
                     )
                     .ToArbitrary();
             }
