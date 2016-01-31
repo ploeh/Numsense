@@ -67,42 +67,46 @@ let internal tryParseSwedishImp (x : string) =
         match candidate with
         | ""                       -> Some acc
         | StartsWith "-"         t
-        | StartsWith "OCH"       t -> conv                acc  t
-        | StartsWith "NOLL"      t -> conv          (0  + acc) t
-        | StartsWith "EN"        t
-        | StartsWith "ETT"       t -> conv          (1  + acc) t
-        | StartsWith "TVÅ"       t -> conv          (2  + acc) t
-        | StartsWith "TRE"       t -> conv          (3  + acc) t
-        | StartsWith "FYRA"      t -> conv          (4  + acc) t
-        | StartsWith "FEMTIO"    t -> conv         (50  + acc) t
-        | StartsWith "FEM"       t -> conv          (5  + acc) t
-        | StartsWith "SEXTIO"    t -> conv         (60  + acc) t
-        | StartsWith "SEX"       t -> conv          (6  + acc) t
-        | StartsWith "SJU"       t -> conv          (7  + acc) t
-        | StartsWith "ÅTTA"      t -> conv          (8  + acc) t
-        | StartsWith "NIO"       t -> conv          (9  + acc) t
-        | StartsWith "TIO"       t -> conv         (10  + acc) t
-        | StartsWith "ELVA"      t -> conv         (11  + acc) t
-        | StartsWith "TOLV"      t -> conv         (12  + acc) t
-        | StartsWith "TTON"      t
-        | StartsWith "TON"       t -> conv         (10  + acc) t
-        | StartsWith "FJORTON"   t -> conv         (14  + acc) t
-        | StartsWith "ARTON"     t -> conv         (18  + acc) t
-        | StartsWith "NITTON"    t -> conv         (19  + acc) t
-        | StartsWith "TJUGO"     t -> conv         (20  + acc) t
-        | StartsWith "TTIO"      t -> conv         (10 %* acc) t
-        | StartsWith "FYRTIO"    t -> conv         (40  + acc) t
-        | StartsWith "ÅTTIO"     t -> conv         (80  + acc) t
-        | StartsWith "NITTIO"    t -> conv         (90  + acc) t
+        | StartsWith "OCH"       t -> conv                       acc  t
+        | StartsWith "NOLL"      t -> conv                 (0  + acc) t
+        | StartsWith "EN"        t                      
+        | StartsWith "ETT"       t -> conv                 (1  + acc) t
+        | StartsWith "TVÅ"       t -> conv                 (2  + acc) t
+        | StartsWith "TRE"       t -> conv                 (3  + acc) t
+        | StartsWith "FYRA"      t -> conv                 (4  + acc) t
+        | StartsWith "FEMTIO"    t -> conv                (50  + acc) t
+        | StartsWith "FEM"       t -> conv                 (5  + acc) t
+        | StartsWith "SEXTIO"    t -> conv                (60  + acc) t
+        | StartsWith "SEX"       t -> conv                 (6  + acc) t
+        | StartsWith "SJU"       t -> conv                 (7  + acc) t
+        | StartsWith "ÅTTA"      t -> conv                 (8  + acc) t
+        | StartsWith "NIO"       t -> conv                 (9  + acc) t
+        | StartsWith "TIO"       t -> conv                (10  + acc) t
+        | StartsWith "ELVA"      t -> conv                (11  + acc) t
+        | StartsWith "TOLV"      t -> conv                (12  + acc) t
+        | StartsWith "TTON"      t                      
+        | StartsWith "TON"       t -> conv                (10  + acc) t
+        | StartsWith "FJORTON"   t -> conv                (14  + acc) t
+        | StartsWith "ARTON"     t -> conv                (18  + acc) t
+        | StartsWith "NITTON"    t -> conv                (19  + acc) t
+        | StartsWith "TJUGO"     t -> conv                (20  + acc) t
+        | StartsWith "TTIO"      t -> conv                (10 %* acc) t
+        | StartsWith "FYRTIO"    t -> conv                (40  + acc) t
+        | StartsWith "ÅTTIO"     t -> conv                (80  + acc) t
+        | StartsWith "NITTIO"    t -> conv                (90  + acc) t
         | StartsWith "HUNDRA"    t ->
-            conv (if acc % 100 = 0 then 100 + acc else 100 %* acc) t
+            conv    (if acc % 100 = 0 then 100 + acc else 100 %* acc) t
         | StartsWith "USEN"      t
         | StartsWith "TUSEN"     t ->
-            conv (if acc = 0 then 1000 else       1000 %* acc) t
+            conv (if acc % 1000 = 0 then 1000 + acc else 1000 %* acc) t
         | StartsWith "MILJONER"  t
-        | StartsWith "MILJON"    t -> conv    (1000000 %* acc) t
+        | StartsWith "MILJON"    t ->
+            conv (if acc % 1000000 = 0 then 1000000 + acc
+                  else 1000000 %* acc) t
         | StartsWith "MILJARDER" t
-        | StartsWith "MILJARD"   t -> conv (1000000000  * acc) t
+        | StartsWith "MILJARD"   t ->
+            conv (if acc % 1000000000 = 0 then 1000000000 + acc
+                  else 1000000000 %* acc) t
         | _ -> None
 
     let canonicalized = x.Trim().ToUpper(System.Globalization.CultureInfo "sv-SE")
