@@ -44,6 +44,32 @@ type RussianNumeralConverter () =
         member this.TryParse (s, result) =
             Helper.tryParse Numeral.tryParseRussian (s, &result)
             
+type TraditionalChineseNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toTraditionalChinese number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseTraditionalChinese (s, &result)
+
+type TraditionalFinancialChineseNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number =
+            Numeral.toTraditionalFinancialChinese number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseTraditionalFinancialChinese (s, &result)
+
+type SimplifiedChineseNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toSimplifiedChinese number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseSimplifiedChinese (s, &result)
+
+type SimplifiedFinancialChineseNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number =
+            Numeral.toSimplifiedFinancialChinese number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseSimplifiedFinancialChinese (s, &result)
+
 type CatalanNumeralConverter () =
     interface INumeralConverter with
         member this.ToNumeral number = Numeral.toCatalan number
@@ -63,4 +89,12 @@ type Numeral private () =
     static member val Polish  = PolishNumeralConverter () :> INumeralConverter
     static member val Dutch   = DutchNumeralConverter () :> INumeralConverter
     static member val Russian = RussianNumeralConverter () :> INumeralConverter
+    static member val TraditionalChinese =
+        TraditionalChineseNumeralConverter () :> INumeralConverter
+    static member val TraditionalFinancialChinese =
+        TraditionalFinancialChineseNumeralConverter () :> INumeralConverter
+    static member val SimplifiedChinese =
+        SimplifiedChineseNumeralConverter () :> INumeralConverter
+    static member val SimplifiedFinancialChinese =
+        SimplifiedFinancialChineseNumeralConverter () :> INumeralConverter
     static member val Catalan = CatalanNumeralConverter () :> INumeralConverter

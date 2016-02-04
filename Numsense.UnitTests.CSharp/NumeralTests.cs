@@ -95,6 +95,68 @@ namespace Ploeh.Numsense.UnitTests
         }
         
         [Fact]
+        public void TraditionalChineseIsCorrect()
+        {
+            var actual = Numeral.TraditionalChinese;
+            Assert.IsAssignableFrom<TraditionalChineseNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void TraditionalChineseIsSingleton()
+        {
+            var expected = Numeral.TraditionalChinese;
+            var actual = Numeral.TraditionalChinese;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void TraditionalFinancialChineseIsCorrect()
+        {
+            var actual = Numeral.TraditionalFinancialChinese;
+            Assert.IsAssignableFrom
+                <TraditionalFinancialChineseNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void TraditionalFinancialChineseIsSingleton()
+        {
+            var expected = Numeral.TraditionalFinancialChinese;
+            var actual = Numeral.TraditionalFinancialChinese;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void SimplifiedChineseIsCorrect()
+        {
+            var actual = Numeral.SimplifiedChinese;
+            Assert.IsAssignableFrom<SimplifiedChineseNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void SimplifiedChineseIsSingleton()
+        {
+            var expected = Numeral.SimplifiedChinese;
+            var actual = Numeral.SimplifiedChinese;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void SimplifiedFinancialChineseIsCorrect()
+        {
+            var actual = Numeral.SimplifiedFinancialChinese;
+            Assert.IsAssignableFrom
+                <SimplifiedFinancialChineseNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void SimplifiedFinancialChineseIsSingleton()
+        {
+            var expected = Numeral.SimplifiedFinancialChinese;
+            var actual = Numeral.SimplifiedFinancialChinese;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
         public void CatalanIsCorrect()
         {
             var actual = Numeral.Catalan;

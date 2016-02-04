@@ -94,6 +94,71 @@ let ``negative Russian is the inverse of positive Russian`` x =
     sprintf "минус %s" (Numeral.toRussian x) =! actualRussian
     Some -x =! actualInteger
     
+
+[<Property(QuietOnSuccess = true)>]
+let ``tryParseTraditionalChinese is the inverse of toTraditionalChinese`` x =
+    test <@ Some x = (x |> Numeral.toTraditionalChinese
+                        |> Numeral.tryParseTraditionalChinese) @>
+
+[<Property(QuietOnSuccess = true)>]
+let ``negative TraditionalChinese is the inverse of positive TraditionalChinese`` x =
+    x <> 0 ==> lazy
+    let x = abs x
+
+    let actualChinese = Numeral.toTraditionalChinese -x
+    let actualInteger = Numeral.tryParseTraditionalChinese actualChinese
+
+    sprintf "負%s" (Numeral.toTraditionalChinese x) =! actualChinese
+    Some -x =! actualInteger
+
+[<Property(QuietOnSuccess = true)>]
+let ``tryParseTraditionalFinancialChinese is the inverse of toTraditionalFinancialChinese`` x =
+    test <@ Some x = (x |> Numeral.toTraditionalFinancialChinese
+                        |> Numeral.tryParseTraditionalFinancialChinese) @>
+
+[<Property(QuietOnSuccess = true)>]
+let ``negative TraditionalFinancialChinese is the inverse of positive TraditionalFinancialChinese`` x =
+    x <> 0 ==> lazy
+    let x = abs x
+
+    let actualChinese = Numeral.toTraditionalFinancialChinese -x
+    let actualInteger = Numeral.tryParseTraditionalFinancialChinese actualChinese
+
+    sprintf "負%s" (Numeral.toTraditionalFinancialChinese x) =! actualChinese
+    Some -x =! actualInteger
+
+[<Property(QuietOnSuccess = true)>]
+let ``tryParseSimplifiedChinese is the inverse of toSimplifiedChinese`` x =
+    test <@ Some x = (x |> Numeral.toSimplifiedChinese
+                        |> Numeral.tryParseSimplifiedChinese) @>
+
+[<Property(QuietOnSuccess = true)>]
+let ``negative SimplifiedChinese is the inverse of positive SimplifiedChinese`` x =
+    x <> 0 ==> lazy
+    let x = abs x
+
+    let actualChinese = Numeral.toSimplifiedChinese -x
+    let actualInteger = Numeral.tryParseSimplifiedChinese actualChinese
+
+    sprintf "负%s" (Numeral.toSimplifiedChinese x) =! actualChinese
+    Some -x =! actualInteger
+
+[<Property(QuietOnSuccess = true)>]
+let ``tryParseSimplifiedFinancialChinese is the inverse of toSimplifiedFinancialChinese`` x =
+    test <@ Some x = (x |> Numeral.toSimplifiedFinancialChinese
+                        |> Numeral.tryParseSimplifiedFinancialChinese) @>
+
+[<Property(QuietOnSuccess = true)>]
+let ``negative SimplifiedFinancialChinese is the inverse of positive SimplifiedFinancialChinese`` x =
+    x <> 0 ==> lazy
+    let x = abs x
+
+    let actualChinese = Numeral.toSimplifiedFinancialChinese -x
+    let actualInteger = Numeral.tryParseSimplifiedFinancialChinese actualChinese
+
+    sprintf "负%s" (Numeral.toSimplifiedFinancialChinese x) =! actualChinese
+    Some -x =! actualInteger
+
 [<Property(QuietOnSuccess = true)>]
 let ``tryParseCatalan is the inverse of toCatalan`` x =
     test <@ Some x = (x |> Numeral.toCatalan |> Numeral.tryParseCatalan) @>
