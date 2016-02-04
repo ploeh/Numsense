@@ -22,14 +22,16 @@ namespace Ploeh.Numsense.UnitTests
         [ConverterProperty]
         public void TryParseProperNumeralReturnsCorrectResult(
             ConverterPropertyGroup p,
-            int expected)
+            int i)
         {
-            var numeral = p.ToNumeralImp.Invoke(expected);
+            var numeral = p.ToNumeralImp.Invoke(i);
+
             int actual;
             var success = p.Sut.TryParse(numeral, out actual);
 
+            var expected = p.TryParseImp.Invoke(numeral);
             Assert.True(success);
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, FSharpOption<int>.Some(actual));
         }
 
         [ConverterProperty]
@@ -77,7 +79,23 @@ namespace Ploeh.Numsense.UnitTests
                     new ConverterPropertyGroup(
                         new FarsiNumeralConverter(), 
                         NumeralModule.toFarsi,
-                        NumeralModule.tryParseFarsi)
+                        NumeralModule.tryParseFarsi),
+                    new ConverterPropertyGroup(
+                        new PolishNumeralConverter(),
+                        NumeralModule.toPolish,
+                        NumeralModule.tryParsePolish),
+                    new ConverterPropertyGroup(
+                        new DutchNumeralConverter(),
+                        NumeralModule.toDutch,
+                        NumeralModule.tryParseDutch),
+                    new ConverterPropertyGroup(
+                        new RussianNumeralConverter(),
+                        NumeralModule.toRussian,
+                        NumeralModule.tryParseRussian),
+                    new ConverterPropertyGroup(
+                        new CatalanNumeralConverter(),
+                        NumeralModule.toCatalan,
+                        NumeralModule.tryParseCatalan)
                     )
                     .ToArbitrary();
             }

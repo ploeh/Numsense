@@ -87,9 +87,12 @@ AppPackages/
 
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git ;-)
-_UpgradeReport_Files/
+_Upgr/
 Backup*/
 UpgradeLog*.XML
+
+# FAKE hidden directory
+.fake/
 
 # Generated .nupkg file in root directory
 Numsense.*.nupkg
