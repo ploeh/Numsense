@@ -56,6 +56,12 @@ type FarsiNumeralConverter () =
         member this.TryParse (s, result) =
             Helper.tryParse Numeral.tryParseFarsi (s, &result)
          
+type WelshNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toWelsh number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseWelsh (s, &result)
+
 type Numeral private () =
     static member val English = EnglishNumeralConverter () :> INumeralConverter
     static member val Farsi   = FarsiNumeralConverter () :> INumeralConverter
@@ -64,3 +70,4 @@ type Numeral private () =
     static member val Dutch   = DutchNumeralConverter () :> INumeralConverter
     static member val Russian = RussianNumeralConverter () :> INumeralConverter
     static member val Catalan = CatalanNumeralConverter () :> INumeralConverter
+    static member val Welsh   = WelshNumeralConverter () :> INumeralConverter

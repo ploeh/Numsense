@@ -95,7 +95,11 @@ namespace Ploeh.Numsense.UnitTests
                     new ConverterPropertyGroup(
                         new CatalanNumeralConverter(),
                         NumeralModule.toCatalan,
-                        NumeralModule.tryParseCatalan)
+                        NumeralModule.tryParseCatalan),
+                    new ConverterPropertyGroup(
+                        new WelshNumeralConverter(),
+                        NumeralModule.toWelsh,
+                        NumeralModule.tryParseWelsh ) 
                     )
                     .ToArbitrary();
             }
