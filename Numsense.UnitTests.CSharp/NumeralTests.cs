@@ -47,8 +47,8 @@ namespace Ploeh.Numsense.UnitTests
         {
             var expected = Numeral.Farsi;
             var actual = Numeral.Farsi;
-			Assert.Same(expected, actual);
-		}
+            Assert.Same(expected, actual);
+        }
 
         public void PolishIsCorrect()
         {
@@ -78,7 +78,7 @@ namespace Ploeh.Numsense.UnitTests
             var actual = Numeral.Dutch;
             Assert.Same(expected, actual);
         }
-        
+
         [Fact]
         public void RussianIsCorrect()
         {
@@ -93,7 +93,7 @@ namespace Ploeh.Numsense.UnitTests
             var actual = Numeral.Russian;
             Assert.Same(expected, actual);
         }
-        
+
         [Fact]
         public void CatalanIsCorrect()
         {
@@ -108,5 +108,21 @@ namespace Ploeh.Numsense.UnitTests
             var actual = Numeral.Catalan;
             Assert.Same(expected, actual);
         }
+
+        [Fact]
+        public void WelshIsCorrect()
+        {
+            var actual = Numeral.Welsh;
+            Assert.IsAssignableFrom<WelshNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void WelshIsSingleton()
+        {
+            var expected = Numeral.Welsh;
+            var actual = Numeral.Welsh;
+            Assert.Same(expected, actual);
+        }
     }
 }
+

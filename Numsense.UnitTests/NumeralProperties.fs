@@ -108,3 +108,18 @@ let ``negative Catalan is the inverse of positive Catalan`` x =
 
     sprintf "menys %s" (Numeral.toCatalan x) =! actualCatalan
     Some -x =! actualInteger
+
+[<Property(QuietOnSuccess = true)>]
+let ``tryParseWelsh is the inverse of toWelsh`` x =
+    test <@ Some x = (x |> Numeral.toWelsh |> Numeral.tryParseWelsh) @>
+
+[<Property(QuietOnSuccess = true)>]
+let ``negative Welsh is the inverse of positive Welsh`` x =
+    x <> 0 ==> lazy
+    let x = abs x
+
+    let actualWelsh   = Numeral.toWelsh -x
+    let actualInteger = Numeral.tryParseWelsh actualWelsh
+
+    sprintf "minus %s" (Numeral.toWelsh x) =! actualWelsh
+    Some -x =! actualInteger
