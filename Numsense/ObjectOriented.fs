@@ -71,4 +71,3 @@ type Numeral private () =
     static member val Russian    = RussianNumeralConverter () :> INumeralConverter
     static member val Catalan    = CatalanNumeralConverter () :> INumeralConverter
     static member val Portuguese = PortugueseNumeralConverter () :> INumeralConverter
->>>>>>> master
