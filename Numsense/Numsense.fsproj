@@ -56,9 +56,12 @@
     <Compile Include="InternalDsl.fs" />
     <Compile Include="Danish.fs" />
     <Compile Include="English.fs" />
+    <Compile Include="Farsi.fs" />
     <Compile Include="Polish.fs" />
     <Compile Include="Portuguese.fs" />
     <Compile Include="Dutch.fs" />
+    <Compile Include="Russian.fs" />
+    <Compile Include="Catalan.fs" />
     <Compile Include="Numeral.fs" />
     <Compile Include="ObjectOriented.fs" />
     <Content Include="packages.config" />
@@ -72,7 +75,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

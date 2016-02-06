@@ -35,6 +35,21 @@ let ``negative Danish is the inverse of positive Danish`` x =
     Some -x =! actualInteger
 
 [<Property(QuietOnSuccess = true)>]
+let ``tryOfFarsi is the inverse of toFarsi`` x =
+    test <@ Some x = (x |> Numeral.toFarsi |> Numeral.tryParseFarsi) @>
+
+[<Property(QuietOnSuccess = true)>]
+let ``negative Farsi is the inverse of positive Farsi`` x =
+    x <> 0 ==> lazy
+    let x = abs x
+
+    let actualFarsi = Numeral.toFarsi -x
+    let actualInteger = Numeral.tryParseFarsi actualFarsi
+
+    sprintf "منفی %s" (Numeral.toFarsi x) =! actualFarsi
+    Some -x =! actualInteger
+
+[<Property(QuietOnSuccess = true)>]
 let ``tryParsePolish is the inverse of toPolish`` x =
     test <@ Some x = (x |> Numeral.toPolish |> Numeral.tryParsePolish) @>
 
@@ -77,4 +92,34 @@ let ``negative Portuguese is the inverse of positive Portuguese`` x =
     let actualInteger = Numeral.tryParsePortuguese actualPortuguese
 
     sprintf "menos %s" (Numeral.toPortuguese x) =! actualPortuguese
+    Some -x =! actualInteger
+
+[<Property(QuietOnSuccess = true)>]
+let ``tryParseRussian is the inverse of toRussian`` x =
+    test <@ Some x = (x |> Numeral.toRussian |> Numeral.tryParseRussian) @>
+
+[<Property(QuietOnSuccess = true)>]
+let ``negative Russian is the inverse of positive Russian`` x =
+    x <> 0 ==> lazy
+    let x = abs x
+
+    let actualRussian = Numeral.toRussian -x
+    let actualInteger = Numeral.tryParseRussian actualRussian
+
+    sprintf "минус %s" (Numeral.toRussian x) =! actualRussian
+    Some -x =! actualInteger
+
+[<Property(QuietOnSuccess = true)>]
+let ``tryParseCatalan is the inverse of toCatalan`` x =
+    test <@ Some x = (x |> Numeral.toCatalan |> Numeral.tryParseCatalan) @>
+
+[<Property(QuietOnSuccess = true)>]
+let ``negative Catalan is the inverse of positive Catalan`` x =
+    x <> 0 ==> lazy
+    let x = abs x
+
+    let actualCatalan = Numeral.toCatalan -x
+    let actualInteger = Numeral.tryParseCatalan actualCatalan
+
+    sprintf "menys %s" (Numeral.toCatalan x) =! actualCatalan
     Some -x =! actualInteger
