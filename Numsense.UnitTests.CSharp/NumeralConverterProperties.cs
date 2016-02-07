@@ -81,6 +81,10 @@ namespace Ploeh.Numsense.UnitTests
                         NumeralModule.toGerman,
                         NumeralModule.tryParseGerman),
                     new ConverterPropertyGroup(
+                        new FarsiNumeralConverter(), 
+                        NumeralModule.toFarsi,
+                        NumeralModule.tryParseFarsi),
+                    new ConverterPropertyGroup(
                         new PolishNumeralConverter(),
                         NumeralModule.toPolish,
                         NumeralModule.tryParsePolish),
@@ -91,7 +95,11 @@ namespace Ploeh.Numsense.UnitTests
                     new ConverterPropertyGroup(
                         new RussianNumeralConverter(),
                         NumeralModule.toRussian,
-                        NumeralModule.tryParseRussian)
+                        NumeralModule.tryParseRussian),
+                    new ConverterPropertyGroup(
+                        new CatalanNumeralConverter(),
+                        NumeralModule.toCatalan,
+                        NumeralModule.tryParseCatalan)
                     )
                     .ToArbitrary();
             }
