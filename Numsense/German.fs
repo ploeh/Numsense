@@ -45,7 +45,6 @@ let rec convertPart einEnde x  =
     | 17 -> "siebzehn"
     | 18 -> "achtzehn"
     | 19 -> "neunzehn"
-    | 20 -> "zwanzig"
     | Between 20 30 x -> simplifyReverse "zwanzig" 10 x
     | Between 30 40 x -> simplifyReverse "dreißig" 10 x
     | Between 40 50 x -> simplifyReverse "vierzig" 10 x
@@ -128,11 +127,8 @@ let internal tryParseGermanImp (x : string) =
         | StartsWith "ZEHN"      t -> conv         (10  + acc) t
         | StartsWith "ELF"       t -> conv         (11  + acc) t
         | StartsWith "ZWÖLF"     t -> conv         (12  + acc) t
-        | StartsWith "DREIZEHN"  t -> conv         (13  + acc) t
-        | StartsWith "FÜNFZEHN"  t -> conv         (15  + acc) t
         | StartsWith "SECHZEHN"  t -> conv         (16  + acc) t
         | StartsWith "SIEBZEHN"  t -> conv         (17  + acc) t
-        | StartsWith "EHN"       t // matches 'een' in 'eighteen'
         | StartsWith "ZEHN"      t -> conv         (10  + acc) t
         | StartsWith "ZWANZIG"   t -> conv         (20  + acc) t
         | StartsWith "DREIßIG"   t -> conv         (30  + acc) t
