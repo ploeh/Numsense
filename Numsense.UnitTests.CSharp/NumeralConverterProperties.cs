@@ -77,6 +77,10 @@ namespace Ploeh.Numsense.UnitTests
                         NumeralModule.toDanish,
                         NumeralModule.tryParseDanish),
                     new ConverterPropertyGroup(
+                        new FarsiNumeralConverter(), 
+                        NumeralModule.toFarsi,
+                        NumeralModule.tryParseFarsi),
+                    new ConverterPropertyGroup(
                         new PolishNumeralConverter(),
                         NumeralModule.toPolish,
                         NumeralModule.tryParsePolish),
@@ -87,7 +91,11 @@ namespace Ploeh.Numsense.UnitTests
                     new ConverterPropertyGroup(
                         new RussianNumeralConverter(),
                         NumeralModule.toRussian,
-                        NumeralModule.tryParseRussian)
+                        NumeralModule.tryParseRussian),
+                    new ConverterPropertyGroup(
+                        new CatalanNumeralConverter(),
+                        NumeralModule.toCatalan,
+                        NumeralModule.tryParseCatalan)
                     )
                     .ToArbitrary();
             }
@@ -103,7 +111,7 @@ namespace Ploeh.Numsense.UnitTests
                 INumeralConverter sut,
                 FSharpFunc<int, string> toNumeralImp,
                 FSharpFunc<string, FSharpOption<int>> tryParseImp)
-            {   
+            {
                 this.Sut = sut;
                 this.ToNumeralImp = toNumeralImp;
                 this.TryParseImp = tryParseImp;
