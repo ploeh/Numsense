@@ -123,5 +123,20 @@ namespace Ploeh.Numsense.UnitTests
             var actual = Numeral.Swedish;
             Assert.Same(expected, actual);
         }
+
+        [Fact]
+        public void RomanianIsCorrect()
+        {
+            var actual = Numeral.Romanian;
+            Assert.IsAssignableFrom<RomanianNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void RomanianIsSingleton()
+        {
+            var expected = Numeral.Romanian;
+            var actual = Numeral.Romanian;
+            Assert.Same(expected, actual);
+        }
     }
 }

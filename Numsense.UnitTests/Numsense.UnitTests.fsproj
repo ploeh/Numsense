@@ -62,6 +62,7 @@
     <Compile Include="RussianExamples.fs" />
     <Compile Include="CatalanExamples.fs" />
     <Compile Include="SwedishExamples.fs" />
+    <Compile Include="RomanianExamples.fs" />
     <Compile Include="Demo.fs" />
     <Content Include="packages.config" />
     <Content Include="App.config" />

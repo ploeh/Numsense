@@ -99,7 +99,11 @@ namespace Ploeh.Numsense.UnitTests
                     new ConverterPropertyGroup(
                         new SwedishNumeralConverter(),
                         NumeralModule.toSwedish,
-                        NumeralModule.tryParseSwedish)
+                        NumeralModule.tryParseSwedish),
+                    new ConverterPropertyGroup(
+                        new RomanianNumeralConverter(),
+                        NumeralModule.toRomanian,
+                        NumeralModule.tryParseRomanian)
                     )
                     .ToArbitrary();
             }
