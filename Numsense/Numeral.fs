@@ -24,3 +24,6 @@ let tryParseCatalan = Catalan.tryParseCatalanImp
 
 let toSwedish =       Swedish.toSwedishImp
 let tryParseSwedish = Swedish.tryParseSwedishImp
+
+let toSlovak =        Slovak.toSlovakImp Slovak.MasculineInanimate
+let tryParseSlovak =  Slovak.tryParseSlovakImp
