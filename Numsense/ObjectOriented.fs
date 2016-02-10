@@ -44,6 +44,24 @@ type RussianNumeralConverter () =
         member this.TryParse (s, result) =
             Helper.tryParse Numeral.tryParseRussian (s, &result)
 
+type CatalanNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toCatalan number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseCatalan (s, &result)
+
+type FarsiNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toFarsi number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseFarsi (s, &result)
+         
+type SwedishNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toSwedish number
+        member this.TryParse (s, result) = 
+            Helper.tryParse Numeral.tryParseSwedish (s, &result)
+
 type SlovakNumeralConverter () =
     interface INumeralConverter with
         member this.ToNumeral number = Numeral.toSlovak number
@@ -52,8 +70,11 @@ type SlovakNumeralConverter () =
 
 type Numeral private () =
     static member val English = EnglishNumeralConverter () :> INumeralConverter
-    static member val Danish  =  DanishNumeralConverter () :> INumeralConverter
-    static member val Polish  =  PolishNumeralConverter () :> INumeralConverter
-    static member val Dutch   =   DutchNumeralConverter () :> INumeralConverter
+    static member val Farsi   = FarsiNumeralConverter () :> INumeralConverter
+    static member val Danish  = DanishNumeralConverter () :> INumeralConverter
+    static member val Polish  = PolishNumeralConverter () :> INumeralConverter
+    static member val Dutch   = DutchNumeralConverter () :> INumeralConverter
     static member val Russian = RussianNumeralConverter () :> INumeralConverter
-    static member val Slovak  =  SlovakNumeralConverter () :> INumeralConverter
+    static member val Catalan = CatalanNumeralConverter () :> INumeralConverter
+    static member val Swedish = SwedishNumeralConverter () :> INumeralConverter
+    static member val Slovak  = SlovakNumeralConverter () :> INumeralConverter

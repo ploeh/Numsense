@@ -12,6 +12,6 @@ let internal (|Between|_|) lower upper candidate =
 
 let internal (%*) factor x =
     let multiplicand = x % factor
-    x + (factor * multiplicand) - multiplicand
-
-
+    if multiplicand = 0 
+    then x + factor
+    else x + (factor * multiplicand) - multiplicand
