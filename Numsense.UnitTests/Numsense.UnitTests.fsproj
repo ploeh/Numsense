@@ -63,6 +63,7 @@
     <Compile Include="CatalanExamples.fs" />
     <Compile Include="SwedishExamples.fs" />
     <Compile Include="RomanianExamples.fs" />
+    <Compile Include="GermanExamples.fs" />
     <Compile Include="Demo.fs" />
     <Content Include="packages.config" />
     <Content Include="App.config" />
@@ -108,7 +109,7 @@
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

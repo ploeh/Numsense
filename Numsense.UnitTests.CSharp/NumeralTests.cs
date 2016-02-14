@@ -93,7 +93,7 @@ namespace Ploeh.Numsense.UnitTests
             var actual = Numeral.Russian;
             Assert.Same(expected, actual);
         }
-        
+
         [Fact]
         public void CatalanIsCorrect()
         {
@@ -136,6 +136,21 @@ namespace Ploeh.Numsense.UnitTests
         {
             var expected = Numeral.Romanian;
             var actual = Numeral.Romanian;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void GermanIsCorrect()
+        {
+            var actual = Numeral.German;
+            Assert.IsAssignableFrom<GermanNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void GermanIsSingleton()
+        {
+            var expected = Numeral.German;
+            var actual = Numeral.German;
             Assert.Same(expected, actual);
         }
     }
