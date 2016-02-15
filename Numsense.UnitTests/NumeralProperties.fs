@@ -153,5 +153,5 @@ let ``negative German is the inverse of positive German`` x =
     let actualGerman = Numeral.toGerman -x
     let actualInteger = Numeral.tryParseGerman actualGerman
 
-    sprintf "minus %s" (Numeral.toGerman x) =! actualGerman
+    sprintf "minus-%s" (Numeral.toGerman x) =! actualGerman
     Some -x =! actualInteger

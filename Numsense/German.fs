@@ -1,23 +1,32 @@
 module internal Ploeh.Numsense.German
 
 open Ploeh.Numsense.InternalDsl
+open System
 
-let rec internal toGermanImp x =
+let rec convertPart einEnde x  =
+
+    let simplifyReverse prefix factor x =
+        let remainder = x % factor
+        match remainder = 0 with
+        | true ->
+            prefix
+        | false ->
+            sprintf "%s-und-%s" (convertPart "" (remainder) ) prefix
 
     let simplify prefix factor x =
         let remainder = x % factor
-        if remainder = 0
-        then prefix
-        else sprintf "%s-%s" prefix (toGermanImp (remainder))
+        match remainder = 0 with
+        | true ->
+            prefix
+        | false ->
+            sprintf "%s-%s" prefix (convertPart "" (remainder))
 
     let format suffix factor x =
-        let prefix = sprintf "%s%s" (toGermanImp (x / factor)) suffix
+        let prefix = sprintf "%s%s" (convertPart "" (x / factor)) suffix
         simplify prefix factor x
 
     match x with
-    |  x when x < 0 -> sprintf "minus %s" (toGermanImp -x)
-    |  0 -> "null"
-    |  1 -> "eins"
+    |  1 -> "ein" + einEnde
     |  2 -> "zwei"
     |  3 -> "drei"
     |  4 -> "vier"
@@ -32,22 +41,76 @@ let rec internal toGermanImp x =
     | 13 -> "dreizehn"
     | 14 -> "vierzehn"
     | 15 -> "fünfzehn"
-    | 16 -> "sechszehn"
-    | 17 -> "siebenzehn"
+    | 16 -> "sechzehn"
+    | 17 -> "siebzehn"
     | 18 -> "achtzehn"
     | 19 -> "neunzehn"
-    | Between 20 30 x -> simplify "zwanzig" 10 x
-    | Between 30 40 x -> simplify "dreißig" 10 x
-    | Between 40 50 x -> simplify "vierzig" 10 x
-    | Between 50 60 x -> simplify "fünfzig" 10 x
-    | Between 60 70 x -> simplify "sechzig" 10 x
-    | Between 70 80 x -> simplify "siebzig" 10 x
-    | Between 80 90 x -> simplify "achtzig" 10 x
-    | Between 60 100 x -> format "zig" 10 x
-    | Between 100 1000 x -> format "-hundert" 100 x
-    | Between 1000 1000000 x -> format "-tausend" 1000 x
-    | Between 1000000 1000000000 x -> format "-million" 1000000 x
-    | _ -> format "-milliarde" 1000000000 x
+    | Between 20 30 x -> simplifyReverse "zwanzig" 10 x
+    | Between 30 40 x -> simplifyReverse "dreißig" 10 x
+    | Between 40 50 x -> simplifyReverse "vierzig" 10 x
+    | Between 50 60 x -> simplifyReverse "fünfzig" 10 x
+    | Between 60 70 x -> simplifyReverse "sechzig" 10 x
+    | Between 70 80 x -> simplifyReverse "siebzig" 10 x
+    | Between 80 90 x -> simplifyReverse "achtzig" 10 x
+    | Between 90 100 x -> simplifyReverse "neunzig" 10 x
+    | 100 -> format "-hundert" 100 x
+    | 101 -> "ein-hundert-eins"
+    | Between 101 1000 x -> format "-hundert" 100 x
+    | _ -> ""
+
+let convToInt (str : string) =
+    Convert.ToInt32(str)
+
+let combineParts (newPart : string) (result : string) =
+    match (newPart <> "") with
+    | true ->
+        match (result <> "") with
+        | true -> sprintf "%s-%s" newPart result
+        | false -> newPart
+    | false -> result
+
+let getPartOfNumber start length number =
+    let divisor = pown 10 (start - 1)
+    let parts = pown 10 length
+
+    (number / divisor) % parts
+
+let internal toGermanNumber (x : int ) =
+
+    let minus = (x < 0)
+    let absValue = Math.Abs(x)
+
+    let milliarde = absValue |> getPartOfNumber 10 1  |> convertPart ""
+    let million = absValue |> getPartOfNumber 7 3 |> convertPart ""
+    let tausend = absValue |> getPartOfNumber 4 3 |> convertPart ""
+    let rest = absValue |> getPartOfNumber 1 3 |> convertPart "s"
+
+    let milliardeString = match milliarde with
+                          | "" -> ""
+                          | "ein" -> "eine-milliarde"
+                          | _ -> sprintf "%s%s" milliarde "-milliarden"
+    let millionString = match million with
+                        | "" -> ""
+                        | "ein" -> "eine-million"
+                        | _ -> sprintf "%s%s" million "-millionen"
+
+    let tausendString = match tausend with
+                        | "" -> ""
+                        | _ -> sprintf "%s%s" tausend "-tausend"
+
+    let result = rest
+                 |> combineParts tausendString
+                 |> combineParts millionString
+                 |> combineParts milliardeString
+
+    match minus with
+    | true -> sprintf "minus-%s" result
+    | false -> result
+
+let internal toGermanImp (x : int)  =
+    match x with
+    | 0 -> "null"
+    | _ -> toGermanNumber x
 
 let internal tryParseGermanImp (x : string) =
     let rec conv acc (candidate : string) =
@@ -64,9 +127,8 @@ let internal tryParseGermanImp (x : string) =
         | StartsWith "ZEHN"      t -> conv         (10  + acc) t
         | StartsWith "ELF"       t -> conv         (11  + acc) t
         | StartsWith "ZWÖLF"     t -> conv         (12  + acc) t
-        | StartsWith "DREIZEHN"  t -> conv         (13  + acc) t
-        | StartsWith "FÜNFZEHN"  t -> conv         (15  + acc) t
-        | StartsWith "EHN"       t // matches 'een' in 'eighteen'
+        | StartsWith "SECHZEHN"  t -> conv         (16  + acc) t
+        | StartsWith "SIEBZEHN"  t -> conv         (17  + acc) t
         | StartsWith "ZEHN"      t -> conv         (10  + acc) t
         | StartsWith "ZWANZIG"   t -> conv         (20  + acc) t
         | StartsWith "DREIßIG"   t -> conv         (30  + acc) t
