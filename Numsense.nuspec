@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/ploeh/Numsense</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A .NET library for parsing natural-language numerals ("forty-two") to integers, and converting the other way as well.</description>
-    <copyright>Copyright Mark Seemann 2014</copyright>
+    <copyright>Copyright Mark Seemann 2016</copyright>
     <tags>Integers Numbers Translation Language</tags>
     <dependencies>
       <dependency id="FSharp.Core" version="4.0.0.1" />
