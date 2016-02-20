@@ -47,7 +47,7 @@ namespace Ploeh.Numsense.UnitTests
         {
             var expected = Numeral.Farsi;
             var actual = Numeral.Farsi;
-			Assert.Same(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         public void PolishIsCorrect()
