@@ -62,6 +62,9 @@
     <Compile Include="Dutch.fs" />
     <Compile Include="Russian.fs" />
     <Compile Include="Catalan.fs" />
+    <Compile Include="Swedish.fs" />
+    <Compile Include="Romanian.fs" />
+    <Compile Include="German.fs" />
     <Compile Include="Numeral.fs" />
     <Compile Include="ObjectOriented.fs" />
     <Content Include="packages.config" />

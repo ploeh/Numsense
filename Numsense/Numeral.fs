@@ -22,5 +22,14 @@ let tryParseRussian    = Russian.tryParseRussianImp
 let toCatalan          = Catalan.toCatalanImp
 let tryParseCatalan    = Catalan.tryParseCatalanImp
 
+let toSwedish          = Swedish.toSwedishImp
+let tryParseSwedish    = Swedish.tryParseSwedishImp
+
+let toRomanian         = Romanian.toRomanianImp
+let tryParseRomanian   = Romanian.tryParseRomanianImp
+
+let toGerman           = German.toGermanImp
+let tryParseGerman     = German.tryParseGermanImp
+
 let toPortuguese       = Portuguese.toPortugueseImp
 let tryParsePortuguese = Portuguese.tryParsePortugueseImp

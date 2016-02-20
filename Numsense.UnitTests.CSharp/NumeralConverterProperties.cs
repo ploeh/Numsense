@@ -77,7 +77,7 @@ namespace Ploeh.Numsense.UnitTests
                         NumeralModule.toDanish,
                         NumeralModule.tryParseDanish),
                     new ConverterPropertyGroup(
-                        new FarsiNumeralConverter(), 
+                        new FarsiNumeralConverter(),
                         NumeralModule.toFarsi,
                         NumeralModule.tryParseFarsi),
                     new ConverterPropertyGroup(
@@ -95,7 +95,19 @@ namespace Ploeh.Numsense.UnitTests
                     new ConverterPropertyGroup(
                         new CatalanNumeralConverter(),
                         NumeralModule.toCatalan,
-                        NumeralModule.tryParseCatalan)
+                        NumeralModule.tryParseCatalan),
+                    new ConverterPropertyGroup(
+                        new SwedishNumeralConverter(),
+                        NumeralModule.toSwedish,
+                        NumeralModule.tryParseSwedish),
+                    new ConverterPropertyGroup(
+                        new RomanianNumeralConverter(),
+                        NumeralModule.toRomanian,
+                        NumeralModule.tryParseRomanian),
+                    new ConverterPropertyGroup(
+                        new GermanNumeralConverter(),
+                        NumeralModule.toGerman,
+                        NumeralModule.tryParseGerman)
                     )
                     .ToArbitrary();
             }
