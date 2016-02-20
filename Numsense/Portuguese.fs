@@ -5,7 +5,7 @@ open System.Diagnostics
 
 let rec internal toPortugueseImp x =
 
-    // Concatenates classes of numbers and simplifies some cases like trailing zeros
+    // Concatenates classes of numbers and simplifies some cases like zero
     let formatSimple prefix factor number =
         let remainder = number % factor
 
@@ -15,8 +15,8 @@ let rec internal toPortugueseImp x =
 
         let remainderHundreds = remainder |> getRemainderHundreds
 
-        let outputWithComma() =  sprintf "%s, %s" prefix (toPortugueseImp remainder)
-        let outputWithAnd() =  sprintf "%s e %s" prefix (toPortugueseImp remainder)
+        let outputWithComma() = sprintf "%s, %s" prefix (toPortugueseImp remainder)
+        let outputWithAnd() = sprintf "%s e %s" prefix (toPortugueseImp remainder)
         
         match remainder, remainderHundreds with
         | 0, _ -> prefix
@@ -24,6 +24,7 @@ let rec internal toPortugueseImp x =
         | _, r when r > 100 && r % 100 = 0 -> outputWithAnd()
         | _ -> outputWithComma() 
 
+    // Formats numbers that can be represented in different ways
     let format' suffixPlural suffixSingular factor value ignoreOne =
         let digits = value / factor
         match digits, ignoreOne with
