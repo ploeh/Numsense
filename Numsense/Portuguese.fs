@@ -5,26 +5,37 @@ open System.Diagnostics
 
 let rec internal toPortugueseImp x =
 
-    // Esentially simplifies expressions like 'twenty-zero' to 'twenty',
-    // 'one-milion-zero' to 'one-million', and so on.
-    let simplify prefix factor x =
-        let remainder = x % factor
-        if remainder = 0
-        then prefix
-        else sprintf "%s-%s" prefix (toPortugueseImp (remainder))
+    // Concatenates classes of numbers and simplifies some cases like trailing zeros
+    let formatSimple prefix factor number =
+        let remainder = number % factor
+
+        let rec getRemainderHundreds = function
+        | r when r > 1000 -> getRemainderHundreds (r / 1000)
+        | r -> r
+
+        let remainderHundreds = remainder |> getRemainderHundreds
+
+        let outputWithComma() =  sprintf "%s, %s" prefix (toPortugueseImp remainder)
+        let outputWithAnd() =  sprintf "%s e %s" prefix (toPortugueseImp remainder)
+        
+        match remainder, remainderHundreds with
+        | 0, _ -> prefix
+        | _, r when r > 0 && r <= 100 -> outputWithAnd()
+        | _, r when r > 100 && r % 100 = 0 -> outputWithAnd()
+        | _ -> outputWithComma() 
 
     let format' suffixPlural suffixSingular factor value ignoreOne =
-        let firstDigit = value / factor
-        match firstDigit, ignoreOne with
+        let digits = value / factor
+        match digits, ignoreOne with
         | 1, false ->
-            let prefix = sprintf "%s-%s" (toPortugueseImp firstDigit) suffixSingular
-            simplify prefix factor value
+            let prefix = sprintf "%s %s" (toPortugueseImp 1) suffixSingular
+            formatSimple prefix factor value
         | 1, true ->
             let form = if x % factor > 0 then suffixPlural else suffixSingular
-            simplify form factor value
-        | _ ->
-            let prefix = sprintf "%s-%s" (toPortugueseImp firstDigit) suffixPlural
-            simplify prefix factor value
+            formatSimple form factor value
+        | x, _->
+            let prefix = sprintf "%s %s" (toPortugueseImp x) suffixPlural
+            formatSimple prefix factor value
 
     let formatPlural suffixPlural suffixSingular factor value =
         format' suffixPlural suffixSingular factor value
@@ -54,31 +65,33 @@ let rec internal toPortugueseImp x =
     | 17 -> "dezassete"
     | 18 -> "dezoito"
     | 19 -> "dezanove"
-    | Between 20  30 x -> simplify "vinte" 20 x
-    | Between 30  40 x -> simplify "trinta" 30 x
-    | Between 40  50 x -> simplify "quarenta" 40 x
-    | Between 50  60 x -> simplify "cinquenta" 50 x
-    | Between 60  70 x -> simplify "sessenta" 60 x
-    | Between 70  80 x -> simplify "setenta" 70 x
-    | Between 80  90 x -> simplify "oitenta" 80 x
-    | Between 90  100 x -> simplify "noventa" 90 x
+    | Between 20  30 x -> formatSimple "vinte" 20 x
+    | Between 30  40 x -> formatSimple "trinta" 30 x
+    | Between 40  50 x -> formatSimple "quarenta" 40 x
+    | Between 50  60 x -> formatSimple "cinquenta" 50 x
+    | Between 60  70 x -> formatSimple "sessenta" 60 x
+    | Between 70  80 x -> formatSimple "setenta" 70 x
+    | Between 80  90 x -> formatSimple "oitenta" 80 x
+    | Between 90  100 x -> formatSimple "noventa" 90 x
     | Between 100 200 x -> formatPlural "cento" "cem" 100 x true
-    | Between 200 300 x -> simplify "duzentos" 200 x
-    | Between 300 400 x -> simplify "trezentos" 300 x
-    | Between 400 500 x -> simplify "quatrocentos" 400 x
-    | Between 500 600 x -> simplify "quinhentos" 500 x
-    | Between 600 700 x -> simplify "seiscentos" 600 x
-    | Between 700 800 x -> simplify "setecentos" 700 x
-    | Between 800 900 x -> simplify "oitocentos" 800 x
-    | Between 900 1000 x -> simplify "novecentos" 900 x
+    | Between 200 300 x -> formatSimple "duzentos" 200 x
+    | Between 300 400 x -> formatSimple "trezentos" 300 x
+    | Between 400 500 x -> formatSimple "quatrocentos" 400 x
+    | Between 500 600 x -> formatSimple "quinhentos" 500 x
+    | Between 600 700 x -> formatSimple "seiscentos" 600 x
+    | Between 700 800 x -> formatSimple "setecentos" 700 x
+    | Between 800 900 x -> formatSimple "oitocentos" 800 x
+    | Between 900 1000 x -> formatSimple "novecentos" 900 x
     | Between 1000 1000000 x -> formatSingular "mil" 1000 x true
     | Between 1000000 1000000000 x -> formatPlural "milhões" "milhão" 1000000 x false
-    | _ -> formatSingular "mil-milhões" 1000000000 x true
+        | _ -> formatSingular "mil milhões" 1000000000 x true
 
 let rec internal tryParsePortugueseImp (x:string) =
     let rec conv acc candidate =
         match candidate with
         | ""                          -> Some acc
+        | StartsWith " "            t
+        | StartsWith ", "           t
         | StartsWith "-"            t
         | StartsWith "E"            t -> conv                acc  t
         | StartsWith "ZERO"         t -> conv          (0  + acc) t

@@ -60,10 +60,10 @@
     <Compile Include="DutchExamples.fs" />
     <Compile Include="RussianExamples.fs" />
     <Compile Include="CatalanExamples.fs" />
+    <Compile Include="PortugueseExamples.fs" />
     <Compile Include="Demo.fs" />
     <Content Include="packages.config" />
     <Content Include="App.config" />
-    <Compile Include="PortugueseExamples.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FsCheck">
