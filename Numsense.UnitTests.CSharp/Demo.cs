@@ -45,5 +45,24 @@ namespace Ploeh.Numsense.UnitTests
             var danishNumeral = Numeral.Danish.ToNumeral(9);
             Assert.Equal("ni", danishNumeral);
         }
+
+        [Fact]
+        public void ConvertIntegerToBulgarian()
+        {
+            var bulgarianNumeral = Numeral.Bulgarian.ToNumeral(21);
+            Assert.Equal("двайсет-и-едно", bulgarianNumeral);
+        }
+
+        [Fact]
+        public void ParseBulgarianNumeralToInteger()
+        {
+            int i;
+            var success = Numeral.Bulgarian.TryParse(
+                "четиресет и две",
+                out i);
+
+            Assert.True(success);
+            Assert.Equal(42, i);
+        }
     }
 }
