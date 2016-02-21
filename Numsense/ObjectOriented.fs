@@ -80,6 +80,12 @@ type GermanNumeralConverter () =
         member this.TryParse (s, result) =
             Helper.tryParse Numeral.tryParseGerman (s, &result)
 
+type ItalianNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toItalian number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseItalian (s, &result)
+
 
 type Numeral private () =
     static member val Bulgarian = BulgarianNumeralConverter () :> INumeralConverter
@@ -93,3 +99,4 @@ type Numeral private () =
     static member val Swedish  = SwedishNumeralConverter () :> INumeralConverter
     static member val Romanian = RomanianNumeralConverter () :> INumeralConverter
     static member val German   = GermanNumeralConverter () :> INumeralConverter
+    static member val Italian  = ItalianNumeralConverter () :> INumeralConverter

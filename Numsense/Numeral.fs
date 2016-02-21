@@ -33,3 +33,6 @@ let tryParseRomanian = Romanian.tryParseRomanianImp
 
 let toGerman         = German.toGermanImp
 let tryParseGerman   = German.tryParseGermanImp
+
+let toItalian        = Italian.toItalianImp
+let tryParseItalian  = Italian.tryParseItalianImp

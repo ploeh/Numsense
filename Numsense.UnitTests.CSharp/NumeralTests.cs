@@ -168,5 +168,20 @@ namespace Ploeh.Numsense.UnitTests
             var actual = Numeral.German;
             Assert.Same(expected, actual);
         }
+
+        [Fact]
+        public void ItalianIsCorrect()
+        {
+            var actual = Numeral.Italian;
+            Assert.IsAssignableFrom<ItalianNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void ItalianIsSingleton()
+        {
+            var expected = Numeral.Italian;
+            var actual = Numeral.Italian;
+            Assert.Same(expected, actual);
+        }
     }
 }
