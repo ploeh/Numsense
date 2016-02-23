@@ -1,4 +1,4 @@
-﻿module Ploeh.Numsense.Italian
+﻿module internal Ploeh.Numsense.Italian
 
 open Ploeh.Numsense.InternalDsl
 
