@@ -102,10 +102,10 @@ let internal tryParseItalianImp (x : string) =
         | StartsWith "SESSANT"      t -> conv (     60  + acc) t
         | StartsWith "SETTANT"      t -> conv (     70  + acc) t
         | StartsWith "OTTANT"       t -> conv (     80  + acc) t
-          // Matches final "-o" in "uno" and "miliardo"
+          // Matches final "-o" in "uno", "cento" and "miliardo"
         | StartsWith "O"            t -> conv (           acc) t
         | StartsWith "NOVANT"       t -> conv (     90  + acc) t
-        | StartsWith "CENTO"        t -> 
+        | StartsWith "CENT"         t -> 
             conv (if acc = 0 then     100 else     100 %* acc) t
         | StartsWith "MILLE"        t -> conv (   1000  + acc) t
         | StartsWith "MILA"         t -> conv (   1000 %* acc) t
