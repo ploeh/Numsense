@@ -1,26 +1,36 @@
 ﻿module internal Ploeh.Numsense.BrazilianPortuguese
 
+open Ploeh.Numsense.InternalDsl
+
 let internal tryParseBrazilianImp (x : string) =
-    match x.Trim().ToUpper() with
-    | "ZERO"      -> Some 0
-    | "DEZ"       -> Some 10
-    | "ONZE"      -> Some 11
-    | "DOZE"      -> Some 12
-    | "TREZE"     -> Some 13
-    | "CATORZE"   -> Some 14
-    | "QUATORZE"  -> Some 14
-    | "QUINZE"    -> Some 15
-    | "DEZESSEIS" -> Some 16
-    | "DEZESSETE" -> Some 17
-    | "DEZOITO"   -> Some 18
-    | "DEZENOVE"  -> Some 19
-    | "UM"        -> Some 1
-    | "DOIS"      -> Some 2
-    | "TRÊS"      -> Some 3
-    | "QUATRO"    -> Some 4
-    | "CINCO"     -> Some 5
-    | "SEIS"      -> Some 6
-    | "SETE"      -> Some 7
-    | "OITO"      -> Some 8
-    | "NOVE"      -> Some 9
-    | _        -> None
+    let rec conv acc candidate =
+        match candidate with
+        | ""                   -> Some acc
+        | StartsWith " "     t
+        | StartsWith "E"     t -> conv acc t
+        | "ZERO"               -> Some  (0  + acc)
+        | StartsWith "VINTE" t -> conv (20  + acc) t
+        | "DEZ"                -> Some (10  + acc)
+        | "ONZE"               -> Some (11  + acc)
+        | "DOZE"               -> Some (12  + acc)
+        | "TREZE"              -> Some (13  + acc)
+        | "CATORZE"            -> Some (14  + acc)
+        | "QUATORZE"           -> Some (14  + acc)
+        | "QUINZE"             -> Some (15  + acc)
+        | "DEZESSEIS"          -> Some (16  + acc)
+        | "DEZESSETE"          -> Some (17  + acc)
+        | "DEZOITO"            -> Some (18  + acc)
+        | "DEZENOVE"           -> Some (19  + acc)
+        | "UM"                 -> Some  (1  + acc)
+        | "DOIS"               -> Some  (2  + acc)
+        | "TRÊS"               -> Some  (3  + acc)
+        | "QUATRO"             -> Some  (4  + acc)
+        | "CINCO"              -> Some  (5  + acc)
+        | "SEIS"               -> Some  (6  + acc)
+        | "SETE"               -> Some  (7  + acc)
+        | "OITO"               -> Some  (8  + acc)
+        | "NOVE"               -> Some  (9  + acc)
+        | _ -> None
+
+    let canonicalized = x.Trim().ToUpper(System.Globalization.CultureInfo "pt-BR")
+    conv 0 canonicalized
