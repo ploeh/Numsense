@@ -2,6 +2,11 @@
 
 open Ploeh.Numsense.InternalDsl
 
+let internal toBrazilianImp x =
+    match x with
+    | 0 -> "zero"
+    | _ -> ""
+
 let internal tryParseBrazilianImp (x : string) =
     let rec conv acc candidate =
         match candidate with

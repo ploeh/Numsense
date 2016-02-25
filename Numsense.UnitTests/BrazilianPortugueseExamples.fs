@@ -144,3 +144,9 @@ open Swensen.Unquote
 let ``tryParseBrazilian returns correct result`` (portuguese, expected) =
     let actual = Numeral.tryParseBrazilian portuguese
     Some expected =! actual
+
+[<Theory>]
+[<InlineData(0, "zero")>]
+let ``toBrazilian returns correct result`` (i, expected) =
+    let actual = Numeral.toBrazilian i
+    expected =! actual
