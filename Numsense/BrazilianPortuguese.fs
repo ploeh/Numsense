@@ -2,7 +2,13 @@
 
 open Ploeh.Numsense.InternalDsl
 
-let internal toBrazilianImp x =
+let rec internal toBrazilianImp x =
+    let format prefix factor x =
+        let remainder = x % factor
+        if remainder = 0
+        then prefix
+        else sprintf "%s e %s" prefix <| toBrazilianImp remainder
+
     match x with
     |  0 -> "zero"
     |  1 -> "um"
@@ -24,7 +30,7 @@ let internal toBrazilianImp x =
     | 17 -> "dezessete"
     | 18 -> "dezoito"
     | 19 -> "dezenove"
-    | 20 -> "vinte"
+    | Between 20 30 x -> format "vinte" 10 x
     | _  -> ""
 
 let internal tryParseBrazilianImp (x : string) =
