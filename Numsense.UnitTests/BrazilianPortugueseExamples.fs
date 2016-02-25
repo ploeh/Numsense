@@ -60,6 +60,8 @@ open Swensen.Unquote
 [<InlineData("cinqüenta e sete", 57)>]
 [<InlineData(        "sessenta", 60)>]
 [<InlineData( "sessenta e dois", 62)>]
+[<InlineData(         "setenta", 70)>]
+[<InlineData("setenta e quatro", 74)>]
 let ``tryParseBrazilian returns correct result`` (portuguese, expected) =
     let actual = Numeral.tryParseBrazilian portuguese
     Some expected =! actual
