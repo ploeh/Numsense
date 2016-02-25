@@ -92,6 +92,12 @@ type PortugueseNumeralConverter () =
         member this.TryParse (s, result) =
             Helper.tryParse Numeral.tryParsePortuguese (s, &result)
 
+type BrazilianNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toBrazilian number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseBrazilian (s, &result)
+
 type Numeral private () =
     static member val Bulgarian  = BulgarianNumeralConverter () :> INumeralConverter
     static member val English    = EnglishNumeralConverter () :> INumeralConverter
@@ -106,3 +112,4 @@ type Numeral private () =
     static member val Romanian   = RomanianNumeralConverter () :> INumeralConverter
     static member val German     = GermanNumeralConverter () :> INumeralConverter
     static member val Portuguese = PortugueseNumeralConverter () :> INumeralConverter
+    static member val Brazilian  = BrazilianNumeralConverter () :> INumeralConverter
