@@ -10,8 +10,8 @@ let internal tryParseBrazilianImp (x : string) =
         | StartsWith ","            t
         | StartsWith "E"            t -> conv acc t
         | "ZERO"                      -> Some    (0  + acc)
-        | StartsWith "MIL"          t -> conv (1000  + acc) t
-        | StartsWith "CEM"          t -> Some  (100  + acc)
+        | StartsWith "MIL"          t -> conv (1000 %* acc) t
+        | StartsWith "CEM"          t -> conv  (100  + acc) t
         | StartsWith "CENTOS"       t -> conv  (100 %* acc) t
         | StartsWith "CENTO"        t -> conv  (100  + acc) t
         | StartsWith "DUZENTOS"     t -> conv  (200  + acc) t
@@ -26,22 +26,22 @@ let internal tryParseBrazilianImp (x : string) =
         | StartsWith "SETENTA"      t -> conv   (70  + acc) t
         | StartsWith "OITENTA"      t -> conv   (80  + acc) t
         | StartsWith "NOVENTA"      t -> conv   (90  + acc) t
-        | "DEZ"                       -> Some   (10  + acc)
-        | "ONZE"                      -> Some   (11  + acc)
-        | "DOZE"                      -> Some   (12  + acc)
-        | "TREZE"                     -> Some   (13  + acc)
-        | "CATORZE"                   -> Some   (14  + acc)
-        | "QUATORZE"                  -> Some   (14  + acc)
-        | "QUINZE"                    -> Some   (15  + acc)
-        | "DEZESSEIS"                 -> Some   (16  + acc)
-        | "DEZESSETE"                 -> Some   (17  + acc)
-        | "DEZOITO"                   -> Some   (18  + acc)
-        | "DEZENOVE"                  -> Some   (19  + acc)
-        | "UM"                        -> Some    (1  + acc)
-        | "DOIS"                      -> Some    (2  + acc)
-        | "TRÊS"                      -> Some    (3  + acc)
+        | StartsWith "ONZE"         t -> conv   (11  + acc) t
+        | StartsWith "DOZE"         t -> conv   (12  + acc) t
+        | StartsWith "TREZE"        t -> conv   (13  + acc) t
+        | StartsWith "CATORZE"      t -> conv   (14  + acc) t
+        | StartsWith "QUATORZE"     t -> conv   (14  + acc) t
+        | StartsWith "QUINZE"       t -> conv   (15  + acc) t
+        | StartsWith "DEZESSEIS"    t -> conv   (16  + acc) t
+        | StartsWith "DEZESSETE"    t -> conv   (17  + acc) t
+        | StartsWith "DEZOITO"      t -> conv   (18  + acc) t
+        | StartsWith "DEZENOVE"     t -> conv   (19  + acc) t
+        | StartsWith "DEZ"          t -> conv   (10  + acc) t
+        | StartsWith "UM"           t -> conv    (1  + acc) t
+        | StartsWith "DOIS"         t -> conv    (2  + acc) t
+        | StartsWith "TRÊS"         t -> conv    (3  + acc) t
         | StartsWith "QUATRO"       t -> conv    (4  + acc) t
-        | "CINCO"                     -> Some    (5  + acc)
+        | StartsWith "CINCO"        t -> conv    (5  + acc) t
         | StartsWith "SEIS"         t -> conv    (6  + acc) t
         | StartsWith "SETE"         t -> conv    (7  + acc) t
         | StartsWith "OITO"         t -> conv    (8  + acc) t
