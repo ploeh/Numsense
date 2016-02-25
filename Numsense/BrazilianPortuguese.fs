@@ -7,7 +7,14 @@ let rec internal toBrazilianImp x =
         let remainder = x % factor
         if remainder = 0
         then prefix
-        else if remainder > 100 && x % 100 <> 0 then
+        else
+
+        let r =
+            if remainder > 1000
+            then remainder / 1000
+            else remainder
+
+        if r > 100 && r % 100 <> 0 then
             sprintf "%s, %s" prefix <| toBrazilianImp remainder
         else
             sprintf "%s e %s" prefix <| toBrazilianImp remainder
@@ -53,6 +60,8 @@ let rec internal toBrazilianImp x =
     | Between 400 1000 x -> formatSuffix "centos" 100 x
     | Between 1000 2000 x -> formatPrefix "mil" 1000 x
     | Between 1000 1000000 x -> formatSuffix " mil" 1000 x
+    | Between 1000000 2000000 x -> formatPrefix "um milhão" 1000000 x
+    | Between 2000000 1000000000 x -> formatSuffix " milhões" 1000000 x
     | _  -> ""
 
 let internal tryParseBrazilianImp (x : string) =
