@@ -10,7 +10,8 @@ let internal tryParseBrazilianImp (x : string) =
         | StartsWith ","            t
         | StartsWith "E"            t -> conv acc t
         | "ZERO"                      -> Some       (0  + acc)
-        | StartsWith "MILHÃO"       t -> conv (1000000 %* acc) t
+        | StartsWith "MILHÃO"       t
+        | StartsWith "MILHÕES"      t -> conv (1000000 %* acc) t
         | StartsWith "MIL"          t -> conv    (1000 %* acc) t
         | StartsWith "CEM"          t -> conv     (100  + acc) t
         | StartsWith "CENTOS"       t -> conv     (100 %* acc) t
