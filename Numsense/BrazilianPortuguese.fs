@@ -22,6 +22,7 @@ let rec internal toBrazilianImp x =
         formatPrefix prefix factor x
 
     match x with
+    |  x when x < 0 -> sprintf "menos %s" <| toBrazilianImp -x
     |  0 -> "zero"
     |  1 -> "um"
     |  2 -> "dois"
@@ -114,4 +115,6 @@ let internal tryParseBrazilianImp (x : string) =
         | _ -> None
 
     let canonicalized = x.Trim().ToUpper(System.Globalization.CultureInfo "pt-BR")
-    conv 0 canonicalized
+    match canonicalized with
+    | StartsWith "MENOS" t -> conv 0 t |> Option.map (~-)
+    | _ -> conv 0 canonicalized
