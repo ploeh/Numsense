@@ -11,6 +11,7 @@ let internal tryParseBrazilianImp (x : string) =
         | "ZERO"                   -> Some   (0  + acc)
         | StartsWith "CEM"       t -> Some (100  + acc)
         | StartsWith "CENTO"     t -> conv (100  + acc) t
+        | StartsWith "DUZENTOS"  t -> conv (200  + acc) t
         | StartsWith "VINTE"     t -> conv  (20  + acc) t
         | StartsWith "TRINTA"    t -> conv  (30  + acc) t
         | StartsWith "QUARENTA"  t -> conv  (40  + acc) t
