@@ -169,6 +169,20 @@ let ``tryParseBrazilian returns correct result`` (portuguese, expected) =
 [<InlineData(20, "vinte")>]
 [<InlineData(21, "vinte e um")>]
 [<InlineData(27, "vinte e sete")>]
+[<InlineData(30, "trinta")>]
+[<InlineData(34, "trinta e quatro")>]
+[<InlineData(40, "quarenta")>]
+[<InlineData(42, "quarenta e dois")>]
+[<InlineData(50, "cinquenta")>]
+[<InlineData(58, "cinquenta e oito")>]
+[<InlineData(60, "sessenta")>]
+[<InlineData(65, "sessenta e cinco")>]
+[<InlineData(70, "setenta")>]
+[<InlineData(79, "setenta e nove")>]
+[<InlineData(80, "oitenta")>]
+[<InlineData(86, "oitenta e seis")>]
+[<InlineData(90, "noventa")>]
+[<InlineData(93, "noventa e três")>]
 let ``toBrazilian returns correct result`` (i, expected) =
     let actual = Numeral.toBrazilian i
     expected =! actual
