@@ -10,12 +10,11 @@ let internal tryParseBrazilianImp (x : string) =
         | StartsWith "E"            t -> conv acc t
         | "ZERO"                      -> Some   (0  + acc)
         | StartsWith "CEM"          t -> Some (100  + acc)
+        | StartsWith "CENTOS"       t -> conv (100 %* acc) t
         | StartsWith "CENTO"        t -> conv (100  + acc) t
         | StartsWith "DUZENTOS"     t -> conv (200  + acc) t
         | StartsWith "TREZENTOS"    t -> conv (300  + acc) t
-        | StartsWith "QUATROCENTOS" t -> conv (400  + acc) t
         | StartsWith "QUINHENTOS"   t -> conv (500  + acc) t
-        | StartsWith "SEISCENTOS"   t -> conv (600  + acc) t
         | StartsWith "VINTE"        t -> conv  (20  + acc) t
         | StartsWith "TRINTA"       t -> conv  (30  + acc) t
         | StartsWith "QUARENTA"     t -> conv  (40  + acc) t
@@ -42,9 +41,9 @@ let internal tryParseBrazilianImp (x : string) =
         | StartsWith "QUATRO"       t -> conv   (4  + acc) t
         | "CINCO"                     -> Some   (5  + acc)
         | StartsWith "SEIS"         t -> conv   (6  + acc) t
-        | "SETE"                      -> Some   (7  + acc)
-        | "OITO"                      -> Some   (8  + acc)
-        | "NOVE"                      -> Some   (9  + acc)
+        | StartsWith "SETE"         t -> conv   (7  + acc) t
+        | StartsWith "OITO"         t -> conv   (8  + acc) t
+        | StartsWith "NOVE"         t -> conv   (9  + acc) t
         | _ -> None
 
     let canonicalized = x.Trim().ToUpper(System.Globalization.CultureInfo "pt-BR")
