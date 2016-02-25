@@ -5,20 +5,17 @@ open Ploeh.Numsense.InternalDsl
 let rec internal toBrazilianImp x =
     let formatPrefix prefix factor x =
         let remainder = x % factor
-        if remainder = 0
-        then prefix
-        else
 
         let rec hundreds x =
             if x > 1000
             then hundreds (x / 1000)
             else x
 
-        let r = hundreds remainder
-        if r > 100 && r % 100 <> 0 then
-            sprintf "%s, %s" prefix <| toBrazilianImp remainder
-        else
-            sprintf "%s e %s" prefix <| toBrazilianImp remainder
+        match remainder, hundreds remainder with
+        | 0, _ -> prefix
+        | _, r when r > 100 && r % 100 <> 0 ->
+               sprintf "%s, %s"  prefix <| toBrazilianImp remainder
+        | _ -> sprintf "%s e %s" prefix <| toBrazilianImp remainder
 
     let formatSuffix suffix factor x =
         let prefix = sprintf "%s%s" (toBrazilianImp (x / factor)) suffix
