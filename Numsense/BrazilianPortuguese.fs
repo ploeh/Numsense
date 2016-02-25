@@ -38,6 +38,8 @@ let rec internal toBrazilianImp x =
     | Between 70 80 x -> format "setenta" 10 x
     | Between 80 90 x -> format "oitenta" 10 x
     | Between 90 100 x -> format "noventa" 10 x
+    | 100 -> "cem"
+    | Between 100 200 x -> format "cento" 100 x
     | _  -> ""
 
 let internal tryParseBrazilianImp (x : string) =
