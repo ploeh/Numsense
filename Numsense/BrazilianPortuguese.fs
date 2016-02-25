@@ -39,9 +39,9 @@ let internal tryParseBrazilianImp (x : string) =
         | "UM"                        -> Some   (1  + acc)
         | "DOIS"                      -> Some   (2  + acc)
         | "TRÊS"                      -> Some   (3  + acc)
-        | "QUATRO"                    -> Some   (4  + acc)
+        | StartsWith "QUATRO"       t -> conv   (4  + acc) t
         | "CINCO"                     -> Some   (5  + acc)
-        | "SEIS"                      -> Some   (6  + acc)
+        | StartsWith "SEIS"         t -> conv   (6  + acc) t
         | "SETE"                      -> Some   (7  + acc)
         | "OITO"                      -> Some   (8  + acc)
         | "NOVE"                      -> Some   (9  + acc)
