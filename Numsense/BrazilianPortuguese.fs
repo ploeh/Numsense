@@ -7,7 +7,7 @@ let rec internal toBrazilianImp x =
         let remainder = x % factor
         if remainder = 0
         then prefix
-        else if remainder > 100 then
+        else if remainder > 100 && x % 100 <> 0 then
             sprintf "%s, %s" prefix <| toBrazilianImp remainder
         else
             sprintf "%s e %s" prefix <| toBrazilianImp remainder
