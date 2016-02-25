@@ -146,7 +146,27 @@ let ``tryParseBrazilian returns correct result`` (portuguese, expected) =
     Some expected =! actual
 
 [<Theory>]
-[<InlineData(0, "zero")>]
+[<InlineData( 0, "zero")>]
+[<InlineData( 1, "um")>]
+[<InlineData( 2, "dois")>]
+[<InlineData( 3, "três")>]
+[<InlineData( 4, "quatro")>]
+[<InlineData( 5, "cinco")>]
+[<InlineData( 6, "seis")>]
+[<InlineData( 7, "sete")>]
+[<InlineData( 8, "oito")>]
+[<InlineData( 9, "nove")>]
+[<InlineData(10, "dez")>]
+[<InlineData(11, "onze")>]
+[<InlineData(12, "doze")>]
+[<InlineData(13, "treze")>]
+[<InlineData(14, "quatorze")>]
+[<InlineData(15, "quinze")>]
+[<InlineData(16, "dezesseis")>]
+[<InlineData(17, "dezessete")>]
+[<InlineData(18, "dezoito")>]
+[<InlineData(19, "dezenove")>]
+[<InlineData(20, "vinte")>]
 let ``toBrazilian returns correct result`` (i, expected) =
     let actual = Numeral.toBrazilian i
     expected =! actual
