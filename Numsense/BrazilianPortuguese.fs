@@ -7,7 +7,10 @@ let rec internal toBrazilianImp x =
         let remainder = x % factor
         if remainder = 0
         then prefix
-        else sprintf "%s e %s" prefix <| toBrazilianImp remainder
+        else if remainder > 100 then
+            sprintf "%s, %s" prefix <| toBrazilianImp remainder
+        else
+            sprintf "%s e %s" prefix <| toBrazilianImp remainder
 
     let formatSuffix suffix factor x =
         let prefix = sprintf "%s%s" (toBrazilianImp (x / factor)) suffix
