@@ -3,11 +3,15 @@
 open Ploeh.Numsense.InternalDsl
 
 let rec internal toBrazilianImp x =
-    let format prefix factor x =
+    let formatPrefix prefix factor x =
         let remainder = x % factor
         if remainder = 0
         then prefix
         else sprintf "%s e %s" prefix <| toBrazilianImp remainder
+
+    let formatSuffix suffix factor x =
+        let prefix = sprintf "%s%s" (toBrazilianImp (x / factor)) suffix
+        formatPrefix prefix factor x
 
     match x with
     |  0 -> "zero"
@@ -30,16 +34,20 @@ let rec internal toBrazilianImp x =
     | 17 -> "dezessete"
     | 18 -> "dezoito"
     | 19 -> "dezenove"
-    | Between 20 30 x -> format "vinte" 10 x
-    | Between 30 40 x -> format "trinta" 10 x
-    | Between 40 50 x -> format "quarenta" 10 x
-    | Between 50 60 x -> format "cinquenta" 10 x
-    | Between 60 70 x -> format "sessenta" 10 x
-    | Between 70 80 x -> format "setenta" 10 x
-    | Between 80 90 x -> format "oitenta" 10 x
-    | Between 90 100 x -> format "noventa" 10 x
+    | Between 20 30 x -> formatPrefix "vinte" 10 x
+    | Between 30 40 x -> formatPrefix "trinta" 10 x
+    | Between 40 50 x -> formatPrefix "quarenta" 10 x
+    | Between 50 60 x -> formatPrefix "cinquenta" 10 x
+    | Between 60 70 x -> formatPrefix "sessenta" 10 x
+    | Between 70 80 x -> formatPrefix "setenta" 10 x
+    | Between 80 90 x -> formatPrefix "oitenta" 10 x
+    | Between 90 100 x -> formatPrefix "noventa" 10 x
     | 100 -> "cem"
-    | Between 100 200 x -> format "cento" 100 x
+    | Between 100 200 x -> formatPrefix "cento" 100 x
+    | Between 200 300 x -> formatPrefix "duzentos" 100 x
+    | Between 300 400 x -> formatPrefix "trezentos" 100 x
+    | Between 500 600 x -> formatPrefix "quinhentos" 100 x
+    | Between 400 1000 x -> formatSuffix "centos" 100 x
     | _  -> ""
 
 let internal tryParseBrazilianImp (x : string) =
