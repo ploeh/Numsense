@@ -48,6 +48,8 @@ let rec internal toBrazilianImp x =
     | Between 300 400 x -> formatPrefix "trezentos" 100 x
     | Between 500 600 x -> formatPrefix "quinhentos" 100 x
     | Between 400 1000 x -> formatSuffix "centos" 100 x
+    | Between 1000 2000 x -> formatPrefix "mil" 1000 x
+    | Between 1000 1000000 x -> formatSuffix " mil" 1000 x
     | _  -> ""
 
 let internal tryParseBrazilianImp (x : string) =
