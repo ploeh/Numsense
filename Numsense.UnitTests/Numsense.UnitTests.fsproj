@@ -54,14 +54,16 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="UseCultureAttribute.fs" />
     <Compile Include="NumeralProperties.fs" />
+    <Compile Include="BulgarianExamples.fs" />
     <Compile Include="DanishExamples.fs" />
     <Compile Include="EnglishExamples.fs" />
     <Compile Include="FarsiExamples.fs" />
     <Compile Include="PolishExamples.fs" />
     <Compile Include="DutchExamples.fs" />
     <Compile Include="RussianExamples.fs" />
-    <Compile Include="CatalanExamples.fs" />
     <Compile Include="PortugueseExamples.fs" />
+    <Compile Include="SpanishExamples.fs" />
+    <Compile Include="CatalanExamples.fs" />
     <Compile Include="SwedishExamples.fs" />
     <Compile Include="RomanianExamples.fs" />
     <Compile Include="GermanExamples.fs" />

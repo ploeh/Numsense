@@ -6,6 +6,21 @@ namespace Ploeh.Numsense.UnitTests
     public class NumeralTests
     {
         [Fact]
+        public void BulgarianIsCorrect()
+        {
+            var actual = Numeral.Bulgarian;
+            Assert.IsAssignableFrom<BulgarianNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void BulgarianIsSingleton()
+        {
+            var expected = Numeral.Bulgarian;
+            var actual = Numeral.Bulgarian;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
         public void EnglishIsCorrect()
         {
             var actual = Numeral.English;
@@ -47,6 +62,7 @@ namespace Ploeh.Numsense.UnitTests
         {
             var expected = Numeral.Farsi;
             var actual = Numeral.Farsi;
+
             Assert.Same(expected, actual);
         }
 
@@ -106,6 +122,21 @@ namespace Ploeh.Numsense.UnitTests
         {
             var expected = Numeral.Russian;
             var actual = Numeral.Russian;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void SpanishIsCorrect()
+        {
+            var actual = Numeral.Spanish;
+            Assert.IsAssignableFrom<SpanishNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void SpanishIsSingleton()
+        {
+            var expected = Numeral.Spanish;
+            var actual = Numeral.Spanish;
             Assert.Same(expected, actual);
         }
 

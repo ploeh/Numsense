@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="InternalDsl.fs" />
+    <Compile Include="Bulgarian.fs" />
     <Compile Include="Danish.fs" />
     <Compile Include="English.fs" />
     <Compile Include="Farsi.fs" />
@@ -61,6 +62,7 @@
     <Compile Include="Portuguese.fs" />
     <Compile Include="Dutch.fs" />
     <Compile Include="Russian.fs" />
+    <Compile Include="Spanish.fs" />
     <Compile Include="Catalan.fs" />
     <Compile Include="Swedish.fs" />
     <Compile Include="Romanian.fs" />

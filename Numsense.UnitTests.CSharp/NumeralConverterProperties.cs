@@ -93,6 +93,10 @@ namespace Ploeh.Numsense.UnitTests
                         NumeralModule.toRussian,
                         NumeralModule.tryParseRussian),
                     new ConverterPropertyGroup(
+                        new SpanishNumeralConverter(),
+                        NumeralModule.toSpanish,
+                        NumeralModule.tryParseSpanish),
+                    new ConverterPropertyGroup(
                         new CatalanNumeralConverter(),
                         NumeralModule.toCatalan,
                         NumeralModule.tryParseCatalan),
