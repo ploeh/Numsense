@@ -260,3 +260,43 @@ let ``tryParseBrazilian returns correct result`` (portuguese, expected) =
 let ``toBrazilian returns correct result`` (i, expected) =
     let actual = Numeral.toBrazilian i
     expected =! actual
+
+[<Theory>]
+[<InlineData("quatro quatro")>]
+[<InlineData("quatro e quatro")>]
+[<InlineData("vinte e dez")>]
+[<InlineData("vinte e onze")>]
+[<InlineData("vinte e doze")>]
+[<InlineData("vinte e treze")>]
+[<InlineData("vinte e quatorze")>]
+[<InlineData("vinte e quinze")>]
+[<InlineData("vinte e dezesseis")>]
+[<InlineData("vinte e dezessete")>]
+[<InlineData("vinte e dezoito")>]
+[<InlineData("vinte e dezenove")>]
+[<InlineData("vinte e vinte")>]
+[<InlineData("trinta e trinta")>]
+[<InlineData("quarenta e quarenta")>]
+[<InlineData("cinquenta e cinquenta")>]
+[<InlineData("cinqüenta e cinqüenta")>]
+[<InlineData("sessenta e sessenta")>]
+[<InlineData("setenta e setenta")>]
+[<InlineData("oitenta e oitenta")>]
+[<InlineData("noventa e noventa")>]
+[<InlineData("cento e cento")>]
+[<InlineData("cento e cem")>]
+[<InlineData("duzentos e duzentos")>]
+[<InlineData("quatrocentos e quatrocentos")>]
+[<InlineData("quinhentos e quinhentos")>]
+[<InlineData("seiscentos e seiscentos")>]
+[<InlineData("setecentos e setecentos")>]
+[<InlineData("oitocentos e oitocentos")>]
+[<InlineData("novecentos e novecentos")>]
+[<InlineData("mil e mil")>]
+[<InlineData("vinte e quinze mil")>]
+[<InlineData("um milhão e um milhão")>]
+[<InlineData("dois milhões e três milhões")>]
+[<InlineData("um bilhão e um bilhão")>]
+let ``tryParseBrazilian with incorrect input returns correct result`` (portuguese) =
+    let actual = Numeral.tryParseBrazilian portuguese
+    None =! actual

@@ -66,6 +66,22 @@ let rec internal toBrazilianImp x =
 
 let internal tryParseBrazilianImp (x : string) =
     let rec conv acc candidate =
+        let conv' remainderFactor placeFactor acc' candidate =
+            if (acc % remainderFactor) / placeFactor <> 0
+            then None
+            else conv acc' candidate
+
+        let convBillions acc' candidate = 
+            if acc / 1000000000 <> 0
+            then None
+            else conv acc' candidate
+
+        let convMillions  = conv'    1000000000    1000000
+        let convThousands = conv'       1000000       1000
+        let convHundreds  = conv'          1000        100
+        let convTens      = conv'           100         10
+        let convUnits     = conv'            10          1
+
         match candidate with
         | ""                          -> Some acc
         | StartsWith " "            t
@@ -73,45 +89,45 @@ let internal tryParseBrazilianImp (x : string) =
         | StartsWith "E"            t -> conv acc t
         | "ZERO"                      -> Some          (0  + acc)
         | StartsWith "BILHÃO"       t 
-        | StartsWith "BILHÕES"      t -> conv (1000000000 %* acc) t
+        | StartsWith "BILHÕES"      t -> convBillions (1000000000 %* acc) t
         | StartsWith "MILHÃO"       t
-        | StartsWith "MILHÕES"      t -> conv    (1000000 %* acc) t
-        | StartsWith "MIL"          t -> conv       (1000 %* acc) t
-        | StartsWith "CEM"          t -> conv        (100  + acc) t
-        | StartsWith "CENTOS"       t -> conv        (100 %* acc) t
-        | StartsWith "CENTO"        t -> conv        (100  + acc) t
-        | StartsWith "DUZENTOS"     t -> conv        (200  + acc) t
-        | StartsWith "TREZENTOS"    t -> conv        (300  + acc) t
-        | StartsWith "QUINHENTOS"   t -> conv        (500  + acc) t
-        | StartsWith "VINTE"        t -> conv         (20  + acc) t
-        | StartsWith "TRINTA"       t -> conv         (30  + acc) t
-        | StartsWith "QUARENTA"     t -> conv         (40  + acc) t
-        | StartsWith "CINQUENTA"    t -> conv         (50  + acc) t
-        | StartsWith "CINQÜENTA"    t -> conv         (50  + acc) t
-        | StartsWith "SESSENTA"     t -> conv         (60  + acc) t
-        | StartsWith "SETENTA"      t -> conv         (70  + acc) t
-        | StartsWith "OITENTA"      t -> conv         (80  + acc) t
-        | StartsWith "NOVENTA"      t -> conv         (90  + acc) t
-        | StartsWith "ONZE"         t -> conv         (11  + acc) t
-        | StartsWith "DOZE"         t -> conv         (12  + acc) t
-        | StartsWith "TREZE"        t -> conv         (13  + acc) t
-        | StartsWith "CATORZE"      t -> conv         (14  + acc) t
-        | StartsWith "QUATORZE"     t -> conv         (14  + acc) t
-        | StartsWith "QUINZE"       t -> conv         (15  + acc) t
-        | StartsWith "DEZESSEIS"    t -> conv         (16  + acc) t
-        | StartsWith "DEZESSETE"    t -> conv         (17  + acc) t
-        | StartsWith "DEZOITO"      t -> conv         (18  + acc) t
-        | StartsWith "DEZENOVE"     t -> conv         (19  + acc) t
-        | StartsWith "DEZ"          t -> conv         (10  + acc) t
-        | StartsWith "UM"           t -> conv          (1  + acc) t
-        | StartsWith "DOIS"         t -> conv          (2  + acc) t
-        | StartsWith "TRÊS"         t -> conv          (3  + acc) t
-        | StartsWith "QUATRO"       t -> conv          (4  + acc) t
-        | StartsWith "CINCO"        t -> conv          (5  + acc) t
-        | StartsWith "SEIS"         t -> conv          (6  + acc) t
-        | StartsWith "SETE"         t -> conv          (7  + acc) t
-        | StartsWith "OITO"         t -> conv          (8  + acc) t
-        | StartsWith "NOVE"         t -> conv          (9  + acc) t
+        | StartsWith "MILHÕES"      t -> convMillions    (1000000 %* acc) t
+        | StartsWith "MIL"          t -> convThousands      (1000 %* acc) t
+        | StartsWith "CEM"          t -> convHundreds        (100  + acc) t
+        | StartsWith "CENTOS"       t -> convHundreds        (100 %* acc) t
+        | StartsWith "CENTO"        t -> convHundreds        (100  + acc) t
+        | StartsWith "DUZENTOS"     t -> convHundreds        (200  + acc) t
+        | StartsWith "TREZENTOS"    t -> convHundreds        (300  + acc) t
+        | StartsWith "QUINHENTOS"   t -> convHundreds        (500  + acc) t
+        | StartsWith "VINTE"        t -> convTens             (20  + acc) t
+        | StartsWith "TRINTA"       t -> convTens             (30  + acc) t
+        | StartsWith "QUARENTA"     t -> convTens             (40  + acc) t
+        | StartsWith "CINQUENTA"    t -> convTens             (50  + acc) t
+        | StartsWith "CINQÜENTA"    t -> convTens             (50  + acc) t
+        | StartsWith "SESSENTA"     t -> convTens             (60  + acc) t
+        | StartsWith "SETENTA"      t -> convTens             (70  + acc) t
+        | StartsWith "OITENTA"      t -> convTens             (80  + acc) t
+        | StartsWith "NOVENTA"      t -> convTens             (90  + acc) t
+        | StartsWith "ONZE"         t -> convTens             (11  + acc) t
+        | StartsWith "DOZE"         t -> convTens             (12  + acc) t
+        | StartsWith "TREZE"        t -> convTens             (13  + acc) t
+        | StartsWith "CATORZE"      t -> convTens             (14  + acc) t
+        | StartsWith "QUATORZE"     t -> convTens             (14  + acc) t
+        | StartsWith "QUINZE"       t -> convTens             (15  + acc) t
+        | StartsWith "DEZESSEIS"    t -> convTens             (16  + acc) t
+        | StartsWith "DEZESSETE"    t -> convTens             (17  + acc) t
+        | StartsWith "DEZOITO"      t -> convTens             (18  + acc) t
+        | StartsWith "DEZENOVE"     t -> convTens             (19  + acc) t
+        | StartsWith "DEZ"          t -> convTens             (10  + acc) t
+        | StartsWith "UM"           t -> convUnits             (1  + acc) t
+        | StartsWith "DOIS"         t -> convUnits             (2  + acc) t
+        | StartsWith "TRÊS"         t -> convUnits             (3  + acc) t
+        | StartsWith "QUATRO"       t -> convUnits             (4  + acc) t
+        | StartsWith "CINCO"        t -> convUnits             (5  + acc) t
+        | StartsWith "SEIS"         t -> convUnits             (6  + acc) t
+        | StartsWith "SETE"         t -> convUnits             (7  + acc) t
+        | StartsWith "OITO"         t -> convUnits             (8  + acc) t
+        | StartsWith "NOVE"         t -> convUnits             (9  + acc) t
         | _ -> None
 
     let canonicalized = x.Trim().ToUpper(System.Globalization.CultureInfo "pt-BR")
