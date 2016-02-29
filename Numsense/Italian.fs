@@ -8,19 +8,27 @@ let rec internal toItalianImp x =
         let remainder = x % factor
         match remainder with
         | 0 -> sprintf "%s" prefix
-          // When a number is between 21 and 99 and the unit part starts with a
-          // vowel (uno, otto), we must remove the last char from the tens part
-          // For example: 21 -> "ventuno" (and not "ventiuno")
-          //              38 -> "trentotto" (and not "trentaotto")
-        | 1 
-        | 8 when x > 20 && x < 100
-            -> sprintf "%s%s" (prefix.[..prefix.Length - 2]) 
-                              (toItalianImp remainder)
-        | _ when x > 1000000 -> sprintf "%s %s" prefix (toItalianImp remainder)
+          // According to Italian grammar rules, if the word "tre"
+          // appears at the end of another number, it needs the accent 
+          // on the final "-e". Ex.: ventitre -> ventitré
+          // It doesn't need the accent if "tre" is at the end of
+          // a number but it's a separate word. Ex.: "un milione tre"
+        | 3 when factor < 1000000 ->
+            sprintf "%stré" prefix
+        | _ when factor = 1000000 || factor = 1000000000 -> 
+            sprintf "%s %s" prefix (toItalianImp remainder)
         | _ -> sprintf "%s%s" prefix (toItalianImp remainder)
 
     let format suffix factor x =
-        let prefix = sprintf "%s%s" (toItalianImp (x / factor)) suffix
+        let num = toItalianImp (x / factor)
+        let prefix = 
+            match factor with
+              // If a number ends with "-tré" but it is a multiplier for 
+              // thousands, it doesn't need the accent. 
+              // Ex.: "ventitremila" (not "ventitrémila")
+            | 1000 when num.EndsWith("tré") -> 
+                sprintf "%s%s%s" num.[..num.Length - 4] "tre" suffix
+            | _ -> sprintf "%s%s" num suffix
         simplify prefix factor x
 
     match x with
@@ -28,6 +36,7 @@ let rec internal toItalianImp x =
     |  0 -> "zero"
     |  1 -> "uno"
     |  2 -> "due"
+       // "tre", used as single word, doesn't need the accent.
     |  3 -> "tre"
     |  4 -> "quattro"
     |  5 -> "cinque"
@@ -45,14 +54,30 @@ let rec internal toItalianImp x =
     | 17 -> "diciassette"
     | 18 -> "diciotto"
     | 19 -> "diciannove"
-    | Between 20 30 x -> simplify "venti" 10 x
-    | Between 30 40 x -> simplify "trenta" 10 x
-    | Between 40 50 x -> simplify "quaranta" 10 x
-    | Between 50 60 x -> simplify "cinquanta" 10 x
-    | Between 60 70 x -> simplify "sessanta" 10 x
-    | Between 70 80 x -> simplify "settanta" 10 x
-    | Between 80 90 x -> simplify "ottanta" 10 x
-    | Between 90 100 x -> simplify "novanta" 10 x
+    | Between 20 30 x ->  match x with
+                          21 | 28 -> simplify "vent" 10 x
+                          | _     -> simplify "venti" 10 x
+    | Between 30 40 x ->  match x with
+                          31 | 38 -> simplify "trent" 10 x
+                          | _     -> simplify "trenta" 10 x
+    | Between 40 50 x ->  match x with
+                          41 | 48 -> simplify "quarant" 10 x
+                          | _     -> simplify "quaranta" 10 x
+    | Between 50 60 x ->  match x with
+                          51 | 58 -> simplify "cinquant" 10 x
+                          | _     -> simplify "cinquanta" 10 x
+    | Between 60 70 x ->  match x with
+                          61 | 68 -> simplify "sessant" 10 x
+                          | _     -> simplify "sessanta" 10 x
+    | Between 70 80 x ->  match x with
+                          71 | 78 -> simplify "settant" 10 x
+                          | _     -> simplify "settanta" 10 x
+    | Between 80 90 x ->  match x with
+                          81 | 88 -> simplify "ottant" 10 x
+                          | _     -> simplify "ottanta" 10 x
+    | Between 90 100 x -> match x with
+                          91 | 98 -> simplify "novant" 10 x
+                          | _     -> simplify "novanta" 10 x
     | Between 100 200 x -> simplify "cento" 100 x
     | Between 200 1000 x -> format "cento" 100 x
     | Between 1000 2000 x -> simplify "mille" 1000 x
@@ -84,7 +109,7 @@ let internal tryParseItalianImp (x : string) =
         | StartsWith "NOVE"         t -> conv (      9  + acc) t
         | StartsWith "DIECI"        t -> conv (     10  + acc) t
         | StartsWith "UNDICI"       t -> conv (     11  + acc) t
-          // Matches "un-" in "uno" and "un milione"
+          // Matches "un-" in "uno", "un milione" and "un miliardo"
         | StartsWith "UN"           t -> conv (      1  + acc) t
         | StartsWith "DODICI"       t -> conv (     12  + acc) t
         | StartsWith "TREDICI"      t -> conv (     13  + acc) t
@@ -96,6 +121,8 @@ let internal tryParseItalianImp (x : string) =
         | StartsWith "DICIANNOVE"   t -> conv (     19  + acc) t
         | StartsWith "VENT"         t -> conv (     20  + acc) t
         | StartsWith "TRENT"        t -> conv (     30  + acc) t
+        | StartsWith "TRÉ"          t
+        | StartsWith "TRE'"         t
         | StartsWith "TRE"          t -> conv (      3  + acc) t
         | StartsWith "QUARANT"      t -> conv (     40  + acc) t
         | StartsWith "CINQUANT"     t -> conv (     50  + acc) t
