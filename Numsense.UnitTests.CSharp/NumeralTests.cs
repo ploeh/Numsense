@@ -199,5 +199,20 @@ namespace Ploeh.Numsense.UnitTests
             var actual = Numeral.German;
             Assert.Same(expected, actual);
         }
+
+        [Fact]
+        public void BrazilianIsCorrect()
+        {
+            var actual = Numeral.Brazilian;
+            Assert.IsAssignableFrom<BrazilianNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void BrazilianIsSingleton()
+        {
+            var expected = Numeral.Brazilian;
+            var actual = Numeral.Brazilian;
+            Assert.Same(expected, actual);
+        }
     }
 }

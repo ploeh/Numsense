@@ -39,3 +39,6 @@ let tryParseGerman     = German.tryParseGermanImp
 
 let toPortuguese       = Portuguese.toPortugueseImp
 let tryParsePortuguese = Portuguese.tryParsePortugueseImp
+
+let tryParseBrazilian  = BrazilianPortuguese.tryParseBrazilianImp
+let toBrazilian        = BrazilianPortuguese.toBrazilianImp
