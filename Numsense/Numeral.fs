@@ -1,9 +1,6 @@
 ﻿[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Ploeh.Numsense.Numeral
 
-let toBulgarian =       Bulgarian.toBulgarianImp
-let tryParseBulgarian = Bulgarian.tryParseBulgarianImp
-
 let toDanish           = Danish.toDanishImp 1
 let tryParseDanish     = Danish.tryParseDanishImp
 
@@ -39,3 +36,6 @@ let tryParseGerman     = German.tryParseGermanImp
 
 let toPortuguese       = Portuguese.toPortugueseImp
 let tryParsePortuguese = Portuguese.tryParsePortugueseImp
+
+let toBulgarian =       Bulgarian.toBulgarianImp 1
+let tryParseBulgarian = Bulgarian.tryParseBulgarianImp

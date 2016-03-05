@@ -29,9 +29,9 @@ let ``Convert integer to Danish`` () =
 [<Fact>]
 let ``Convert integer to Bulgarian`` () =
     let bulgarianNumeral = Numeral.toBulgarian 2022000
-    "два-милиона-двайсет-и-две-хиляди" =! bulgarianNumeral
+    "два-милиона-двадесет-и-две-хиляди" =! bulgarianNumeral
 
 [<Fact>]
 let ``Parse Bulgarian numeral to integer`` () =
-    let i = Numeral.tryParseBulgarian "два-милиона-и-тринайсет-хиляди"
+    let i = Numeral.tryParseBulgarian "два-милиона-и-тринадесет-хиляди"
     Some 2013000 =! i

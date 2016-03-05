@@ -50,7 +50,7 @@ namespace Ploeh.Numsense.UnitTests
         public void ConvertIntegerToBulgarian()
         {
             var bulgarianNumeral = Numeral.Bulgarian.ToNumeral(21);
-            Assert.Equal("двайсет-и-едно", bulgarianNumeral);
+            Assert.Equal("двадесет-и-едно", bulgarianNumeral);
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace Ploeh.Numsense.UnitTests
         {
             int i;
             var success = Numeral.Bulgarian.TryParse(
-                "четиресет и две",
+                "четиресет-и-две",
                 out i);
 
             Assert.True(success);
