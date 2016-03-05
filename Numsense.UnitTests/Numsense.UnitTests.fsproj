@@ -52,14 +52,15 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="BulgarianExamples.fs" />
     <Compile Include="NumeralProperties.fs" />
     <Compile Include="DanishExamples.fs" />
     <Compile Include="EnglishExamples.fs" />
-    <Compile Include="PolishExamples.fs" />
     <Compile Include="DutchExamples.fs" />
     <Compile Include="Demo.fs" />
     <Content Include="packages.config" />
     <Content Include="App.config" />
+    <Compile Include="PolishExamples.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FsCheck">
