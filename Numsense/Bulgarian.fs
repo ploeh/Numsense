@@ -2,72 +2,102 @@
 
 open Ploeh.Numsense.InternalDsl
 
-let rec internal toBulgarianImp x =
+// The magnitude parameter is only used in order to determine the
+// right gender in some situations ("1" and "2" change gender)
+let rec internal toBulgarianImp magnitude x =
 
-    let simplify prefix factor x =
-        let remainder = x % factor
-        if remainder = 0
-        then prefix
-        else sprintf "%s-%s" prefix (toBulgarianImp remainder)
+    // Determines if a number should be bound by "и" ("and").
+    // Number 1-19 should be bound (f.x., две хиляди И ЕДНО).
+    // Same is valid for round numbers 20, ..., 90, 100, 200,..., 900,
+    // 1000, 2000, ..., 10000, 11000, ..., 19000, 20000, 30000, ...,
+    // 100000, ...
+    let rec bindable x =
+        match x with
+        | x when x < 20    -> true
+        | x when x < 100   -> (x % 10 = 0)
+        | x when x < 1000  -> (x % 100 = 0)
+        | _                -> let remainder = x % 1000
+                              match remainder with
+                              | 0 -> bindable (x / 1000)
+                              | _ -> false
 
-    let format suffix factor x =
-        let prefix = sprintf "%s%s" (toBulgarianImp (x / factor)) suffix
-        simplify prefix factor x
+    // Gets the binding between two parts of the number, based on the
+    // remainder after the division
+    let binding remainder =
+        if bindable remainder
+        then "-и-"
+        else "-"
 
     let formatTens x =
         let tens = x / 10
+        let remainder = x % 10
+        let mag = max magnitude 10
         match x with
         | 10 -> "десет"
         | 11 -> "единадесет"
         | 12 -> "дванадесет"
-        | 13 -> "тринадесет"
-        | 14 -> "четиринадесет"
-        | 15 -> "петнадесет"
-        | 16 -> "шестнадесет"
-        | 17 -> "седемнадесет"
-        | 18 -> "осемнадесет"
-        | 19 -> "деветнадесет"
-        | x when x < 20 -> format "надесет" 1 tens
-        | _ -> match tens with
-               | 2 -> simplify "двадесет" 10 x
-               | 4 -> simplify "четиресет" 10 x
-               | _ -> simplify (format "десет" 1 tens) 10 x
+        | x when x < 20
+             -> sprintf "%s%s" (toBulgarianImp 1 remainder) "надесет"
+        | x when remainder = 0
+             -> match tens with
+                | 2 -> "двадесет"
+                | _ -> sprintf "%s%s" (toBulgarianImp 1 tens) "десет"
+        | _  -> sprintf "%s-и-%s" 
+                          (toBulgarianImp 1 (tens * 10)) 
+                          (toBulgarianImp mag remainder)
 
     let formatHundreds x =
+        let remainder = x % 100
         let hundreds = x / 100
-        match hundreds with
-        | 1 -> simplify "сто" 100 x
-        | 2 -> simplify "двеста" 100 x
-        | 3 -> simplify "триста" 100 x
-        | _ -> format "стотин" 100 x
+        let mag = max magnitude 100
+        match remainder with
+        | 0 -> match hundreds with
+               | 1 -> "сто"
+               | 2
+               | 3 -> sprintf "%s%s" (toBulgarianImp 1 hundreds) "ста"
+               | _ -> sprintf "%s%s" (toBulgarianImp 1 hundreds) "стотин"
+        | _ -> sprintf "%s%s%s" 
+                         (toBulgarianImp mag (hundreds * 100)) 
+                         (binding remainder) 
+                         (toBulgarianImp mag remainder)
 
-    let formatNumerals single plural1 plural2 factor x =
-        let thousands = x / factor
-        let remainder = thousands % 10
-        match thousands with
-        | 1 -> simplify single factor x
-        | thousands when thousands > 9 && thousands < 20 -> format plural1 factor x
-        | _ -> match remainder with
-               | remainder when remainder > 1 && remainder < 5 -> format plural2 factor x
-               | _ -> format plural1 factor x
+    let formatNumerals single plural factor x =
+        let remainder = x % factor
+        let numerals = x / factor
+        let mag = max magnitude factor
+        match remainder with
+        | 0 -> match numerals with
+               | 1 -> single
+               | _ -> sprintf "%s-%s" (toBulgarianImp mag numerals) plural
+        | _ -> sprintf "%s%s%s" 
+                         (toBulgarianImp mag (numerals * factor)) 
+                         (binding remainder) 
+                         (toBulgarianImp 1 remainder)
 
     match x with
-    |  x when x < 0 -> sprintf "минус %s" (toBulgarianImp -x)
-    |  0 -> "нула"
-    |  1 -> "едно"
-    |  2 -> "две"
-    |  3 -> "три"
-    |  4 -> "четири"
-    |  5 -> "пет"
-    |  6 -> "шест"
-    |  7 -> "седем"
-    |  8 -> "осем"
-    |  9 -> "девет"
-    | Between 10 100 x -> formatTens x
-    | Between 100 1000 x -> formatHundreds x
-    | Between 1000 1000000 x -> formatNumerals "tysiąc" "-tysięcy" "-tysiące" 1000 x
-    | Between 1000000 1000000000 x -> formatNumerals "milion" "-milionów" "-miliony" 1000000 x
-    | _ -> formatNumerals "miliard" "-miliardów" "-miliardy" 1000000000 x
+    | x when x < 0 -> sprintf "минус %s" (toBulgarianImp magnitude -x)
+    | 0 -> "нула"
+    | 1 -> match magnitude with
+           | 1000 -> "една" // Matches една, f.x., in двеста и една хиляди
+           | x when x > 1000 
+                  -> "един" // Matches една, f.x., in един милион/милиард
+           | _    -> "едно"
+    | 2 -> match magnitude with
+           | x when x > 1000
+                  -> "два" // Matches два, f.x., in дванадесет, двадесет and два милиона
+           | _    -> "две"
+    | 3 -> "три"
+    | 4 -> "четири"
+    | 5 -> "пет"
+    | 6 -> "шест"
+    | 7 -> "седем"
+    | 8 -> "осем"
+    | 9 -> "девет"
+    | Between      10        100 x -> formatTens x
+    | Between     100       1000 x -> formatHundreds x
+    | Between    1000    1000000 x -> formatNumerals "хиляда" "хиляди" 1000 x
+    | Between 1000000 1000000000 x -> formatNumerals "един-милион" "милиона" 1000000 x
+    | _                            -> formatNumerals "един-милиард" "милиарда" 1000000000 x
 
 let internal tryParseBulgarianImp (x : string) =
     let rec conv acc candidate =
@@ -80,7 +110,7 @@ let internal tryParseBulgarianImp (x : string) =
         | StartsWith "ЕДНА"           t // Matches една in двеста и една хиляди
         | StartsWith "ЕДИН"           t // Matches един in един милион/милиард
         | StartsWith "ЕДНО"           t -> conv           (1  + acc) t
-        | StartsWith "ДВА"            t // Macthes два in дванадесет, двадесет and два милиона/милиарда
+        | StartsWith "ДВА"            t // Macthes два in дванадесет, двадесет and два милиарда
         | StartsWith "ДВЕ"            t -> conv           (2  + acc) t
         | StartsWith "ТРИ"            t -> conv           (3  + acc) t
         | StartsWith "ЧЕТИРИ"         t -> conv           (4  + acc) t
