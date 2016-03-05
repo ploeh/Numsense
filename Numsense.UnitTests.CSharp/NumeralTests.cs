@@ -6,6 +6,21 @@ namespace Ploeh.Numsense.UnitTests
     public class NumeralTests
     {
         [Fact]
+        public void BulgarianIsCorrect()
+        {
+            var actual = Numeral.Bulgarian;
+            Assert.IsAssignableFrom<BulgarianNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void BulgarianIsSingleton()
+        {
+            var expected = Numeral.Bulgarian;
+            var actual = Numeral.Bulgarian;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
         public void EnglishIsCorrect()
         {
             var actual = Numeral.English;
@@ -36,6 +51,21 @@ namespace Ploeh.Numsense.UnitTests
         }
 
         [Fact]
+        public void FarsiIsCorrect()
+        {
+            var actual = Numeral.Farsi;
+            Assert.IsAssignableFrom<FarsiNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void FarsiIsSingleton()
+        {
+            var expected = Numeral.Farsi;
+            var actual = Numeral.Farsi;
+
+            Assert.Same(expected, actual);
+        }
+
         public void PolishIsCorrect()
         {
             var actual = Numeral.Polish;
@@ -66,17 +96,107 @@ namespace Ploeh.Numsense.UnitTests
         }
 
         [Fact]
-        public void BulgarianIsCorrect()
+        public void PortugueseIsCorrect()
         {
-            var actual = Numeral.Bulgarian;
-            Assert.IsAssignableFrom<BulgarianNumeralConverter>(actual);
+            var actual = Numeral.Portuguese;
+            Assert.IsAssignableFrom<PortugueseNumeralConverter>(actual);
         }
 
         [Fact]
-        public void BulgarianIsSingleton()
+        public void PortugueseIsSingleton()
         {
-            var expected = Numeral.Bulgarian;
-            var actual = Numeral.Bulgarian;
+            var expected = Numeral.Portuguese;
+            var actual = Numeral.Portuguese;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void RussianIsCorrect()
+        {
+            var actual = Numeral.Russian;
+            Assert.IsAssignableFrom<RussianNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void RussianIsSingleton()
+        {
+            var expected = Numeral.Russian;
+            var actual = Numeral.Russian;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void SpanishIsCorrect()
+        {
+            var actual = Numeral.Spanish;
+            Assert.IsAssignableFrom<SpanishNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void SpanishIsSingleton()
+        {
+            var expected = Numeral.Spanish;
+            var actual = Numeral.Spanish;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void CatalanIsCorrect()
+        {
+            var actual = Numeral.Catalan;
+            Assert.IsAssignableFrom<CatalanNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void CatalanIsSingleton()
+        {
+            var expected = Numeral.Catalan;
+            var actual = Numeral.Catalan;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void SwedishIsCorrect()
+        {
+            var actual = Numeral.Swedish;
+            Assert.IsAssignableFrom<SwedishNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void SwedishIsSingleton()
+        {
+            var expected = Numeral.Swedish;
+            var actual = Numeral.Swedish;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void RomanianIsCorrect()
+        {
+            var actual = Numeral.Romanian;
+            Assert.IsAssignableFrom<RomanianNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void RomanianIsSingleton()
+        {
+            var expected = Numeral.Romanian;
+            var actual = Numeral.Romanian;
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void GermanIsCorrect()
+        {
+            var actual = Numeral.German;
+            Assert.IsAssignableFrom<GermanNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void GermanIsSingleton()
+        {
+            var expected = Numeral.German;
+            var actual = Numeral.German;
             Assert.Same(expected, actual);
         }
     }

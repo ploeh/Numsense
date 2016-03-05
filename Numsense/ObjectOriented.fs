@@ -14,10 +14,16 @@ module internal Helper =
         | false, Lazy None -> false
         | false, Lazy (Some i) -> result <- i; true
 
+type BulgarianNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toBulgarian number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseBulgarian (s, &result)
+
 type EnglishNumeralConverter () =
     interface INumeralConverter with
         member this.ToNumeral number = Numeral.toEnglish number
-        member this.TryParse (s, result) = 
+        member this.TryParse (s, result) =
             Helper.tryParse Numeral.tryParseEnglish (s, &result)
 
 type DanishNumeralConverter () =
@@ -38,15 +44,65 @@ type DutchNumeralConverter () =
         member this.TryParse (s, result) =
             Helper.tryParse Numeral.tryParseDutch (s, &result)
 
-type BulgarianNumeralConverter () =
+type RussianNumeralConverter () =
     interface INumeralConverter with
-        member this.ToNumeral number = Numeral.toBulgarian number
+        member this.ToNumeral number = Numeral.toRussian number
         member this.TryParse (s, result) =
-            Helper.tryParse Numeral.tryParseBulgarian (s, &result)
+            Helper.tryParse Numeral.tryParseRussian (s, &result)
+
+type SpanishNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toSpanish number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseSpanish (s, &result)
+            
+type CatalanNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toCatalan number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseCatalan (s, &result)
+
+type FarsiNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toFarsi number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseFarsi (s, &result)
+
+type SwedishNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toSwedish number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseSwedish (s, &result)
+
+type RomanianNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toRomanian number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseRomanian (s, &result)
+
+type GermanNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toGerman number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParseGerman (s, &result)
+
+type PortugueseNumeralConverter () =
+    interface INumeralConverter with
+        member this.ToNumeral number = Numeral.toPortuguese number
+        member this.TryParse (s, result) =
+            Helper.tryParse Numeral.tryParsePortuguese (s, &result)
 
 type Numeral private () =
-    static member val English = EnglishNumeralConverter () :> INumeralConverter
-    static member val Danish  =  DanishNumeralConverter () :> INumeralConverter
-    static member val Polish  =  PolishNumeralConverter () :> INumeralConverter
-    static member val Dutch   =   DutchNumeralConverter () :> INumeralConverter
-    static member val Bulgarian   =   BulgarianNumeralConverter () :> INumeralConverter
+    static member val Bulgarian  = BulgarianNumeralConverter () :> INumeralConverter
+    static member val English    = EnglishNumeralConverter () :> INumeralConverter
+    static member val Farsi      = FarsiNumeralConverter () :> INumeralConverter
+    static member val Danish     = DanishNumeralConverter () :> INumeralConverter
+    static member val Polish     = PolishNumeralConverter () :> INumeralConverter
+    static member val Dutch      = DutchNumeralConverter () :> INumeralConverter
+    static member val Russian    = RussianNumeralConverter () :> INumeralConverter
+    static member val Spanish    = SpanishNumeralConverter () :> INumeralConverter
+    static member val Catalan    = CatalanNumeralConverter () :> INumeralConverter
+    static member val Swedish    = SwedishNumeralConverter () :> INumeralConverter
+    static member val Romanian   = RomanianNumeralConverter () :> INumeralConverter
+    static member val German     = GermanNumeralConverter () :> INumeralConverter
+    static member val Portuguese = PortugueseNumeralConverter () :> INumeralConverter
