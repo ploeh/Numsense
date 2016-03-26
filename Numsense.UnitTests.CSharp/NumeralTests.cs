@@ -79,5 +79,20 @@ namespace Ploeh.Numsense.UnitTests
             var actual = Numeral.Russian;
             Assert.Same(expected, actual);
         }
+
+        [Fact]
+        public void LithuanianIsCorrect()
+        {
+            var actual = Numeral.Lithuanian;
+            Assert.IsAssignableFrom<LithuanianNumeralConverter>(actual);
+        }
+
+        [Fact]
+        public void LithuanianIsSingleton()
+        {
+            var expected = Numeral.Lithuanian;
+            var actual = Numeral.Lithuanian;
+            Assert.Same(expected, actual);
+        }
     }
 }
