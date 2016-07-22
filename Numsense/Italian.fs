@@ -15,20 +15,27 @@ let rec internal toItalianImp x =
           // a number but it's a separate word. Ex.: "un milione tre"
         | 3 when factor < 1000000 ->
             sprintf "%stré" prefix
-        | _ when factor = 1000000 || factor = 1000000000 -> 
+        | _ when factor >= 1000000 -> 
             sprintf "%s %s" prefix (toItalianImp remainder)
         | _ -> sprintf "%s%s" prefix (toItalianImp remainder)
 
     let format suffix factor x =
-        let num = toItalianImp (x / factor)
+        let num = x / factor
+        let units = num % 10
+        let leftPart = (num / 10) * 10
         let prefix = 
             match factor with
-              // If a number ends with "-tré" but it is a multiplier for 
+              // If a number ends with "3" but it is a multiplier for 
               // thousands, it doesn't need the accent. 
-              // Ex.: "ventitremila" (not "ventitrémila")
-            | 1000 when num.EndsWith("tré") -> 
-                sprintf "%s%s%s" num.[..num.Length - 4] "tre" suffix
-            | _ -> sprintf "%s%s" num suffix
+              // Ex.: 23000 = "ventitremila" (not "ventitrémila")
+            | 1000 when units = 3 -> 
+                if leftPart = 0 
+                then sprintf "%s%s" (toItalianImp units) suffix
+                else sprintf "%s%s%s" 
+                        (toItalianImp leftPart) 
+                        (toItalianImp units) 
+                        suffix
+            | _ -> sprintf "%s%s" (toItalianImp num) suffix
         simplify prefix factor x
 
     match x with
