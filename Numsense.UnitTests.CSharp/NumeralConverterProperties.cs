@@ -111,7 +111,11 @@ namespace Ploeh.Numsense.UnitTests
                     new ConverterPropertyGroup(
                         new GermanNumeralConverter(),
                         NumeralModule.toGerman,
-                        NumeralModule.tryParseGerman)
+                        NumeralModule.tryParseGerman),
+                    new ConverterPropertyGroup(
+                        new ItalianNumeralConverter(),
+                        NumeralModule.toItalian,
+                        NumeralModule.tryParseItalian)
                     )
                     .ToArbitrary();
             }
