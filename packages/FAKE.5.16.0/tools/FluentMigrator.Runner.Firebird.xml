@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FluentMigrator.Runner.Firebird</name>
+    </assembly>
+    <members>
+        <member name="P:FluentMigrator.Runner.Generators.Firebird.FirebirdGenerator.AlterColumnSetNullable3">
+            <summary>
+            ALTER TABLE table_name ALTER column_name { DROP | SET } [NOT] NULL
+            </summary>
+        </member>
+        <member name="F:FluentMigrator.Runner.Processors.Firebird.FirebirdTransactionModel.AutoCommitOnCheckFail">
+            <summary>
+            Automatically starts a new transaction when a virtual lock check fails
+            </summary>
+        </member>
+        <member name="F:FluentMigrator.Runner.Processors.Firebird.FirebirdTransactionModel.AutoCommit">
+            <summary>
+            Automaticaly commits every processed statement
+            </summary>
+        </member>
+        <member name="F:FluentMigrator.Runner.Processors.Firebird.FirebirdTransactionModel.None">
+            <summary>
+            Don't manage transactions
+            </summary>
+        </member>
+        <member name="F:FluentMigrator.Runner.Processors.Firebird.FirebirdOptions.MaxNameLength">
+            <summary>
+            Maximum internal length of names in firebird is 31 characters
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Processors.Firebird.FirebirdOptions.TruncateLongNames">
+            <summary>
+            Firebird only supports constraint, table, column, etc. names up to 31 characters
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Processors.Firebird.FirebirdOptions.VirtualLock">
+            <summary>
+            Virtually lock tables and columns touched by DDL statements in a transaction
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Processors.Firebird.FirebirdOptions.ForceQuote">
+            <summary>
+            Gets or sets a value indicating whether all names should be quoted unconditionally.
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Processors.Firebird.FirebirdOptions.TransactionModel">
+            <summary>
+            Which transaction model to use if any to work around firebird's DDL restrictions
+            </summary>
+        </member>
+    </members>
+</doc>

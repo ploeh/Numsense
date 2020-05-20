@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FluentMigrator</name>
+    </assembly>
+    <members>
+        <member name="T:FluentMigrator.Builders.ColumnExpressionBuilderHelper">
+            <summary>
+            This class provides a common location for logic pertaining to setting and maintaining 
+            expressions for expression builders which manipulate the the ColumnDefinition.
+            </summary>
+            <remarks>
+            This is a support class for the migrator framework and is not intended for external use.
+            TODO: make this internal, and the change assmebly info so InternalsVisibleTo is set for the test assemblies.
+            </remarks>
+        </member>
+        <member name="T:FluentMigrator.Builders.ColumnExpressionBuilderHelper.ExistingRowsData">
+            <summary>
+            For each distinct column which has an existing row default, an instance of this
+            will be stored in the _expressionsByColumn.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.ColumnExpressionBuilderHelper.#ctor">
+            <summary>
+            For easy mockability only.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.ColumnExpressionBuilderHelper.SetNullable(System.Boolean)">
+            <summary>
+            Either updates the IsNullable flag on the column, or creates/removes the SetNotNull expression, depending
+            on whether the column has a 'Set existing rows' expression.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.ColumnExpressionBuilderHelper.SetExistingRowsTo(System.Object)">
+            <summary>
+            Adds the existing row default value.  If the column has a value for IsNullable, this will also
+            call SetNullable to create the expression, and will then set the column IsNullable to false.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Constraint.CreateConstraintExpressionBuilder.#ctor(FluentMigrator.Expressions.CreateConstraintExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CreateConstraintExpressionBuilder"/> class.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Constraint.DeleteConstraintExpressionBuilder.#ctor(FluentMigrator.Expressions.DeleteConstraintExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CreateConstraintExpressionBuilder"/> class.
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot">
+            <summary>
+            Allows for conditional inclusion of expresions based on the migration context
+            </summary>
+        </member>
+        <member name="F:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot._context">
+            <summary>
+            The context to add expressions into
+            </summary>
+            <remarks>If the database type doe snot apply then this will be a new context that is not used by the caller</remarks>
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.#ctor(FluentMigrator.Infrastructure.IMigrationContext,System.String[])">
+            <summary>
+            Initializes a new instance of a the <see cref="T:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot"/> class that will only add expressions to the provided <paramref name="context"/> if <paramref name="databaseType"/> matches the migration processor
+            </summary>
+            <remarks>If the database type does not apply then a <seealso cref="T:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor"/> will be used as a container to void any fluent expressions that would have been executed</remarks>
+            <param name="context">The context to add expressions to if the database type applies</param>
+            <param name="databaseType">The database type that the expressions relate to</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.#ctor(FluentMigrator.Infrastructure.IMigrationContext,System.Predicate{System.String})">
+            <summary>
+            Initializes a new instance of a the <see cref="T:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot"/> class that will only add expressions to the provided <paramref name="context"/> if <paramref name="databaseTypePredicate"/> is true for the migration processor
+            </summary>
+            <remarks>If the database type does not apply then a <seealso cref="T:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor"/> will be used as a container to void any fluent expressions that would have been executed</remarks>
+            <param name="context">The context to add expressions to if the database type applies</param>
+            <param name="databaseTypePredicate">The predicate that must be true for the expression to run</param>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Alter">
+            <summary>
+            Alter the schema of an existing object
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Create">
+            <summary>
+            Create a new database object
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Delete">
+            <summary>
+            Delete a database object, table, or row
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Rename">
+            <summary>
+            Rename tables / columns
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Insert">
+            <summary>
+            Insert data into a table
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Execute">
+            <summary>
+            Execute SQL statements
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Update">
+            <summary>
+            Update an existing row
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.DatabaseTypeApplies(FluentMigrator.Infrastructure.IMigrationContext,System.String[])">
+            <summary>
+            Checks if the database type matches the name of the context migration processor
+            </summary>
+            <param name="context">The context to evaluate</param>
+            <param name="databaseTypes">The type to be checked</param>
+            <returns><c>True</c> if the database type applies, <c>False</c> if not</returns>
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.DatabaseTypeApplies(FluentMigrator.Infrastructure.IMigrationContext,System.Predicate{System.String})">
+            <summary>
+            Checks if the database type matches the name of the context migration processor
+            </summary>
+            <param name="context">The context to evaluate</param>
+            <param name="databaseTypePredicate">The predicate to be evaluated</param>
+            <returns><c>True</c> if the database type applies, <c>False</c> if not</returns>
+        </member>
+        <member name="T:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor">
+            <summary>
+            Provides a null implmentation of a procesor that does not do any work
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Infrastructure.MigrationContext.ApplicationContext">
+            <summary>The arbitrary application context passed to the task runner.</summary>
+        </member>
+        <member name="P:FluentMigrator.Infrastructure.MigrationContext.Connection">
+            <summary>
+            Connection String from the runner.
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter">
+            <summary>
+            This adapter wraps a migration into a MigrationInfo instance, used to keep IMigration backwards compatible with new IMigrationInfo.
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.MigrationBase.ApplicationContext">
+            <summary>The arbitrary application context passed to the task runner.</summary>
+        </member>
+        <member name="P:FluentMigrator.MigrationBase.ConnectionString">
+            <summary>
+            Connection String that is used to execute migrations.
+            </summary>
+        </member>
+    </members>
+</doc>

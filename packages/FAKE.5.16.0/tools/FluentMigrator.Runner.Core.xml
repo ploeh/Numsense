@@ -1,0 +1,1132 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FluentMigrator.Runner.Core</name>
+    </assembly>
+    <members>
+        <member name="T:FluentMigrator.Runner.BatchParser.EndCodeSearchResult">
+            <summary>
+            The result of a <see cref="M:FluentMigrator.Runner.BatchParser.IRangeSearcher.FindEndCode(FluentMigrator.Runner.BatchParser.ILineReader)"/> operation
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.EndCodeSearchResult.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.EndCodeSearchResult"/> class.
+            </summary>
+            <param name="index">The index into the <see cref="T:FluentMigrator.Runner.BatchParser.ILineReader"/> where the end code was found</param>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.EndCodeSearchResult.#ctor(System.Int32,FluentMigrator.Runner.BatchParser.IRangeSearcher)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.EndCodeSearchResult"/> class.
+            </summary>
+            <param name="index">The index into the <see cref="T:FluentMigrator.Runner.BatchParser.ILineReader"/> where the nested start code was found</param>
+            <param name="nestedRangeSearcher">The searcher to be used to find the end of the nested range</param>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.EndCodeSearchResult.IsNestedStart">
+            <summary>
+            Gets a value indicating whether this is a nested range
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.EndCodeSearchResult.Index">
+            <summary>
+            Gets the index into the previously tested <see cref="T:FluentMigrator.Runner.BatchParser.ILineReader"/> of the end code or nested start code
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.EndCodeSearchResult.NestedRangeSearcher">
+            <summary>
+            Gets the searcher to be used to find the end of the nested range
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.EndCodeSearchResult.op_Implicit(System.Int32)~FluentMigrator.Runner.BatchParser.EndCodeSearchResult">
+            <summary>
+            Operator to convert an index of the end code into a <see cref="T:FluentMigrator.Runner.BatchParser.EndCodeSearchResult"/>
+            </summary>
+            <param name="index">The index into the <see cref="T:FluentMigrator.Runner.BatchParser.ILineReader"/> of the end code</param>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.ILineReader">
+            <summary>
+            Read content from a line and advance the internal index
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.ILineReader.Line">
+            <summary>
+            Gets the current line
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.ILineReader.Index">
+            <summary>
+            Gets the current index into the line
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.ILineReader.Length">
+            <summary>
+            Gets the remaining length
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.ILineReader.ReadString(System.Int32)">
+            <summary>
+            Reads a string with the given <paramref name="length"/> from the <see cref="P:FluentMigrator.Runner.BatchParser.ILineReader.Line"/>
+            </summary>
+            <param name="length">The length of the string to read from the <see cref="P:FluentMigrator.Runner.BatchParser.ILineReader.Line"/></param>
+            <returns>The read string</returns>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.ILineReader.Advance(System.Int32)">
+            <summary>
+            Creates a new <see cref="T:FluentMigrator.Runner.BatchParser.ILineReader"/> while moving the internal <see cref="P:FluentMigrator.Runner.BatchParser.ILineReader.Index"/> by the given <paramref name="length"/>
+            </summary>
+            <param name="length">The number of characters to move the internal <see cref="P:FluentMigrator.Runner.BatchParser.ILineReader.Index"/></param>
+            <returns>A new line reader with the new index</returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.IRangeSearcher">
+            <summary>
+            Interface to search for content with a given start- and end code
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.IRangeSearcher.StartCodeLength">
+            <summary>
+            Gets the length of the start code
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.IRangeSearcher.EndCodeLength">
+            <summary>
+            Gets the length of the end code
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.IRangeSearcher.IsComment">
+            <summary>
+            Is this range a comment?
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.IRangeSearcher.FindStartCode(FluentMigrator.Runner.BatchParser.ILineReader)">
+            <summary>
+            Gets the index into the <paramref name="reader"/> where the start code was found
+            </summary>
+            <param name="reader">The reader where the start code is searched</param>
+            <returns><c>-1</c> when the start code couldn't be found</returns>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.IRangeSearcher.FindEndCode(FluentMigrator.Runner.BatchParser.ILineReader)">
+            <summary>
+            Search for an end code
+            </summary>
+            <param name="reader">The reader where the end code is searched</param>
+            <returns><c>null</c> when the end code couldn't be found (or a nested start code)</returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.ISpecialTokenSearcher">
+            <summary>
+            Searches for special tokens (e.g. <c>GO</c>)
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.ISpecialTokenSearcher.Find(FluentMigrator.Runner.BatchParser.ILineReader)">
+            <summary>
+            Search for the special token in the given <paramref name="reader"/>
+            </summary>
+            <param name="reader">The reader used to search the token</param>
+            <returns><c>null</c> when the token couldn't be found</returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.ITextSource">
+            <summary>
+            An interface to create a reader that is used to read the SQL script lines
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.ITextSource.CreateReader">
+            <summary>
+            Creates a reader
+            </summary>
+            <returns><c>null</c> when no content was available</returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.RangeSearchers.AnsiSqlIdentifier">
+            <summary>
+            A range searcher for ANSI-style SQL identifiers
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.AnsiSqlIdentifier.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.AnsiSqlIdentifier"/> class.
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.RangeSearchers.CharWithEscapeByDuplication">
+            <summary>
+            Utility class that handles single-character ranges (e.g. <c>'text'</c>) where the
+            end characters might be duplicated to escape it.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.CharWithEscapeByDuplication.#ctor(System.Char,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.CharWithEscapeByDuplication"/> class.
+            </summary>
+            <param name="startAndEndChar">The character used for start and end</param>
+            <param name="isComment">Is this a comment</param>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.CharWithEscapeByDuplication.#ctor(System.Char,System.Char,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.CharWithEscapeByDuplication"/> class.
+            </summary>
+            <param name="startChar">The start character</param>
+            <param name="endChar">The end character</param>
+            <param name="isComment">Is this a comment</param>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.RangeSearchers.CharWithEscapeByDuplication.StartCodeLength">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.RangeSearchers.CharWithEscapeByDuplication.EndCodeLength">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.RangeSearchers.CharWithEscapeByDuplication.IsComment">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.CharWithEscapeByDuplication.FindStartCode(FluentMigrator.Runner.BatchParser.ILineReader)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.CharWithEscapeByDuplication.FindEndCode(FluentMigrator.Runner.BatchParser.ILineReader)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.RangeSearchers.DoubleDashSingleLineComment">
+            <summary>
+            A single line comment starting with two dashes (<c>-- comment</c>)
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.DoubleDashSingleLineComment.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.DoubleDashSingleLineComment"/> class.
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.RangeSearchers.MultiLineComment">
+            <summary>
+            The default multi-line comment (<c>/* comment */</c>)
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.MultiLineComment.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.MultiLineComment"/> class.
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.RangeSearchers.MySqlIdentifier">
+            <summary>
+            The MySQL identifier quotes using backticks
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.MySqlIdentifier.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.MySqlIdentifier"/> class.
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.RangeSearchers.NestingMultiLineComment">
+            <summary>
+            An example implementation of a nested multi-line comment (e.g. <c>/* comment /* nested */ */</c>)
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.NestingMultiLineComment.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.NestingMultiLineComment"/> class.
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.RangeSearchers.NestingMultiLineComment.StartCodeLength">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.RangeSearchers.NestingMultiLineComment.EndCodeLength">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.RangeSearchers.NestingMultiLineComment.IsComment">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.NestingMultiLineComment.FindStartCode(FluentMigrator.Runner.BatchParser.ILineReader)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.NestingMultiLineComment.FindEndCode(FluentMigrator.Runner.BatchParser.ILineReader)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.RangeSearchers.PoundSignSingleLineComment">
+            <summary>
+            A single line comment starting with a pound sign (<c># comment</c>)
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.PoundSignSingleLineComment.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.PoundSignSingleLineComment"/> class.
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.RangeSearchers.SingleLineComment">
+            <summary>
+            A single line comment starting with the specified start code
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.SingleLineComment.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.SingleLineComment"/> class.
+            </summary>
+            <param name="startCode">The start code for the single line comment</param>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.SingleLineComment.#ctor(System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.SingleLineComment"/> class.
+            </summary>
+            <param name="startCode">The start code for the single line comment</param>
+            <param name="onlyAtBeginningOfLine">Find the start code only at the beginning of the line</param>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.RangeSearchers.SingleLineComment.StartCodeLength">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.RangeSearchers.SingleLineComment.EndCodeLength">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.RangeSearchers.SingleLineComment.IsComment">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.SingleLineComment.FindStartCode(FluentMigrator.Runner.BatchParser.ILineReader)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.SingleLineComment.FindEndCode(FluentMigrator.Runner.BatchParser.ILineReader)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.RangeSearchers.SqlServerIdentifier">
+            <summary>
+            An SQL server style quoted identifer (<c>[identifier]</c>)
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.SqlServerIdentifier.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.SqlServerIdentifier"/> class.
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.RangeSearchers.SqlString">
+            <summary>
+            A ANSI SQL string (<c>'string'</c>)
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.SqlString.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.SqlString"/> class.
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.RangeSearchers.StringWithNoEscape">
+            <summary>
+            Ranges with multi-character start and end tokens (e.g. <c>/* */</c>)
+            </summary>
+            <remarks>
+            Escaping is not supported.
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.StringWithNoEscape.#ctor(System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.StringWithNoEscape"/> class.
+            </summary>
+            <param name="startAndEndCode">The start- and end code string</param>
+            <param name="isComment">Is this range a comment?</param>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.StringWithNoEscape.#ctor(System.String,System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.StringWithNoEscape"/> class.
+            </summary>
+            <param name="startCode">The start code</param>
+            <param name="endCode">The end code</param>
+            <param name="isComment">Is this range a comment?</param>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.RangeSearchers.StringWithNoEscape.StartCodeLength">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.RangeSearchers.StringWithNoEscape.EndCodeLength">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.RangeSearchers.StringWithNoEscape.IsComment">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.StringWithNoEscape.FindStartCode(FluentMigrator.Runner.BatchParser.ILineReader)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.RangeSearchers.StringWithNoEscape.FindEndCode(FluentMigrator.Runner.BatchParser.ILineReader)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.SearchContext">
+            <summary>
+            Represents the context for the <see cref="T:FluentMigrator.Runner.BatchParser.SearchStatus"/> operation
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SearchContext.#ctor(System.Collections.Generic.IEnumerable{FluentMigrator.Runner.BatchParser.IRangeSearcher},System.Collections.Generic.IEnumerable{FluentMigrator.Runner.BatchParser.ISpecialTokenSearcher},System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.SearchContext"/> class.
+            </summary>
+            <param name="rangeSearchers">The range searchers</param>
+            <param name="specialTokenSearchers">The special token searchers</param>
+            <param name="stripComments">Should the comments be stripped</param>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.SearchContext.SpecialTokenSearchers">
+            <summary>
+            Gets the special token searchers
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.SearchContext.RangeSearchers">
+            <summary>
+            Gets the range searchers
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.SearchContext.StripComments">
+            <summary>
+            Gets a value indicating whether the comments should be stripped
+            </summary>
+        </member>
+        <member name="E:FluentMigrator.Runner.BatchParser.SearchContext.BatchSql">
+            <summary>
+            Event handler that is called when SQL statements should be collected
+            </summary>
+        </member>
+        <member name="E:FluentMigrator.Runner.BatchParser.SearchContext.SpecialToken">
+            <summary>
+            Event handler that is called when a special token was found
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.SearchStatus">
+            <summary>
+            The main class to perform SQL batch collection
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SearchStatus.#ctor(FluentMigrator.Runner.BatchParser.SearchContext,FluentMigrator.Runner.BatchParser.ILineReader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.SearchStatus"/> class.
+            </summary>
+            <param name="context">The search context</param>
+            <param name="reader">The reader to be read from</param>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SearchStatus.#ctor(FluentMigrator.Runner.BatchParser.SearchContext,FluentMigrator.Runner.BatchParser.ILineReader,System.Collections.Generic.Stack{FluentMigrator.Runner.BatchParser.IRangeSearcher},FluentMigrator.Runner.BatchParser.SpecialTokenInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.SearchStatus"/> class
+            </summary>
+            <param name="context">The search context</param>
+            <param name="reader">The reader to be read from</param>
+            <param name="activeRanges">The stack of active ranges</param>
+            <param name="foundToken">The found special token</param>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SearchStatus.Process">
+            <summary>
+            Tries to find the next token or range
+            </summary>
+            <returns><c>null</c> when no token or range could be found</returns>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SearchStatus.FindToken(FluentMigrator.Runner.BatchParser.ILineReader,System.Collections.Generic.IEnumerable{FluentMigrator.Runner.BatchParser.ISpecialTokenSearcher})">
+            <summary>
+            Search a special token
+            </summary>
+            <param name="reader">The reader where the token should be searched in</param>
+            <param name="searchers">The collection of searchers to test</param>
+            <returns><c>null</c> when no token could be found</returns>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SearchStatus.FindRangeStart(FluentMigrator.Runner.BatchParser.ILineReader,System.Collections.Generic.IEnumerable{FluentMigrator.Runner.BatchParser.IRangeSearcher})">
+            <summary>
+            Search for the start of a range
+            </summary>
+            <param name="reader">The reader where the range start token should be searched in</param>
+            <param name="searchers">The collection of searchers to test</param>
+            <returns><c>null</c> when no range could be found</returns>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SearchStatus.FindRangeEnd">
+            <summary>
+            Search for the end of a range
+            </summary>
+            <returns><c>null</c> when no range end token could be found</returns>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SearchStatus.FindTokenOrRangeStart">
+            <summary>
+            Search for a token or range start token
+            </summary>
+            <remarks>
+            In other words: Search for everything that is allowed outside of a range.
+            </remarks>
+            <returns><c>null</c> if neither a token nor a range start sequence could be found</returns>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SearchStatus.UseNewRange(FluentMigrator.Runner.BatchParser.ILineReader,FluentMigrator.Runner.BatchParser.SearchStatus.RangeStart)">
+            <summary>
+            Handle the case where a new range start sequence was found
+            </summary>
+            <param name="reader">The reader where the sequence was found</param>
+            <param name="info">Information about the start sequence</param>
+            <returns>A new search status</returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.Sources.LinesSource">
+            <summary>
+            A <see cref="T:FluentMigrator.Runner.BatchParser.ITextSource"/> implementation that uses lines as input
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.Sources.LinesSource.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.Sources.LinesSource"/> class.
+            </summary>
+            <param name="batchSource">The collection of lines to be used as source</param>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.Sources.LinesSource.CreateReader">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.Sources.TextReaderSource">
+            <summary>
+            A <see cref="T:FluentMigrator.Runner.BatchParser.ITextSource"/> implementation that uses a <see cref="T:System.IO.TextReader"/> as source.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.Sources.TextReaderSource.#ctor(System.IO.TextReader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.Sources.TextReaderSource"/> class.
+            </summary>
+            <param name="reader">The text reader to use</param>
+            <remarks>
+            This function doesn't take ownership of the <paramref name="reader"/>.
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.Sources.TextReaderSource.#ctor(System.IO.TextReader,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.Sources.TextReaderSource"/> class.
+            </summary>
+            <param name="reader">The text reader to use</param>
+            <param name="takeOwnership"><c>true</c> when the <see cref="T:FluentMigrator.Runner.BatchParser.Sources.TextReaderSource"/> should become the owner of the <paramref name="reader"/></param>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.Sources.TextReaderSource.CreateReader">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.Sources.TextReaderSource.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.SpecialTokenEventArgs">
+            <summary>
+            Event arguments for a special token
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SpecialTokenEventArgs.#ctor(System.String,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.SpecialTokenEventArgs"/> class.
+            </summary>
+            <param name="token">The found token</param>
+            <param name="opaque">An opaque (token specific) value</param>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.SpecialTokenEventArgs.Token">
+            <summary>
+            Gets the found token
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.SpecialTokenEventArgs.Opaque">
+            <summary>
+            Gets an opaque (token specific) value
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.SpecialTokenInfo">
+            <summary>
+            Provides special information about the found token
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SpecialTokenInfo.#ctor(System.Int32,System.Int32,System.String,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.SpecialTokenInfo"/> class.
+            </summary>
+            <param name="index">The index to the first character that is assigned to the <paramref name="token"/></param>
+            <param name="length">The content length that is assigned to the <paramref name="token"/></param>
+            <param name="token">The found token</param>
+            <param name="opaque">An opaque (token specific) value</param>
+            <remarks>
+            The <paramref name="index"/> may not point to the real token text and the <paramref name="length"/> might be longer
+            than the <paramref name="token"/> itself. This is usually the case when the token should be the only text on the line,
+            but is instead surrounded by whitespace.
+            </remarks>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.SpecialTokenInfo.Index">
+            <summary>
+            Gets the index to the first character that is assigned to the <see cref="P:FluentMigrator.Runner.BatchParser.SpecialTokenInfo.Token"/>
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.SpecialTokenInfo.Length">
+            <summary>
+            Gets the content length that is assigned to the <see cref="P:FluentMigrator.Runner.BatchParser.SpecialTokenInfo.Token"/>
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.SpecialTokenInfo.Token">
+            <summary>
+            Gets the found token
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.SpecialTokenInfo.Opaque">
+            <summary>
+            Gets an opaque (token specific) value
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.SpecialTokenSearchers.GoSearcher">
+            <summary>
+            Searches for a "GO n" or "GO" token
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SpecialTokenSearchers.GoSearcher.Find(FluentMigrator.Runner.BatchParser.ILineReader)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.SpecialTokenSearchers.GoSearcher.GoSearcherParameters">
+            <summary>
+            Additional values for the GO token
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SpecialTokenSearchers.GoSearcher.GoSearcherParameters.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.SpecialTokenSearchers.GoSearcher.GoSearcherParameters"/> class.
+            </summary>
+            <param name="count">the number of times the batch should be executed</param>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.SpecialTokenSearchers.GoSearcher.GoSearcherParameters.Count">
+            <summary>
+            Gets the number of times the batch should be executed
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.SpecialTokenSearchers.SemicolonSearcher">
+            <summary>
+            Searches for a semicolon
+            </summary>
+            <remarks>
+            This special token searcher might be used to separate SQL statements in a batch.
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SpecialTokenSearchers.SemicolonSearcher.Find(FluentMigrator.Runner.BatchParser.ILineReader)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.SqlBatchCollectorEventArgs">
+            <summary>
+            Event arguments for SQL text to be collected
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SqlBatchCollectorEventArgs.#ctor(System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.SqlBatchCollectorEventArgs"/> class.
+            </summary>
+            <param name="sqlContent">The SQL text to be collected</param>
+            <param name="isEndOfLine"><c>true</c> when a new line character should be appended</param>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.SqlBatchCollectorEventArgs.SqlContent">
+            <summary>
+            Gets the SQL text to be collected
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.SqlBatchCollectorEventArgs.IsEndOfLine">
+            <summary>
+            Gets a value indicating whether a new line character should be appended
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.SqlBatchParser">
+            <summary>
+            This is the base implementation of the SQL batch parser
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SqlBatchParser.#ctor(System.Collections.Generic.IEnumerable{FluentMigrator.Runner.BatchParser.IRangeSearcher},System.Collections.Generic.IEnumerable{FluentMigrator.Runner.BatchParser.ISpecialTokenSearcher},System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.SqlBatchParser"/> class.
+            </summary>
+            <param name="rangeSearchers">The range searchers to be used</param>
+            <param name="specialTokenSearchers">The special token searchers to be used</param>
+            <param name="newLine">The new line sequence to be used for the output</param>
+        </member>
+        <member name="E:FluentMigrator.Runner.BatchParser.SqlBatchParser.SpecialToken">
+            <summary>
+            An event handler that is called when a special token was found
+            </summary>
+        </member>
+        <member name="E:FluentMigrator.Runner.BatchParser.SqlBatchParser.SqlText">
+            <summary>
+            An event handler that is called when an SQL text was collected and is considered complete
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SqlBatchParser.Process(FluentMigrator.Runner.BatchParser.ITextSource,System.Boolean)">
+            <summary>
+            Process the <paramref name="source"/>
+            </summary>
+            <param name="source">The source to process/parse for SQL statement batches</param>
+            <param name="stripComments"><c>true</c> when the comments should be stripped</param>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SqlBatchParser.OnSpecialToken(FluentMigrator.Runner.BatchParser.SpecialTokenEventArgs)">
+            <summary>
+            Invokes the <see cref="E:FluentMigrator.Runner.BatchParser.SqlBatchParser.SpecialToken"/> event
+            </summary>
+            <param name="e">The event arguments</param>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SqlBatchParser.OnSqlText(FluentMigrator.Runner.BatchParser.SqlTextEventArgs)">
+            <summary>
+            Invokes the <see cref="E:FluentMigrator.Runner.BatchParser.SqlBatchParser.SqlText"/> event
+            </summary>
+            <param name="e">The event arguments</param>
+        </member>
+        <member name="T:FluentMigrator.Runner.BatchParser.SqlTextEventArgs">
+            <summary>
+            Event arguments for the SQL text collected by the <see cref="T:FluentMigrator.Runner.BatchParser.SqlBatchParser"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SqlTextEventArgs.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.SqlTextEventArgs"/> class.
+            </summary>
+            <param name="sqlText">The collected SQL text</param>
+        </member>
+        <member name="P:FluentMigrator.Runner.BatchParser.SqlTextEventArgs.SqlText">
+            <summary>
+            Gets the collected SQL text
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.ConventionSetExtensions">
+            <summary>
+            Extension methods that work in <see cref="T:FluentMigrator.Expressions.IMigrationExpression"/> and are using <see cref="T:FluentMigrator.Runner.Conventions.IConventionSet"/> implementations.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.ConventionSetExtensions.Apply(System.Collections.Generic.IEnumerable{FluentMigrator.Expressions.IMigrationExpression},FluentMigrator.Runner.Conventions.IConventionSet)">
+            <summary>
+            Applies all conventions in a <paramref name="conventionSet"/> to the given <paramref name="expressions"/>.
+            </summary>
+            <param name="expressions">The expression to apply the convention set to</param>
+            <param name="conventionSet">The convention set to apply to the expressions</param>
+            <returns>A sequence of expressions where the conventions have been applied to</returns>
+        </member>
+        <member name="M:FluentMigrator.Runner.ConventionSetExtensions.Apply``1(``0,FluentMigrator.Runner.Conventions.IConventionSet)">
+            <summary>
+            Apply all conventions in a <paramref name="conventionSet"/> to the given <paramref name="expression"/>.
+            </summary>
+            <typeparam name="T">The expression type, derived from <see cref="T:FluentMigrator.Expressions.IMigrationExpression"/></typeparam>
+            <param name="expression">The expression to apply the <paramref name="conventionSet"/> to</param>
+            <param name="conventionSet">The convention set to apply to the <paramref name="expression"/></param>
+            <returns>The same or a new instance of the expression. The underlying type of the expression must
+            not be changed.</returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.ConventionSet">
+            <summary>
+            A convenience (empty) implementation of <see cref="T:FluentMigrator.Runner.Conventions.IConventionSet"/>
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.ConventionSet.RootPathConvention">
+            <summary>
+            Gets or sets the root path convention to be applied to <see cref="T:FluentMigrator.Expressions.IFileSystemExpression"/> implementations
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.ConventionSet.SchemaConvention">
+            <summary>
+            Gets or sets the default schema name convention to be applied to <see cref="T:FluentMigrator.Expressions.ISchemaExpression"/> implementations
+            </summary>
+            <remarks>
+            This class cannot be overridden. The <see cref="T:FluentMigrator.Runner.Conventions.IDefaultSchemaNameConvention"/>
+            must be implemented/provided instead.
+            </remarks>
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.ConventionSet.ColumnsConventions">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.ConventionSet.ConstraintConventions">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.ConventionSet.ForeignKeyConventions">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.ConventionSet.IndexConventions">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.ConventionSet.SequenceConventions">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.ConventionSet.AutoNameConventions">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.DefaultConstraintNameConvention">
+            <summary>
+            The default implementation of a <see cref="T:FluentMigrator.Runner.Conventions.IConstraintConvention"/>
+            </summary>
+            <remarks>
+            It sets the default name of a constraint.
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultConstraintNameConvention.Apply(FluentMigrator.Expressions.IConstraintExpression)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.DefaultForeignKeyNameConvention">
+            <summary>
+            The default implementation of a <see cref="T:FluentMigrator.Runner.Conventions.IForeignKeyConvention"/>
+            </summary>
+            <remarks>
+            It sets the default name of a foreign key.
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultForeignKeyNameConvention.Apply(FluentMigrator.Expressions.IForeignKeyExpression)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.DefaultIndexNameConvention">
+            <summary>
+            The default implementation of a <see cref="T:FluentMigrator.Runner.Conventions.IIndexConvention"/>
+            </summary>
+            <remarks>
+            It sets the default name of an index.
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultIndexNameConvention.Apply(FluentMigrator.Expressions.IIndexExpression)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.DefaultPrimaryKeyNameConvention">
+            <summary>
+            The default implementation of a <see cref="T:FluentMigrator.Runner.Conventions.IColumnsConvention"/>
+            </summary>
+            <remarks>
+            It sets the default constraint name of a primary key column.
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultPrimaryKeyNameConvention.Apply(FluentMigrator.Expressions.IColumnsExpression)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.DefaultRootPathConvention">
+            <summary>
+            The default implementation of a <see cref="T:FluentMigrator.Runner.Conventions.IRootPathConvention"/>
+            </summary>
+            <remarks>
+            It sets the working directory, which is either the
+            path given in the constructor or - when the given path is
+            null - the current directory.
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultRootPathConvention.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.Conventions.DefaultRootPathConvention"/> class.
+            </summary>
+            <param name="rootPath">The root path for expressions requiring file system access.</param>
+            <remarks>When <paramref name="rootPath"/> is null, then the current directory is
+            returned</remarks>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultRootPathConvention.Apply(FluentMigrator.Expressions.IFileSystemExpression)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.DefaultSchemaConvention">
+            <summary>
+            The class handling the default schema name
+            </summary>
+            <remarks>
+            This class handles all <see cref="T:FluentMigrator.Expressions.ISchemaExpression"/> and additionally
+            implements other conventions that give access to schema names (e.g.
+            <see cref="T:FluentMigrator.Runner.Conventions.IForeignKeyConvention"/>).
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultSchemaConvention.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.Conventions.DefaultSchemaConvention"/> class.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultSchemaConvention.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.Conventions.DefaultSchemaConvention"/> class.
+            </summary>
+            <param name="defaultSchemaName">The default schema name</param>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultSchemaConvention.#ctor(FluentMigrator.Runner.Conventions.IDefaultSchemaNameConvention)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.Conventions.DefaultSchemaConvention"/> class.
+            </summary>
+            <param name="defaultSchemaNameConvention">The convention used to
+            return the default schema name for a given original schema name.</param>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultSchemaConvention.GetSchemaName(System.String)">
+            <summary>
+            Returns the default schema name depending on the original schema name
+            </summary>
+            <param name="originalSchemaName">The original schema name</param>
+            <returns>Returns the <paramref name="originalSchemaName"/> when the
+            default schema name is null or empty and returns the new default
+            schema name when the <paramref name="originalSchemaName"/> is null
+            or empty</returns>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultSchemaConvention.Apply(FluentMigrator.Expressions.ISchemaExpression)">
+            <summary>
+            Applies a convention to a <see cref="T:FluentMigrator.Expressions.ISchemaExpression"/>
+            </summary>
+            <param name="expression">The expression this convention should be applied to</param>
+            <returns>The same or a new expression. The underlying type must stay the same.</returns>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultSchemaConvention.Apply(FluentMigrator.Expressions.IForeignKeyExpression)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultSchemaConvention.Apply(FluentMigrator.Expressions.IConstraintExpression)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultSchemaConvention.Apply(FluentMigrator.Expressions.IIndexExpression)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultSchemaConvention.Apply(FluentMigrator.Expressions.ISequenceExpression)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.DefaultSchemaNameConvention">
+            <summary>
+            The default implementation of the <see cref="T:FluentMigrator.Runner.Conventions.IDefaultSchemaNameConvention"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultSchemaNameConvention.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.Conventions.IDefaultSchemaNameConvention"/> class.
+            </summary>
+            <param name="defaultSchemaName">The default schema name (can be null or empty)</param>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.DefaultSchemaNameConvention.GetSchemaName(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.IAutoNameConvention">
+            <summary>
+            A convention working on <see cref="T:FluentMigrator.Expressions.IAutoNameExpression"/> implementations
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.IAutoNameConvention.Apply(FluentMigrator.Expressions.IAutoNameExpression)">
+            <summary>
+            Applies a convention to a <see cref="T:FluentMigrator.Expressions.IAutoNameExpression"/>
+            </summary>
+            <param name="expression">The expression this convention should be applied to</param>
+            <returns>The same or a new expression. The underlying type must stay the same.</returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.IColumnsConvention">
+            <summary>
+            A convention working on <see cref="T:FluentMigrator.Expressions.IColumnsExpression"/> implementations
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.IColumnsConvention.Apply(FluentMigrator.Expressions.IColumnsExpression)">
+            <summary>
+            Applies a convention to a <see cref="T:FluentMigrator.Expressions.IColumnsExpression"/>
+            </summary>
+            <param name="expression">The expression this convention should be applied to</param>
+            <returns>The same or a new expression. The underlying type must stay the same.</returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.IConstraintConvention">
+            <summary>
+            A convention working on <see cref="T:FluentMigrator.Expressions.IConstraintExpression"/> implementations
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.IConstraintConvention.Apply(FluentMigrator.Expressions.IConstraintExpression)">
+            <summary>
+            Applies a convention to a <see cref="T:FluentMigrator.Expressions.IConstraintExpression"/>
+            </summary>
+            <param name="expression">The expression this convention should be applied to</param>
+            <returns>The same or a new expression. The underlying type must stay the same.</returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.IConventionSet">
+            <summary>
+            A set of conventions to be applied to expressions
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.IConventionSet.RootPathConvention">
+            <summary>
+            Gets the root path convention to be applied to <see cref="T:FluentMigrator.Expressions.IFileSystemExpression"/> implementations
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.IConventionSet.SchemaConvention">
+            <summary>
+            Gets the default schema name convention to be applied to <see cref="T:FluentMigrator.Expressions.ISchemaExpression"/> implementations
+            </summary>
+            <remarks>
+            This class cannot be overridden. The <see cref="T:FluentMigrator.Runner.Conventions.IDefaultSchemaNameConvention"/>
+            must be implemented/provided instead.
+            </remarks>
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.IConventionSet.ColumnsConventions">
+            <summary>
+            Gets the conventions to be applied to <see cref="T:FluentMigrator.Expressions.IColumnsExpression"/> implementations
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.IConventionSet.ConstraintConventions">
+            <summary>
+            Gets the conventions to be applied to <see cref="T:FluentMigrator.Expressions.IConstraintExpression"/> implementations
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.IConventionSet.ForeignKeyConventions">
+            <summary>
+            Gets the conventions to be applied to <see cref="T:FluentMigrator.Expressions.IForeignKeyExpression"/> implementations
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.IConventionSet.IndexConventions">
+            <summary>
+            Gets the conventions to be applied to <see cref="T:FluentMigrator.Expressions.IIndexExpression"/> implementations
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.IConventionSet.SequenceConventions">
+            <summary>
+            Gets the conventions to be applied to <see cref="T:FluentMigrator.Expressions.ISequenceExpression"/> implementations
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Conventions.IConventionSet.AutoNameConventions">
+            <summary>
+            Gets the conventions to be applied to <see cref="T:FluentMigrator.Expressions.IAutoNameExpression"/> implementations
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.IDefaultSchemaNameConvention">
+            <summary>
+            A convention that returns the default schema name depending on the original schema name
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.IDefaultSchemaNameConvention.GetSchemaName(System.String)">
+            <summary>
+            Returns the default schema name depending on the original schema name
+            </summary>
+            <param name="originalSchemaName">The original schema name</param>
+            <returns>Returns the <paramref name="originalSchemaName"/> when the
+            default schema name is null or empty and returns the new default
+            schema name when the <paramref name="originalSchemaName"/> is null
+            or empty</returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.IForeignKeyConvention">
+            <summary>
+            A convention working on <see cref="T:FluentMigrator.Expressions.IForeignKeyExpression"/> implementations
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.IForeignKeyConvention.Apply(FluentMigrator.Expressions.IForeignKeyExpression)">
+            <summary>
+            Applies a convention to a <see cref="T:FluentMigrator.Expressions.IForeignKeyExpression"/>
+            </summary>
+            <param name="expression">The expression this convention should be applied to</param>
+            <returns>The same or a new expression. The underlying type must stay the same.</returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.IIndexConvention">
+            <summary>
+            A convention working on <see cref="T:FluentMigrator.Expressions.IIndexExpression"/> implementations
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.IIndexConvention.Apply(FluentMigrator.Expressions.IIndexExpression)">
+            <summary>
+            Applies a convention to a <see cref="T:FluentMigrator.Expressions.IIndexExpression"/>
+            </summary>
+            <param name="expression">The expression this convention should be applied to</param>
+            <returns>The same or a new expression. The underlying type must stay the same.</returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.IRootPathConvention">
+            <summary>
+            A convention working on <see cref="T:FluentMigrator.Expressions.IFileSystemExpression"/> implementations
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.IRootPathConvention.Apply(FluentMigrator.Expressions.IFileSystemExpression)">
+            <summary>
+            Applies a convention to a <see cref="T:FluentMigrator.Expressions.IFileSystemExpression"/>
+            </summary>
+            <param name="expression">The expression this convention should be applied to</param>
+            <returns>The same or a new expression. The underlying type must stay the same.</returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.Conventions.ISequenceConvention">
+            <summary>
+            A convention working on <see cref="T:FluentMigrator.Expressions.ISequenceExpression"/> implementations
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Conventions.ISequenceConvention.Apply(FluentMigrator.Expressions.ISequenceExpression)">
+            <summary>
+            Applies a convention to a <see cref="T:FluentMigrator.Expressions.ISequenceExpression"/>
+            </summary>
+            <param name="expression">The expression this convention should be applied to</param>
+            <returns>The same or a new expression. The underlying type must stay the same.</returns>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.Base.ColumnBase.GetPrimaryKeyConstraintName(System.Collections.Generic.IEnumerable{FluentMigrator.Model.ColumnDefinition},System.String)">
+            <summary>
+            Gets the name of the primary key constraint. Some Generators may need to override if the constraint name is limited
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:FluentMigrator.Runner.Generators.Generic.GenericDescriptionGenerator">
+            <summary>
+            Base class to generate descriptions for tables/classes
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.Generic.GenericGenerator.Generate(FluentMigrator.Expressions.CreateTableExpression)">
+            <summary>
+            Outputs a create table string
+            </summary>
+            <param name="expression"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.Generic.GenericQuoter.QuoteValue(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.Generators.Generic.GenericQuoter.IdentifierSeparator">
+            <summary>
+            Gets the separator between identifiers (e.g. the dot between SCHEMA.TABLENAME)
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Generators.Generic.GenericQuoter.OpenQuote">
+            <summary>
+            Returns the opening quote identifier - " is the standard according to the specification
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Generators.Generic.GenericQuoter.CloseQuote">
+            <summary>
+            Returns the closing quote identifier - " is the standard according to the specification
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.Generic.GenericQuoter.IsQuoted(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.Generic.GenericQuoter.Quote(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.Generic.GenericQuoter.QuoteColumnName(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.Generic.GenericQuoter.QuoteConstraintName(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.Generic.GenericQuoter.QuoteIndexName(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.Generic.GenericQuoter.QuoteTableName(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.Generic.GenericQuoter.QuoteSequenceName(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.Generic.GenericQuoter.QuoteSchemaName(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.Generic.GenericQuoter.UnQuote(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Runner.Generators.IDescriptionGenerator">
+            <summary>
+            Generate SQL statements to set descriptions for tables and columns
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.Generators.IQuoter">
+            <summary>
+            The interface to be implemented for handling quotes
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.IQuoter.Quote(System.String)">
+            <summary>
+            Returns a quoted string that has been correctly escaped
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.IQuoter.UnQuote(System.String)">
+            <summary>
+            Provides an unquoted, unescaped string
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.IQuoter.QuoteValue(System.Object)">
+            <summary>
+            Quotes a value to be embedded into an SQL script/statement
+            </summary>
+            <param name="value">The value to be quoted</param>
+            <returns>The quoted value</returns>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.IQuoter.IsQuoted(System.String)">
+            <summary>
+            Returns true is the value starts and ends with a close quote
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.IQuoter.QuoteColumnName(System.String)">
+            <summary>
+            Quotes a column name
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.IQuoter.QuoteTableName(System.String,System.String)">
+            <summary>
+            Quotes a Table name
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.IQuoter.QuoteIndexName(System.String,System.String)">
+            <summary>
+            Quote an index name
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.IQuoter.QuoteConstraintName(System.String,System.String)">
+            <summary>
+            Quotes a constraint name
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.IQuoter.QuoteSequenceName(System.String,System.String)">
+            <summary>
+            Quotes a Sequence name
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.Generators.IQuoter.QuoteSchemaName(System.String)">
+            <summary>
+            Quotes a schema name
+            </summary>
+            <param name="schemaName">The schema name to quote</param>
+            <returns>The quoted schema name</returns>
+        </member>
+    </members>
+</doc>

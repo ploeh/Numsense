@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FluentMigrator.Runner.SqlServer</name>
+    </assembly>
+    <members>
+        <member name="T:FluentMigrator.Runner.BatchParser.SqlServerBatchParser">
+            <summary>
+            A specialization of the <see cref="T:FluentMigrator.Runner.BatchParser.SqlBatchParser"/> for the Microsoft SQL Server
+            </summary>
+            <remarks>
+            It uses the following range searchers: <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.MultiLineComment"/>, <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.DoubleDashSingleLineComment"/>,
+            <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.PoundSignSingleLineComment"/>, <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.SqlServerIdentifier"/>, <see cref="T:FluentMigrator.Runner.BatchParser.RangeSearchers.SqlString"/>
+            and the following token searchers: <see cref="T:FluentMigrator.Runner.BatchParser.SpecialTokenSearchers.GoSearcher"/>.
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.Runner.BatchParser.SqlServerBatchParser.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Runner.BatchParser.SqlServerBatchParser"/> class.
+            </summary>
+            <param name="newLine">The string used to write a new line sequence</param>
+        </member>
+    </members>
+</doc>

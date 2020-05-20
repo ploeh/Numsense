@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FluentMigrator.Runner.Db2</name>
+    </assembly>
+    <members>
+        <member name="M:FluentMigrator.Runner.Generators.DB2.Db2TypeMap.SetupTypeMaps">
+            <summary>
+            The setup type maps.
+            </summary>
+        </member>
+    </members>
+</doc>
