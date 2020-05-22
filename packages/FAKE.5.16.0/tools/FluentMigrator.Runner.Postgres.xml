@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FluentMigrator.Runner.Postgres</name>
+    </assembly>
+    <members>
+        <member name="T:FluentMigrator.Runner.Generators.Postgres.PostgresDescriptionGenerator">
+            <summary>
+            almost copied from OracleDescriptionGenerator,
+            modified for escaping table description
+            </summary>
+        </member>
+    </members>
+</doc>

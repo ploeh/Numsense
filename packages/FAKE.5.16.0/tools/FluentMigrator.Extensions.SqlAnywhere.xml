@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FluentMigrator.Extensions.SqlAnywhere</name>
+    </assembly>
+    <members>
+        <member name="M:FluentMigrator.SqlAnywhere.SqlAnywhereExtensions.UniqueNullsNotDistinct(FluentMigrator.Builders.Create.Index.ICreateIndexOptionsSyntax)">
+            <summary>
+            Index should have unique values, but multiple rows with null values should be accepted.
+            </summary>
+            <param name="expression">The expression to set this option for</param>
+            <returns>The <paramref name="expression"/></returns>
+        </member>
+        <member name="M:FluentMigrator.SqlAnywhere.SqlAnywhereExtensions.UniqueNullsDistinct(FluentMigrator.Builders.Create.Index.ICreateIndexOptionsSyntax,System.Boolean)">
+            <summary>
+            Index should have unique values. Only one row with null value should be accepted (default for most known database engines).
+            </summary>
+            <param name="expression">The expression to set this option for</param>
+            <param name="nullsAreDistinct"><c>true</c> when nulls should be distinct</param>
+            <returns>The <paramref name="expression"/></returns>
+        </member>
+    </members>
+</doc>

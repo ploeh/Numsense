@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FluentMigrator.Runner</name>
+    </assembly>
+    <members>
+        <member name="P:FluentMigrator.Runner.DefaultConventionSet.RootPathConvention">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.DefaultConventionSet.SchemaConvention">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.DefaultConventionSet.ColumnsConventions">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.DefaultConventionSet.ConstraintConventions">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.DefaultConventionSet.ForeignKeyConventions">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.DefaultConventionSet.IndexConventions">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.DefaultConventionSet.SequenceConventions">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.DefaultConventionSet.AutoNameConventions">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.Initialization.IRunnerContext.AllowBreakingChange">
+            <summary>
+            Gets or sets a value indicating whether the migration runner is allowed to apply breaking changes
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Initialization.IRunnerContext.ApplicationContext">
+            <summary>
+            Gets or sets the arbitrary application context passed to the task runner
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Initialization.IRunnerContext.DefaultSchemaName">
+            <summary>
+            Gets or sets the default schema name
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.Initialization.NetFramework.ConnectionStringManager">
+            <summary>
+            Locates connection strings by name in assembly's config file or machine.config
+            If no connection matches it uses the specified connection string as valid connection
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Runner.Initialization.NetFramework.INetConfigManager">
+            <summary>
+            Understand .NET config mechanism and provides access to Configuration sections
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Runner.Initialization.RunnerContext.AllowBreakingChange">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.Initialization.RunnerContext.ApplicationContext">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Runner.Initialization.RunnerContext.DefaultSchemaName">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Runner.Initialization.TaskExecutor.HasMigrationsToApply">
+            <summary>
+            Checks whether the current task will actually run any migrations.
+            Can be used to decide whether it's necessary perform a backup before the migrations are executed.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.MigrationRunner.ExecuteExpressions(System.Collections.Generic.ICollection{FluentMigrator.Expressions.IMigrationExpression})">
+            <summary>
+            execute each migration expression in the expression collection
+            </summary>
+            <param name="expressions"></param>
+        </member>
+        <member name="M:FluentMigrator.Runner.MigrationValidator.ApplyConventionsToAndValidateExpressions(FluentMigrator.IMigration,System.Collections.Generic.IEnumerable{FluentMigrator.Expressions.IMigrationExpression})">
+            <summary>
+            Validates each migration expression that has implemented the ICanBeValidated interface.
+            It throws an InvalidMigrationException exception if validation fails.
+            </summary>
+            <param name="migration">The current migration being run</param>
+            <param name="expressions">All the expressions contained in the up or down action</param>
+        </member>
+        <member name="T:FluentMigrator.Runner.TypeFinder">
+            <summary>
+            Advanced searching and filtration of types collections.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Runner.TypeFinder.FilterByNamespace(System.Collections.Generic.IEnumerable{System.Type},System.String,System.Boolean)">
+            <summary>
+            Searches for types located in the specifying namespace and optionally in its nested namespaces.
+            </summary>
+            <param name="types">Source types collection to search in.</param>
+            <param name="namespace">Namespace to search types in. Set to null or empty string to search in all namespaces.</param>
+            <param name="loadNestedNamespaces">Set to true to search for types located in nested namespaces of <paramref name="namespace"/>.
+            This parameter is ignored if <paramref name="namespace"/> is null or empty string.
+            </param>
+            <returns>Collection of types matching specified criteria.</returns>
+        </member>
+        <member name="P:FluentMigrator.Runner.VersionTableInfo.DefaultVersionTableMetaData.ApplicationContext">
+            <summary>
+            Provides access to <code>ApplicationContext</code> object.
+            </summary>
+            <remarks>
+            ApplicationContext value is set by FluentMigrator immediately after instantiation of a class
+            implementing <code>IVersionTableMetaData</code> and before any of properties of <code>IVersionTableMetaData</code>
+            is called. Properties can use <code>ApplicationContext</code> value to implement context-depending logic.
+            </remarks>
+        </member>
+        <member name="P:FluentMigrator.Runner.VersionTableInfo.IVersionTableMetaData.ApplicationContext">
+            <summary>
+            Provides access to <code>ApplicationContext</code> object.
+            </summary>
+            <remarks>
+            ApplicationContext value is set by FluentMigrator immediately after instantiation of a class
+            implementing <code>IVersionTableMetaData</code> and before any of properties of <code>IVersionTableMetaData</code>
+            is called. Properties can use <code>ApplicationContext</code> value to implement context-depending logic.
+            </remarks>
+        </member>
+    </members>
+</doc>

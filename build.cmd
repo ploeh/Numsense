@@ -1,4 +1,4 @@
 @echo off
 cls
 
-packages\FAKE.4.11.3\tools\FAKE.exe build.fsx %*
+packages\FAKE.5.16.0\tools\FAKE.exe build.fsx %*

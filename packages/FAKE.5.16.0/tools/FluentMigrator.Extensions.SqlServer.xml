@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FluentMigrator.Extensions.SqlServer</name>
+    </assembly>
+    <members>
+        <member name="M:FluentMigrator.SqlServer.SqlServerExtensions.WithIdentityInsert(FluentMigrator.Builders.Insert.IInsertDataSyntax)">
+            <summary>
+            Inserts data using Sql Server's IDENTITY INSERT feature.
+            </summary>
+            <param name="expression"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FluentMigrator.SqlServer.SqlServerExtensions.Identity``2(FluentMigrator.Builders.IColumnOptionSyntax{``0,``1},System.Int32,System.Int32)">
+            <summary>
+            Makes a column an Identity column using the specified seed and increment values.
+            </summary>
+            <param name="expression">Column on which to apply the identity.</param>
+            <param name="seed">Starting value of the identity.</param>
+            <param name="increment">Increment value of the identity.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FluentMigrator.SqlServer.SqlServerExtensions.Identity``2(FluentMigrator.Builders.IColumnOptionSyntax{``0,``1},System.Int64,System.Int32)">
+            <summary>
+            Makes a column an Identity column using the specified seed and increment values with bigint support.
+            </summary>
+            <param name="expression">Column on which to apply the identity.</param>
+            <param name="seed">Starting value of the identity.</param>
+            <param name="increment">Increment value of the identity.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FluentMigrator.SqlServer.SqlServerExtensions.NullsNotDistinct(FluentMigrator.Builders.Create.Index.ICreateIndexColumnUniqueOptionsSyntax)">
+            <summary>
+            Column should have unique values, but multiple rows with null values should be accepted.
+            </summary>
+            <param name="expression">The expression to set this option for</param>
+            <returns>The <paramref name="expression"/></returns>
+        </member>
+        <member name="M:FluentMigrator.SqlServer.SqlServerExtensions.NullsDistinct(FluentMigrator.Builders.Create.Index.ICreateIndexColumnUniqueOptionsSyntax,System.Boolean)">
+            <summary>
+            Column should have unique values. Only one row with null value should be accepted (default for most known database engines).
+            </summary>
+            <param name="expression">The expression to set this option for</param>
+            <param name="nullsAreDistinct"><c>true</c> when nulls should be distinct</param>
+            <returns>The <paramref name="expression"/></returns>
+        </member>
+        <member name="M:FluentMigrator.SqlServer.SqlServerExtensions.NullsNotDistinct(FluentMigrator.Builders.Create.Index.ICreateIndexMoreColumnOptionsSyntax)">
+            <summary>
+            Column should have unique values, but multiple rows with null values should be accepted.
+            </summary>
+            <param name="expression">The expression to set this option for</param>
+            <returns>The <paramref name="expression"/></returns>
+        </member>
+        <member name="M:FluentMigrator.SqlServer.SqlServerExtensions.NullsDistinct(FluentMigrator.Builders.Create.Index.ICreateIndexMoreColumnOptionsSyntax,System.Boolean)">
+            <summary>
+            Column should have unique values. Only one row with null value should be accepted (default for most known database engines).
+            </summary>
+            <param name="expression">The expression to set this option for</param>
+            <param name="nullsAreDistinct"><c>true</c> when nulls should be distinct</param>
+            <returns>The <paramref name="expression"/></returns>
+        </member>
+        <member name="M:FluentMigrator.SqlServer.SqlServerExtensions.UniqueNullsNotDistinct(FluentMigrator.Builders.Create.Index.ICreateIndexOptionsSyntax)">
+            <summary>
+            Index should have unique values, but multiple rows with null values should be accepted.
+            </summary>
+            <param name="expression">The expression to set this option for</param>
+            <returns>The <paramref name="expression"/></returns>
+        </member>
+        <member name="M:FluentMigrator.SqlServer.SqlServerExtensions.UniqueNullsDistinct(FluentMigrator.Builders.Create.Index.ICreateIndexOptionsSyntax,System.Boolean)">
+            <summary>
+            Index should have unique values. Only one row with null value should be accepted (default for most known database engines).
+            </summary>
+            <param name="expression">The expression to set this option for</param>
+            <param name="nullsAreDistinct"><c>true</c> when nulls should be distinct</param>
+            <returns>The <paramref name="expression"/></returns>
+        </member>
+        <member name="M:FluentMigrator.SqlServer.SqlServerExtensions.Online(FluentMigrator.Builders.Delete.Index.IDeleteIndexOptionsSyntax,System.Boolean)">
+            <summary>
+            Specifies whether underlying tables and associated indexes are available for queries and data modification during the index operation.
+            The ONLINE option can only be specified in certain situations, please refer to documentation for SQL Server 2005 and newer.
+            </summary>
+            <param name="expression">The expression to use to set the <c>WITH(ONLINE=)</c> option</param>
+            <param name="active">
+            <c>true</c>
+            Long-term table locks are not held. This allows queries or updates to the underlying table to continue.
+            <c>false</c>
+            Table locks are applied and the table is unavailable for the duration of the index operation.
+            </param>
+        </member>
+        <member name="M:FluentMigrator.SqlServer.SqlServerExtensions.Online(FluentMigrator.Builders.Delete.Constraint.IDeleteConstraintInSchemaOptionsSyntax,System.Boolean)">
+            <summary>
+            Specifies whether underlying tables and associated indexes are available for queries and data modification during the index operation.
+            The ONLINE option can only be specified in certain situations, please refer to documentation for SQL Server 2005 and newer.
+            </summary>
+            <param name="expression">The expression to use to set the <c>WITH(ONLINE=)</c> option</param>
+            <param name="active">
+            <c>true</c>
+            Long-term table locks are not held. This allows queries or updates to the underlying table to continue.
+            <c>false</c>
+            Table locks are applied and the table is unavailable for the duration of the index operation.
+            </param>
+        </member>
+        <member name="M:FluentMigrator.SqlServer.SqlServerExtensions.Online(FluentMigrator.Builders.Create.Index.ICreateIndexOptionsSyntax,System.Boolean)">
+            <summary>
+            Specifies whether underlying tables and associated indexes are available for queries and data modification during the index operation.
+            The ONLINE option can only be specified in certain situations, please refer to documentation for SQL Server 2005 and newer.
+            </summary>
+            <param name="expression">The expression to use to set the <c>WITH(ONLINE=)</c> option</param>
+            <param name="active">
+            <c>true</c>
+            Long-term table locks are not held. This allows queries or updates to the underlying table to continue.
+            <c>false</c>
+            Table locks are applied and the table is unavailable for the duration of the index operation.
+            </param>
+        </member>
+        <member name="M:FluentMigrator.SqlServer.SqlServerExtensions.Online(FluentMigrator.Builders.Create.Constraint.ICreateConstraintOptionsSyntax,System.Boolean)">
+            <summary>
+            Specifies whether underlying tables and associated indexes are available for queries and data modification during the index operation.
+            The ONLINE option can only be specified in certain situations, please refer to documentation for SQL Server 2005 and newer.
+            </summary>
+            <param name="expression">The expression to use to set the <c>WITH(ONLINE=)</c> option</param>
+            <param name="active">
+            <c>true</c>
+            Long-term table locks are not held. This allows queries or updates to the underlying table to continue.
+            <c>false</c>
+            Table locks are applied and the table is unavailable for the duration of the index operation.
+            </param>
+        </member>
+    </members>
+</doc>

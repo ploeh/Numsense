@@ -1,37 +1,40 @@
-﻿#r @"packages/FAKE.4.11.3/tools/FakeLib.dll"
+﻿#r @"packages/FAKE.5.16.0/tools/FakeLib.dll"
 
-open Fake
-open Fake.Testing
+open System
+open System.Diagnostics
+open System.IO
+open Fake.Core
+open Fake.DotNet
+open Fake.Tools
+open Fake.Api
+open Fake.DotNet.Testing
+open Fake.IO
+open Fake.Core.TargetOperators
+open Fake.IO.Globbing.Operators
 
-Target "Clean" (fun _ ->
-    directExec (fun info ->
-        info.FileName <- "git"
-        info.Arguments <- "clean -xdf")
-    |> ignore)
+Target.create "Clean" <| fun _ ->
+    let psi = ProcessStartInfo()
+    psi.FileName <- "git"
+    psi.Arguments <- "clean -xdf"
+    psi.UseShellExecute <- true
 
-Target "Build" (fun _ ->
-    !! "Numsense.sln"
-    |> MSBuildRelease "" "Rebuild"
-    |> ignore)
+    Process.Start psi |> ignore
 
-Target "Test" (fun _ ->
-    !! "*/bin/Release/*Ploeh.*.*Tests*.dll"
-    |> xUnit2 (fun p -> { p with Parallel = ParallelMode.All }))
+Target.create "Build" <| fun _ ->
+    DotNet.build (fun opts -> {
+        opts with Configuration = DotNet.Release
+    }) "Numsense.sln"
 
-Target "PackageNuGet" (fun _ ->
-    let version = GetAssemblyVersion "Numsense/bin/Release/Ploeh.Numsense.dll"
-    let semVerString (v : System.Version) =
-        sprintf "%i.%i.%i" v.Major v.Minor v.Build
+Target.create "Test" <| fun _ ->
+    DotNet.test (fun opts -> { opts with Configuration = DotNet.Release }) "Numsense.sln"
 
-    NuGet (fun p ->
-        { p with
-            Version = semVerString version
-            WorkingDir = "."
-            OutputPath = "."}) "Numsense.nuspec")
+Target.create "CopyNuGetPackage" <| fun _ ->
+     !! "Numsense/bin/Release/*.nupkg"
+    |> Shell.copy "."
 
 "Clean"
 ==> "Build"
 ==> "Test"
-==> "PackageNuGet"
+==> "CopyNuGetPackage"
 
-RunTargetOrDefault "PackageNuGet"
+Target.runOrDefault "CopyNuGetPackage"
